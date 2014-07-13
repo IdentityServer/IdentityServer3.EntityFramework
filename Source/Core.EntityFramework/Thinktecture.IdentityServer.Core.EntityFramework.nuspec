@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Thinktecture.IdentityServer.Core.EntityFrameworkt</id>
+    <version>1.0.0</version>
+    <title>Thinktecture IdentityServer v3 - Entity Framework</title>
+    <authors>Fabien Ruffin</authors>
+    <owners>Fabien Ruffin</owners>
+    <projectUrl>https://github.com/thinktecture/Thinktecture.IdentityServer.v3.EntityFramework</projectUrl>
+    <iconUrl>http://www.thinktecture.com/images/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>"Thinktecture IdentityServer v3 - Entity Framework" is an Entity Framework-based persistence layer for Thinktecture IdentityServer v3</description>
+    <releaseNotes>First beta version</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Thinktecture IdentityServer OpenIDConnect OAuth2 owin ef EntityFramework</tags>
+  </metadata>
+</package>
