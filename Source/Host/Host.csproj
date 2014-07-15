@@ -144,11 +144,13 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Thinktecture.IdentityServer">
-      <HintPath>..\..\packages\Thinktecture.IdentityServer.v3.1.0.0-alpha-20140626-1\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
+    <Reference Include="Thinktecture.IdentityServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Thinktecture.IdentityServer.v3.1.0.0-alpha-20140714\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
     </Reference>
-    <Reference Include="Thinktecture.IdentityServer.WsFederation">
-      <HintPath>..\..\packages\Thinktecture.IdentityServer.v3.WsFederation.1.0.0-alpha-20140702\lib\net45\Thinktecture.IdentityServer.WsFederation.dll</HintPath>
+    <Reference Include="Thinktecture.IdentityServer.WsFederation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Thinktecture.IdentityServer.v3.WsFederation.1.0.0-alpha-20140714\lib\net45\Thinktecture.IdentityServer.WsFederation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

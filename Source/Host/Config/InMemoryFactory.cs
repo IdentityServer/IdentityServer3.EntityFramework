@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Thinktecture.IdentityServer.Core;
 using Thinktecture.IdentityServer.Core.Configuration;
+using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.Services.InMemory;
 
 namespace Thinktecture.IdentityServer.Host.Config
@@ -37,10 +38,10 @@ namespace Thinktecture.IdentityServer.Host.Config
 
             var fact = new IdentityServerServiceFactory
             {
-                UserService = () => userSvc,
-                CoreSettings = () => settings,
-                ScopeService = () => scopes,
-                ClientService = () => clients
+                UserService = Registration.RegisterFactory<IUserService>(() => userSvc),
+                CoreSettings = Registration.RegisterFactory<CoreSettings>(() => settings),
+                ScopeService = Registration.RegisterFactory<IScopeService>(() => scopes),
+                ClientService = Registration.RegisterFactory<IClientService>(() => clients)
             };
 
             return fact;

@@ -13,7 +13,6 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         public DbSet<Client> Clients { get; set; }
         public DbSet<Scope> Scopes { get; set; }
         public DbSet<Consent> Consents { get; set; }
-        public DbSet<AuthorizationCode> AuthorizationCodes { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

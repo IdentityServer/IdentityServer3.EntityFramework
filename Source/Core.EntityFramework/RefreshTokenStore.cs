@@ -6,15 +6,14 @@ using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class TokenHandleStore : BaseTokenStore<Token>, ITokenHandleStore
+    public class RefreshTokenStore : BaseTokenStore<RefreshToken>, IRefreshTokenStore
     {
-
-        public TokenHandleStore(string connectionString)
-            : base(connectionString)
+        public RefreshTokenStore(string connectionstring)
+            :base(connectionstring)
         {
         }
 
-        public override Task StoreAsync(string key, Token value)
+        public override Task StoreAsync(string key, RefreshToken value)
         {
             return Task.Factory.StartNew(() =>
             {
@@ -24,7 +23,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                     {
                         Key = key,
                         JsonCode = JsonConvert.SerializeObject(value),
-                        Expiry = DateTime.UtcNow.AddSeconds(value.Lifetime)
+                        Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime)
                     };
 
                     db.Tokens.Add(efToken);

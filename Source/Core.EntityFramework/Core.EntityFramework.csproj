@@ -59,8 +59,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thinktecture.IdentityServer">
-      <HintPath>..\..\packages\Thinktecture.IdentityServer.v3.1.0.0-alpha-20140626-1\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
+    <Reference Include="Thinktecture.IdentityServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Thinktecture.IdentityServer.v3.1.0.0-alpha-20140714\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -68,10 +69,10 @@
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AuthorizationCodeStore.cs" />
+    <Compile Include="BaseTokenStore.cs" />
     <Compile Include="ClientService.cs" />
     <Compile Include="ConsentService.cs" />
     <Compile Include="CoreDbContext.cs" />
-    <Compile Include="Entities\AuthorizationCode.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\ClientRedirectUri.cs" />
     <Compile Include="Entities\ClientScopeRestriction.cs" />
@@ -79,8 +80,11 @@
     <Compile Include="Entities\Scope.cs" />
     <Compile Include="Entities\ScopeClaim.cs" />
     <Compile Include="Entities\Token.cs" />
+    <Compile Include="Entities\TokenType.cs" />
+    <Compile Include="ExpiredTokenCollector.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefreshTokenStore.cs" />
     <Compile Include="ScopeService.cs" />
     <Compile Include="Serialization\ClaimConverter.cs" />
     <Compile Include="Serialization\JsonCreationConverter.cs" />

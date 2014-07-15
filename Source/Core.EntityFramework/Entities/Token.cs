@@ -15,5 +15,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         [Required]
         public DateTime Expiry { get; set; }
+
+        [Required]
+        public TokenType TokenType { get; set; }
     }
 }

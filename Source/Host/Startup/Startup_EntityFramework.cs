@@ -31,19 +31,19 @@ namespace Thinktecture.IdentityServer.Host
                         siteName: "Thinktecture IdentityServer v3 - preview 1",
                         publicHostAddress: "http://localhost:3333/core");
 
-                    var idsrvOptions = new IdentityServerCoreOptions
+                    var idsrvOptions = new IdentityServerOptions
                     {
                         Factory = factory,
                         AdditionalIdentityProviderConfiguration = ConfigureAdditionalIdentityProviders,
                         ConfigurePlugins = ConfigurePlugins
                     };
 
-                    coreApp.UseIdentityServerCore(idsrvOptions);
+                    coreApp.UseIdentityServer(idsrvOptions);
                         
                 });
         }
 
-        private void ConfigurePlugins(IAppBuilder pluginApp, IdentityServerCoreOptions coreOptions)
+        private void ConfigurePlugins(IAppBuilder pluginApp, IdentityServerOptions coreOptions)
         {
             var wsfedOptions = new WsFederationPluginOptions
             {
@@ -55,8 +55,8 @@ namespace Thinktecture.IdentityServer.Host
                 {
                     UserService = coreOptions.Factory.UserService,
                     CoreSettings = coreOptions.Factory.CoreSettings,
-                    RelyingPartyService = () => new InMemoryRelyingPartyService(LocalTestRelyingParties.Get()),
-                    WsFederationSettings = () => new LocalTestWsFederationSettings()
+                    RelyingPartyService = Registration.RegisterFactory<IRelyingPartyService>(() => new InMemoryRelyingPartyService(LocalTestRelyingParties.Get())),
+                    WsFederationSettings = Registration.RegisterFactory<WsFederationSettings>(() => new LocalTestWsFederationSettings())
                 },
             };
 

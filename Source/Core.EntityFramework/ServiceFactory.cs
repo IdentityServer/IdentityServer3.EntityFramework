@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Thinktecture.IdentityServer.Core.Connect.Services;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
+using Thinktecture.IdentityServer.Core.Services.InMemory;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
@@ -32,14 +32,19 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             return new ConsentService(_connectionString);
         }
 
-        public IAuthorizationCodeStore CreateAuthorizationCodeStore(int? cleanupIntervalInMinutes)
+        public IAuthorizationCodeStore CreateAuthorizationCodeStore()
         {
-            return new AuthorizationCodeStore(_connectionString, cleanupIntervalInMinutes);
+            return new AuthorizationCodeStore(_connectionString);
         }
 
-        public ITokenHandleStore CreateTokenHandleStore(int? cleanupIntervalInMinutes)
+        public ITokenHandleStore CreateTokenHandleStore()
         {
-            return new TokenHandleStore(_connectionString, cleanupIntervalInMinutes);
+            return new TokenHandleStore(_connectionString);
+        }
+
+        public IRefreshTokenStore CreateRefreshTokenStore()
+        {
+            return new RefreshTokenStore(_connectionString);
         }
 
         public void ConfigureClients(IEnumerable<Client> clients)
