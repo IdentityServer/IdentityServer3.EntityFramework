@@ -5,27 +5,13 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{31454937-44A2-419E-B34D-3A173F8C42DF}"
 	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework", "Source\Core.EntityFramework\Core.EntityFramework.csproj", "{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Source\Host\Host.csproj", "{C41ECC23-BB27-4BDD-990E-4908B872F12C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{3E4C3E9A-9206-49F6-A4BE-B9A5D770A5AA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2A6806DF-0183-453C-B13B-112E6A42C229}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClientCredentialsFlow", "Source\ConsoleClientCredentialsFlow\ConsoleClientCredentialsFlow.csproj", "{3D073F86-DFB1-495B-8043-EBCCA7E23407}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constants", "Source\Constants\Constants.csproj", "{D4B8ACDF-5CC3-4A7B-AE30-5055522E025A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdSrvAccessTokenTokenValidation", "Source\IdSrvReferenceTokenValidation\IdSrvAccessTokenTokenValidation.csproj", "{D8783FA3-4371-4848-BC87-B11DD8E02287}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAspNetWebApi", "Source\SampleAspNetWebApi\SampleAspNetWebApi.csproj", "{C8CD1733-783A-4655-814B-9CF7FD7FDFE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,36 +23,11 @@ Global
 		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C41ECC23-BB27-4BDD-990E-4908B872F12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C41ECC23-BB27-4BDD-990E-4908B872F12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C41ECC23-BB27-4BDD-990E-4908B872F12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C41ECC23-BB27-4BDD-990E-4908B872F12C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D073F86-DFB1-495B-8043-EBCCA7E23407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D073F86-DFB1-495B-8043-EBCCA7E23407}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D073F86-DFB1-495B-8043-EBCCA7E23407}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D073F86-DFB1-495B-8043-EBCCA7E23407}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D4B8ACDF-5CC3-4A7B-AE30-5055522E025A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D4B8ACDF-5CC3-4A7B-AE30-5055522E025A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4B8ACDF-5CC3-4A7B-AE30-5055522E025A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D4B8ACDF-5CC3-4A7B-AE30-5055522E025A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8783FA3-4371-4848-BC87-B11DD8E02287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8783FA3-4371-4848-BC87-B11DD8E02287}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8783FA3-4371-4848-BC87-B11DD8E02287}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8783FA3-4371-4848-BC87-B11DD8E02287}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8CD1733-783A-4655-814B-9CF7FD7FDFE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8CD1733-783A-4655-814B-9CF7FD7FDFE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8CD1733-783A-4655-814B-9CF7FD7FDFE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8CD1733-783A-4655-814B-9CF7FD7FDFE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1} = {2A6806DF-0183-453C-B13B-112E6A42C229}
-		{C41ECC23-BB27-4BDD-990E-4908B872F12C} = {3E4C3E9A-9206-49F6-A4BE-B9A5D770A5AA}
-		{3D073F86-DFB1-495B-8043-EBCCA7E23407} = {3E4C3E9A-9206-49F6-A4BE-B9A5D770A5AA}
-		{D4B8ACDF-5CC3-4A7B-AE30-5055522E025A} = {3E4C3E9A-9206-49F6-A4BE-B9A5D770A5AA}
-		{D8783FA3-4371-4848-BC87-B11DD8E02287} = {2A6806DF-0183-453C-B13B-112E6A42C229}
-		{C8CD1733-783A-4655-814B-9CF7FD7FDFE8} = {3E4C3E9A-9206-49F6-A4BE-B9A5D770A5AA}
 	EndGlobalSection
 EndGlobal
