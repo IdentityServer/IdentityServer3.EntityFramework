@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{314549
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework", "Source\Core.EntityFramework\Core.EntityFramework.csproj", "{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2A6806DF-0183-453C-B13B-112E6A42C229}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +24,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1} = {2A6806DF-0183-453C-B13B-112E6A42C229}
 	EndGlobalSection
 EndGlobal
