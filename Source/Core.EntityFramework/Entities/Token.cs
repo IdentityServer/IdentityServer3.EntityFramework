@@ -7,16 +7,16 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
     public class Token
     {
         [Key]
-        public string Key { get; set; }
+        public virtual string Key { get; set; }
 
         [Required]
         [Column(TypeName = "text")]
-        public string JsonCode { get; set; }
+        public virtual string JsonCode { get; set; }
 
         [Required]
-        public DateTime Expiry { get; set; }
+        public virtual DateTime Expiry { get; set; }
 
         [Required]
-        public TokenType TokenType { get; set; }
+        public virtual TokenType TokenType { get; set; }
     }
 }

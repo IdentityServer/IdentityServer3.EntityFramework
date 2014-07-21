@@ -9,7 +9,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
     public class TokenHandleStore : BaseTokenStore<Token>, ITokenHandleStore
     {
         public TokenHandleStore(string connectionString)
-            : base(connectionString)
+            : base(connectionString, Thinktecture.IdentityServer.Core.EntityFramework.Entities.TokenType.TokenHandle)
         {
         }
 
@@ -20,8 +20,9 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 var efToken = new Entities.Token
                 {
                     Key = key,
-                    JsonCode = JsonConvert.SerializeObject(value),
-                    Expiry = DateTime.UtcNow.AddSeconds(value.Lifetime)
+                    JsonCode = ConvertToJson(value),
+                    Expiry = DateTime.UtcNow.AddSeconds(value.Lifetime),
+                    TokenType = this.tokenType
                 };
 
                 db.Tokens.Add(efToken);

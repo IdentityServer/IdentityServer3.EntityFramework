@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.Connect.Models;
 using Thinktecture.IdentityServer.Core.Services;
+using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class RefreshTokenStore : BaseTokenStore<RefreshToken>, IRefreshTokenStore
     {
         public RefreshTokenStore(string connectionstring)
-            :base(connectionstring)
+            : base(connectionstring, TokenType.RefreshToken)
         {
         }
 
@@ -20,8 +21,9 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 var efToken = new Entities.Token
                 {
                     Key = key,
-                    JsonCode = JsonConvert.SerializeObject(value),
-                    Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime)
+                    JsonCode = ConvertToJson(value),
+                    Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime),
+                    TokenType = this.tokenType
                 };
 
                 db.Tokens.Add(efToken);

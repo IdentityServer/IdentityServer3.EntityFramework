@@ -86,8 +86,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RefreshTokenStore.cs" />
     <Compile Include="ScopeService.cs" />
+    <Compile Include="Serialization\AsyncHelper.cs" />
     <Compile Include="Serialization\ClaimConverter.cs" />
-    <Compile Include="Serialization\JsonCreationConverter.cs" />
+    <Compile Include="Serialization\ClaimsPrincipalConverter.cs" />
+    <Compile Include="Serialization\ClientConverter.cs" />
+    <Compile Include="Serialization\ScopeConverter.cs" />
     <Compile Include="ServiceFactory.cs" />
     <Compile Include="TokenHandleStore.cs" />
   </ItemGroup>

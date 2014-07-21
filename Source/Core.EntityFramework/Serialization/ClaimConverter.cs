@@ -1,26 +1,36 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
-using Newtonsoft.Json.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
 {
-    public class ClaimConverter : JsonCreationConverter<Claim>
+    public class ClaimConverter : JsonConverter
     {
-        protected override Claim Create(Type objectType, JObject jObject)
+        public override bool CanConvert(Type objectType)
         {
-            string issuer = FieldExists("Issuer", jObject) ? jObject["Issuer"].Value<string>() : null;
-            string originalIssuer = FieldExists("OriginalIssuer", jObject) ? jObject["OriginalIssuer"].Value<string>() : null;
-            ClaimsIdentity subject = FieldExists("Subject", jObject) ? jObject["Subject"].Value<ClaimsIdentity>() : null;
-            string type = FieldExists("Type", jObject) ? jObject["Type"].Value<string>() : null;
-            string value = FieldExists("Value", jObject) ? jObject["Value"].Value<string>() : null;
-            string valueType = FieldExists("valueType", jObject) ? jObject["valueType"].Value<string>() : null;
-
-            return new Claim(type, value, valueType, issuer, originalIssuer, subject);
+            return typeof(Claim) == objectType;
         }
 
-        private bool FieldExists(string fieldName, JObject jObject)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return jObject[fieldName] != null;
+            var source = serializer.Deserialize<ClaimLite>(reader);
+            var target = new Claim(source.Type, source.Value);
+            return target;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            Claim source = (Claim)value;
+
+            var target = new ClaimLite {
+                Type = source.Type,
+                Value = source.Value 
+            };
+            serializer.Serialize(writer, target);
         }
     }
 }

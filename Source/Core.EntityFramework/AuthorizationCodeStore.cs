@@ -3,33 +3,34 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.Connect.Models;
 using Thinktecture.IdentityServer.Core.Services;
+using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class AuthorizationCodeStore : BaseTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
         public AuthorizationCodeStore(string connectionString)
-            : base(connectionString)
+            : base(connectionString, TokenType.AuthorizationCode)
         {
         }
 
         public override Task StoreAsync(string key, AuthorizationCode code)
         {
-            return Task.Factory.StartNew(() =>
+            using (var db = new CoreDbContext(ConnectionString))
             {
-                using (var db = new CoreDbContext(ConnectionString))
+                var efCode = new Entities.Token
                 {
-                    var efCode = new Entities.Token
-                    {
-                        Key = key,
-                        JsonCode = JsonConvert.SerializeObject(code),
-                        Expiry = DateTime.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime)
-                    };
+                    Key = key,
+                    JsonCode = ConvertToJson(code),
+                    Expiry = DateTime.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
+                    TokenType = this.tokenType
+                };
 
-                    db.Tokens.Add(efCode);
-                    return db.SaveChanges();
-                }
-            });
+                db.Tokens.Add(efCode);
+                db.SaveChanges();
+            }
+
+            return Task.FromResult(0);
         }
     }
 }
