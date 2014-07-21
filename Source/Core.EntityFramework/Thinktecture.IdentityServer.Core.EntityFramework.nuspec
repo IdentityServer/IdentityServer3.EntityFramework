@@ -12,6 +12,6 @@
     <description>"Thinktecture IdentityServer v3 - Entity Framework" is an Entity Framework-based persistence layer for Thinktecture IdentityServer v3</description>
     <releaseNotes>First beta version</releaseNotes>
     <copyright>Copyright 2014</copyright>
-    <tags>Thinktecture IdentityServer OpenIDConnect OAuth2 owin ef EntityFramework</tags>
+    <tags>Thinktecture IdentityServer OpenIDConnect OAuth2 OWIN EF EntityFramework</tags>
   </metadata>
 </package>
