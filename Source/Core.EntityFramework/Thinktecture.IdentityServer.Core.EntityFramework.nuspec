@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Thinktecture.IdentityServer.Core.EntityFrameworkt</id>
-    <version>1.0.0</version>
+    <id>Thinktecture.IdentityServer.Core.EntityFramework</id>
+    <version>0.0.0</version>
     <title>Thinktecture IdentityServer v3 - Entity Framework</title>
-    <authors>Fabien Ruffin</authors>
-    <owners>Fabien Ruffin</owners>
+    <authors>Brock Allen, Dominick Baier, and contributors</authors>
+    <owners>Brock Allen, Dominick Baier</owners>
     <projectUrl>https://github.com/thinktecture/Thinktecture.IdentityServer.v3.EntityFramework</projectUrl>
     <iconUrl>http://www.thinktecture.com/images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
