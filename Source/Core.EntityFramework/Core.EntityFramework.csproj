@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Thinktecture.IdentityServer.Core.EntityFramework.nuspec" />
+    <None Include="Thinktecture.IdentityServer.v3.EntityFramework.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
