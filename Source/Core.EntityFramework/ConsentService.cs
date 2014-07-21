@@ -28,33 +28,47 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
             using (var db = new CoreDbContext(_connectionString))
             {
-                var consent = db.Consents.FirstOrDefault(c => c.ClientId == client.ClientId &&
+                var exists = db.Consents.Any(c => c.ClientId == client.ClientId &&
                                                 c.Scopes == orderedScopes &&
                                                 c.Subject == subjectId);
 
-                return Task.FromResult(consent == null);
+                return Task.FromResult(!exists);
             }
         }
 
-        public Task UpdateConsentAsync(Models.Client client, System.Security.Claims.ClaimsPrincipal user, IEnumerable<string> scopes)
+        public async Task UpdateConsentAsync(Models.Client client, System.Security.Claims.ClaimsPrincipal user, IEnumerable<string> scopes)
         {
             if (client.AllowRememberConsent)
             {
                 using (var db = new CoreDbContext(_connectionString))
                 {
-                    var consent = new Entities.Consent
-                    {
-                        ClientId = client.ClientId,
-                        Subject = user.GetSubjectId(),
-                        Scopes = string.Join(" ", scopes.OrderBy(s => s).ToArray())
-                    };
+                    var clientId = client.ClientId;
+                    var subject = user.GetSubjectId();
 
-                    db.Consents.Add(consent);
+                    var consent = await db.Consents.FindAsync(subject, clientId);
+
+                    if (scopes.Any())
+                    {
+                        if (consent == null)
+                        {
+                            consent = new Entities.Consent
+                            {
+                                ClientId = client.ClientId,
+                                Subject = user.GetSubjectId(),
+                            };
+                            db.Consents.Add(consent);
+                        }
+
+                        consent.Scopes = string.Join(" ", scopes.OrderBy(s => s).ToArray());
+                    }
+                    else if (consent != null)
+                    {
+                        db.Consents.Remove(consent);
+                    }
+
                     db.SaveChanges();
                 }
             }
-
-            return Task.FromResult(0);
         }
     }
 }
