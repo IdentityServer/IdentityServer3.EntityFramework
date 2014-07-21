@@ -15,21 +15,20 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public override Task StoreAsync(string key, RefreshToken value)
         {
-            return Task.Factory.StartNew(() =>
+            using (var db = new CoreDbContext(ConnectionString))
             {
-                using (var db = new CoreDbContext(ConnectionString))
+                var efToken = new Entities.Token
                 {
-                    var efToken = new Entities.Token
-                    {
-                        Key = key,
-                        JsonCode = JsonConvert.SerializeObject(value),
-                        Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime)
-                    };
+                    Key = key,
+                    JsonCode = JsonConvert.SerializeObject(value),
+                    Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime)
+                };
 
-                    db.Tokens.Add(efToken);
-                    db.SaveChanges();
-                }
-            });
+                db.Tokens.Add(efToken);
+                db.SaveChanges();
+            }
+
+            return Task.FromResult(0);
         }
     }
 }

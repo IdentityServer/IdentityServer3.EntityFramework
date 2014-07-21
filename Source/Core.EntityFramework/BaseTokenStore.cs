@@ -29,34 +29,31 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<T> GetAsync(string key)
         {
-            return Task<T>.Factory.StartNew(() =>
+            using (var db = new CoreDbContext(ConnectionString))
             {
-                using (var db = new CoreDbContext(ConnectionString))
-                {
-                    Entities.Token dbCode = db.Tokens.FirstOrDefault(c => c.Key == key);
+                Entities.Token dbCode = db.Tokens.FirstOrDefault(c => c.Key == key);
 
-                    if (dbCode == null || dbCode.Expiry < DateTime.UtcNow) return null;
+                if (dbCode == null || dbCode.Expiry < DateTime.UtcNow) return null;
 
-                    return JsonConvert.DeserializeObject<T>(dbCode.JsonCode, _jsonSerializerSettings);
-                }
-            });
+                T value = JsonConvert.DeserializeObject<T>(dbCode.JsonCode, _jsonSerializerSettings);
+                return Task.FromResult(value);
+            }
         }
 
         public Task RemoveAsync(string key)
         {
-            return Task.Factory.StartNew(() =>
+            using (var db = new CoreDbContext(ConnectionString))
             {
-                using (var db = new CoreDbContext(ConnectionString))
-                {
-                    var code = db.Tokens.FirstOrDefault(c => c.Key == key);
+                var code = db.Tokens.FirstOrDefault(c => c.Key == key);
 
-                    if (code != null)
-                    {
-                        db.Tokens.Remove(code);
-                        db.SaveChanges();
-                    }
+                if (code != null)
+                {
+                    db.Tokens.Remove(code);
+                    db.SaveChanges();
                 }
-            });
+            }
+
+            return Task.FromResult(0);
         }
 
         public abstract Task StoreAsync(string key, T value);
