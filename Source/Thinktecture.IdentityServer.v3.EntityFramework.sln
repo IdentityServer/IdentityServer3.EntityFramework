@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{314549
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework", "Source\Core.EntityFramework\Core.EntityFramework.csproj", "{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework", "Core.EntityFramework\Core.EntityFramework.csproj", "{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework.Tests", "Thinktecture.IdentityServer.v3.EntityFramework.Tests\Core.EntityFramework.Tests.csproj", "{646E3903-80EF-49B8-93C6-21FB86F0F81B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework.Tests", "Core.EntityFramework.Tests\Core.EntityFramework.Tests.csproj", "{646E3903-80EF-49B8-93C6-21FB86F0F81B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
