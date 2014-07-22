@@ -65,9 +65,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\VersionAssemblyInfo.cs">
-      <Link>Properties\VersionAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="AuthorizationCodeStore.cs" />
     <Compile Include="BaseTokenStore.cs" />
     <Compile Include="ClientService.cs" />

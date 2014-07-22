@@ -63,12 +63,13 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\ClaimConverterTests.cs" />
     <Compile Include="Serialization\ClientConverterTests.cs" />
     <Compile Include="Serialization\ScopeConverterTests.cs" />
     <Compile Include="Serialization\ClaimsPrincipalConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\Core.EntityFramework\Core.EntityFramework.csproj">
+    <ProjectReference Include="..\Core.EntityFramework\Core.EntityFramework.csproj">
       <Project>{d4c0430d-3b41-422a-b1a6-ba6c68400ff1}</Project>
       <Name>Core.EntityFramework</Name>
     </ProjectReference>
