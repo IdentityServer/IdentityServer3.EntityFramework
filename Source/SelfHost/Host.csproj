@@ -76,10 +76,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thinktecture.IdentityServer.v3.1.0.0-alpha-20140721\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
     </Reference>
-    <Reference Include="Thinktecture.IdentityServer.Core.EntityFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thinktecture.IdentityServer.v3.EntityFramework.1.0.0-alpha-1\lib\net45\Thinktecture.IdentityServer.Core.EntityFramework.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Certificate.cs" />
@@ -95,6 +91,12 @@
     <None Include="App.config" />
     <EmbeddedResource Include="Config\idsrv3test.pfx" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.EntityFramework\Core.EntityFramework.csproj">
+      <Project>{d4c0430d-3b41-422a-b1a6-ba6c68400ff1}</Project>
+      <Name>Core.EntityFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />

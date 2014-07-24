@@ -61,7 +61,7 @@ namespace Thinktecture.IdentityServer.Host.Config
                     Name = Constants.StandardScopes.OfflineAccess, 
                     DisplayName = "Offline Access",
                     Description = "Access to your data while you are not logged in.",
-                    IsOpenIdScope = true,
+                    IsOpenIdScope = false,
                     Emphasize = true,
                     //Claims = (Constants.ScopeToClaimsMapping[Constants.StandardScopes.Profile].Select(x=>new ScopeClaim{Name = x, Description = x}))
                 },
