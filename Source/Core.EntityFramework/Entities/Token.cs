@@ -6,8 +6,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 {
     public class Token
     {
-        [Key]
+        [Key, Column(Order = 0)]
         public virtual string Key { get; set; }
+
+        [Key, Column(Order = 1)]
+        public virtual TokenType TokenType { get; set; }
 
         [Required]
         [Column(TypeName = "text")]
@@ -15,8 +18,5 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         [Required]
         public virtual DateTime Expiry { get; set; }
-
-        [Required]
-        public virtual TokenType TokenType { get; set; }
     }
 }

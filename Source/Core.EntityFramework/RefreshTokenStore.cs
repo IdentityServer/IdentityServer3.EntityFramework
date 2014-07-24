@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.Connect.Models;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
@@ -23,7 +22,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                     Key = key,
                     JsonCode = ConvertToJson(value),
                     Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime),
-                    TokenType = this.tokenType
+                    TokenType = TokenType
                 };
 
                 db.Tokens.Add(efToken);

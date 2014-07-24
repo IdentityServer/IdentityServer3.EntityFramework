@@ -2,7 +2,6 @@
 using AutoMapper;
 using System;
 using System.Linq;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {

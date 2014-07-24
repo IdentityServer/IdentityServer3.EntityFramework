@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.Connect.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
@@ -9,7 +8,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
     public class TokenHandleStore : BaseTokenStore<Token>, ITokenHandleStore
     {
         public TokenHandleStore(string connectionString)
-            : base(connectionString, Thinktecture.IdentityServer.Core.EntityFramework.Entities.TokenType.TokenHandle)
+            : base(connectionString, Entities.TokenType.TokenHandle)
         {
         }
 
@@ -22,7 +21,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                     Key = key,
                     JsonCode = ConvertToJson(value),
                     Expiry = DateTime.UtcNow.AddSeconds(value.Lifetime),
-                    TokenType = this.tokenType
+                    TokenType = this.TokenType
                 };
 
                 db.Tokens.Add(efToken);

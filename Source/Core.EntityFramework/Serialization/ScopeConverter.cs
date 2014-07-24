@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
 {
@@ -16,12 +12,13 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
 
     public class ScopeConverter : JsonConverter
     {
-        Scope[] scopes;
+        private readonly Scope[] _scopes;
+
         public ScopeConverter(Scope[] scopes)
         {
             if (scopes == null) throw new ArgumentNullException("scopes");
 
-            this.scopes = scopes;
+            _scopes = scopes;
         }
 
         public override bool CanConvert(Type objectType)
@@ -32,12 +29,12 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var source = serializer.Deserialize<ScopeLite>(reader);
-            return scopes.Single(x => x.Name == source.Name);
+            return _scopes.Single(x => x.Name == source.Name);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            Scope source = (Scope)value;
+            var source = (Scope)value;
 
             var target = new ScopeLite
             {

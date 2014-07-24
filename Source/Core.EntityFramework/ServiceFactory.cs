@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
-using Thinktecture.IdentityServer.Core.Services.InMemory;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
@@ -51,8 +49,6 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             using (var db = new CoreDbContext(_connectionString))
             {
-                var clientsTest = db.Clients.ToList();
-
                 if (!db.Clients.Any())
                 {
                     foreach (var c in clients)

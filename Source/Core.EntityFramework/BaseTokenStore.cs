@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 using Newtonsoft.Json;
-using Thinktecture.IdentityServer.Core.Connect.Models;
 using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
@@ -14,7 +10,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
     public abstract class BaseTokenStore<T> where T : class
     {
         private readonly string _connectionString;
-        protected readonly TokenType tokenType;
+        protected readonly TokenType TokenType;
 
         protected string ConnectionString
         {
@@ -24,7 +20,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         protected BaseTokenStore(string connectionString, TokenType tokenType)
         {
             _connectionString = connectionString;
-            this.tokenType = tokenType;
+            TokenType = tokenType;
         }
 
         JsonSerializerSettings GetJsonSerializerSettings()
@@ -32,9 +28,9 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ClaimConverter());
             settings.Converters.Add(new ClaimsPrincipalConverter());
-            settings.Converters.Add(new ClientConverter(new ClientService(this.ConnectionString)));
-            var svc = new ScopeService(this.ConnectionString);
-            var scopes = AsyncHelper.RunSync<IEnumerable<Thinktecture.IdentityServer.Core.Models.Scope>>(async () => await svc.GetScopesAsync());
+            settings.Converters.Add(new ClientConverter(new ClientService(ConnectionString)));
+            var svc = new ScopeService(ConnectionString);
+            var scopes = AsyncHelper.RunSync(async () => await svc.GetScopesAsync());
             settings.Converters.Add(new ScopeConverter(scopes.ToArray()));
             return settings;
         }
@@ -53,7 +49,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             using (var db = new CoreDbContext(ConnectionString))
             {
-                var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == tokenType);
+                var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
                 if (token == null || token.Expiry < DateTime.UtcNow) return null;
 
                 T value = ConvertFromJson(token.JsonCode);
@@ -65,7 +61,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             using (var db = new CoreDbContext(ConnectionString))
             {
-                var code = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == tokenType);
+                var code = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
 
                 if (code != null)
                 {

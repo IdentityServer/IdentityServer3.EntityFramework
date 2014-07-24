@@ -23,7 +23,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                     Key = key,
                     JsonCode = ConvertToJson(code),
                     Expiry = DateTime.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
-                    TokenType = this.tokenType
+                    TokenType = this.TokenType
                 };
 
                 db.Tokens.Add(efCode);
