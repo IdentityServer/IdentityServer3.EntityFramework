@@ -30,7 +30,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         [Range(0, Int32.MaxValue)]
         public virtual int AccessTokenLifetime { get; set; }
         [Range(0, Int32.MaxValue)]
-        public virtual int RefreshTokenLifetime { get; set; }
+        public int AbsoluteRefreshTokenLifetime { get; set; }
+        [Range(0, Int32.MaxValue)]
+        public int SlidingRefreshTokenLifetime { get; set; }
+        public TokenUsage RefreshTokenUsage { get; set; }
+        public TokenExpiration RefreshTokenExpiration { get; set; }
         [Range(0, Int32.MaxValue)]
         public virtual int AuthorizationCodeLifetime { get; set; }
 
