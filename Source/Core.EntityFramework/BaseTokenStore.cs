@@ -54,7 +54,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             using (var db = new CoreDbContext(ConnectionString))
             {
                 var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == tokenType);
-                if (token == null || token.Expiry < DateTime.UtcNow) return null;
+                if (token == null || token.Expiry < DateTime.UtcNow) return Task.FromResult<T>(null);
 
                 T value = ConvertFromJson(token.JsonCode);
                 return Task.FromResult(value);
