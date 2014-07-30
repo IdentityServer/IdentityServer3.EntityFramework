@@ -28,8 +28,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ClaimConverter());
             settings.Converters.Add(new ClaimsPrincipalConverter());
-            settings.Converters.Add(new ClientConverter(new ClientService(ConnectionString)));
-            var svc = new ScopeService(ConnectionString);
+            settings.Converters.Add(new ClientConverter(new ClientStore(ConnectionString)));
+            var svc = new ScopeStore(ConnectionString);
             var scopes = AsyncHelper.RunSync(async () => await svc.GetScopesAsync());
             settings.Converters.Add(new ScopeConverter(scopes.ToArray()));
             return settings;

@@ -12,13 +12,13 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
 
     public class ClientConverter : JsonConverter
     {
-        private readonly IClientService _clientService;
+        private readonly IClientStore _clientStore;
 
-        public ClientConverter(IClientService clientService)
+        public ClientConverter(IClientStore clientStore)
         {
-            if (clientService == null) throw new ArgumentNullException("clientService");
+            if (clientStore == null) throw new ArgumentNullException("clientStore");
 
-            _clientService = clientService;
+            _clientStore = clientStore;
         }
 
         public override bool CanConvert(Type objectType)
@@ -29,7 +29,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var source = serializer.Deserialize<ClientLite>(reader);
-            return AsyncHelper.RunSync(async () => await _clientService.FindClientByIdAsync(source.ClientId));
+            return AsyncHelper.RunSync(async () => await _clientStore.FindClientByIdAsync(source.ClientId));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

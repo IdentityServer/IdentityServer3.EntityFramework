@@ -5,11 +5,11 @@ using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class ScopeService : IScopeService
+    public class ScopeStore : IScopeStore
     {
         private readonly string _connectionString;
 
-        public ScopeService(string connectionString)
+        public ScopeStore(string connectionString)
         {
             _connectionString = connectionString;
         }

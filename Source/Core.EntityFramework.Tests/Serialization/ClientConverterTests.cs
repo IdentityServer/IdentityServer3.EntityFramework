@@ -30,8 +30,8 @@ namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
                 AllowRememberConsent = true, 
                 RedirectUris = new System.Collections.Generic.List<Uri>{new Uri("http://foo.com")}
             };
-            var clientService = new InMemoryClientService(new Client[]{client});
-            var converter = new ClientConverter(clientService);
+            var clientStore = new InMemoryClientStore(new Client[]{client});
+            var converter = new ClientConverter(clientStore);
 
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(converter);

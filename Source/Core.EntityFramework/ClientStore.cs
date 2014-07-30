@@ -4,11 +4,11 @@ using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class ClientService : IClientService
+    public class ClientStore : IClientStore
     {
         private readonly string _connectionString;
 
-        public ClientService(string connectionString)
+        public ClientStore(string connectionString)
         {
             _connectionString = connectionString;
         }

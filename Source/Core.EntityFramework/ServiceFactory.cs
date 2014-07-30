@@ -15,14 +15,14 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             Database.SetInitializer(new CreateDatabaseIfNotExists<CoreDbContext>());
         }
 
-        public IClientService CreateClientService()
+        public IClientStore CreateClientStore()
         {
-            return new ClientService(_connectionString);
+            return new ClientStore(_connectionString);
         }
 
-        public IScopeService CreateScopeService()
+        public IScopeStore CreateScopeStore()
         {
-            return new ScopeService(_connectionString);
+            return new ScopeStore(_connectionString);
         }
 
         public IConsentService CreateConsentService()
