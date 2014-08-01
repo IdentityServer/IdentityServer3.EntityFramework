@@ -25,9 +25,9 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             return new ScopeStore(_connectionString);
         }
 
-        public IConsentService CreateConsentService()
+        public IConsentStore CreateConsentStore()
         {
-            return new ConsentService(_connectionString);
+            return new ConsentStore(_connectionString);
         }
 
         public IAuthorizationCodeStore CreateAuthorizationCodeStore()
