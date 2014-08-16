@@ -13,7 +13,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual TokenType TokenType { get; set; }
 
         [Required]
-        [Column(TypeName = "text")]
+        [DataType(DataType.Text)]
         public virtual string JsonCode { get; set; }
 
         [Required]

@@ -14,8 +14,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             _connectionString = connectionString;
 
             Timer.AutoReset = true;
-            Timer.Interval = cleanupIntervalInMinutes*60*1000;
-            
+            Timer.Interval = cleanupIntervalInMinutes * 60 * 1000;
+
             Timer.Elapsed += CleanUpTokens;
             Timer.Start();
         }
