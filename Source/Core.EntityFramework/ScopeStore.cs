@@ -19,8 +19,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             using (var db = new CoreDbContext(_connectionString))
             {
                 var scopes = db.Scopes
-                    .Include("ScopeClaims")
-                    .ToArray();
+                    .Include("ScopeClaims");
                 
                 var models = scopes.ToList().Select(x => x.ToModel());
 
