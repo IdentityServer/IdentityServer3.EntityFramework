@@ -14,7 +14,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual string Description { get; set; }
         public virtual bool Required { get; set; }
         public virtual bool Emphasize { get; set; }
-        public virtual bool IsOpenIdScope { get; set; }
+        public virtual int Type { get; set; }
 
         public virtual ICollection<ScopeClaim> ScopeClaims { get; set; }
     }
