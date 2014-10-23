@@ -34,7 +34,9 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             {
                 var client = db.Clients
                     .Include("RedirectUris")
+                    .Include("PostLogoutRedirectUris")
                     .Include("ScopeRestrictions")
+                    .Include("IdentityProviderRestrictions")
                     .SingleOrDefault(x => x.ClientId == clientId);
 
                 Models.Client model = client.ToModel();

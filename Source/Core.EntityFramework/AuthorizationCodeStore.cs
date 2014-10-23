@@ -36,6 +36,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 var efCode = new Entities.Token
                 {
                     Key = key,
+                    SubjectId = code.SubjectId,
+                    ClientId = code.ClientId,
                     JsonCode = ConvertToJson(code),
                     Expiry = DateTime.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
                     TokenType = this.TokenType

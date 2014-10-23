@@ -36,6 +36,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         public virtual bool RequireConsent { get; set; }
         public virtual bool AllowRememberConsent { get; set; }
+        public virtual bool AllowLocalLogin { get; set; }
 
         public virtual Flows Flow { get; set; }
 
@@ -58,12 +59,14 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual AccessTokenType AccessTokenType { get; set; }
 
         // not implemented yet
-        public virtual bool RequireSignedAuthorizeRequest { get; set; }
-        public virtual SubjectTypes SubjectType { get; set; }
-        public virtual string SectorIdentifierUri { get; set; }
-        public virtual ApplicationTypes ApplicationType { get; set; }
+        //public virtual bool RequireSignedAuthorizeRequest { get; set; }
+        //public virtual SubjectTypes SubjectType { get; set; }
+        //public virtual string SectorIdentifierUri { get; set; }
+        //public virtual ApplicationTypes ApplicationType { get; set; }
 
         public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
+        public virtual ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
         public virtual ICollection<ClientScopeRestriction> ScopeRestrictions { get; set; }
+        public virtual ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
     }
 }

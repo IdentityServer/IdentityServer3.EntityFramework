@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using System.Collections.Generic;
+using Thinktecture.IdentityServer.Core.Connect.Models;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
@@ -83,6 +85,35 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                     db.Tokens.Remove(code);
                     db.SaveChanges();
                 }
+            }
+
+            return Task.FromResult(0);
+        }
+
+        public Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
+        {
+            using (var db = new CoreDbContext(ConnectionString))
+            {
+                var tokens = db.Tokens.Where(x => 
+                    x.SubjectId == subject &&
+                    x.TokenType == TokenType).ToArray();
+                var results = tokens.Select(x=>ConvertFromJson(x.JsonCode)).ToArray();
+                
+                return Task.FromResult(results.Cast<ITokenMetadata>());
+            }
+        }
+        
+        public Task RevokeAsync(string subject, string client)
+        {
+            using (var db = new CoreDbContext(ConnectionString))
+            {
+                var found = db.Tokens.Where(x => 
+                    x.SubjectId == subject && 
+                    x.ClientId == client && 
+                    x.TokenType == TokenType).ToArray();
+                db.Tokens.RemoveRange(found);
+
+                db.SaveChanges();
             }
 
             return Task.FromResult(0);

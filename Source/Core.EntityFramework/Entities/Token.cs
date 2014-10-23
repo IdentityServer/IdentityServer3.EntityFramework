@@ -28,6 +28,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual TokenType TokenType { get; set; }
 
         [Required]
+        public virtual string SubjectId { get; set; }
+        [Required]
+        public virtual string ClientId { get; set; }
+        
+        [Required]
         [DataType(DataType.Text)]
         public virtual string JsonCode { get; set; }
 

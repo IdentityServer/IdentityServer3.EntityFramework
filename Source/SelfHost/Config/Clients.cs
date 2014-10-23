@@ -33,6 +33,10 @@ namespace SelfHost.Config
                         // MVC code client manual
                         new Uri("https://localhost:44312/callback"),
                     },
+
+                    PostLogoutRedirectUris = new List<Uri>{
+                        new Uri("https://localhost:44312/signedout"),
+                    },
                     
                     ScopeRestrictions = new List<string>
                     { 
@@ -44,9 +48,12 @@ namespace SelfHost.Config
                         "write"
                     },
 
+                    IdentityProviderRestrictions = new string[]{
+                        "Google"
+                    },
                     
                     IdentityTokenSigningKeyType = SigningKeyTypes.Default,
-                    SubjectType = SubjectTypes.Global,
+                    //SubjectType = SubjectTypes.Global,
                     AccessTokenType = AccessTokenType.Reference,
                     
                     IdentityTokenLifetime = 360,
@@ -93,7 +100,7 @@ namespace SelfHost.Config
                     },
 
                     IdentityTokenSigningKeyType = SigningKeyTypes.Default,
-                    SubjectType = SubjectTypes.Global,
+                    //SubjectType = SubjectTypes.Global,
                     AccessTokenType = AccessTokenType.Jwt,
                     
                     IdentityTokenLifetime = 360,
