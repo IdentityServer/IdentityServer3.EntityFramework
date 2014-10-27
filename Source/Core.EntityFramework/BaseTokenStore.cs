@@ -20,7 +20,7 @@ using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using System.Collections.Generic;
-using Thinktecture.IdentityServer.Core.Connect.Models;
+using Thinktecture.IdentityServer.Core.Models;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {

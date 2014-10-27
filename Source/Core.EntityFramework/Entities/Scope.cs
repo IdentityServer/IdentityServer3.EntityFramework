@@ -33,6 +33,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual int Type { get; set; }
         public virtual bool IncludeAllClaimsForUser { get; set; }
         public virtual string ClaimsRule { get; set; }
+        public virtual bool ShowInDiscoveryDocument { get; set; }
 
         public virtual ICollection<ScopeClaim> ScopeClaims { get; set; }
     }
