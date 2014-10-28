@@ -37,7 +37,12 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.RedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
+                .HasMany(x => x.PostLogoutRedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
+            modelBuilder.Entity<Client>()
                 .HasMany(x => x.ScopeRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
+            modelBuilder.Entity<Client>()
+                .HasMany(x => x.IdentityProviderRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
+            
             modelBuilder.Entity<Scope>()
                 .HasMany(x => x.ScopeClaims).WithRequired(x => x.Scope).WillCascadeOnDelete();
         }
