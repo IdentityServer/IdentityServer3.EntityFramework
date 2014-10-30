@@ -27,7 +27,6 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         [Key, Column(Order = 1)]
         public virtual TokenType TokenType { get; set; }
 
-        [Required]
         public virtual string SubjectId { get; set; }
         [Required]
         public virtual string ClientId { get; set; }
