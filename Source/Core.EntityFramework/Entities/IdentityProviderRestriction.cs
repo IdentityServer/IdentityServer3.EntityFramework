@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 {
-    public class Token
+    public class IdentityProviderRestriction
     {
-        [Key, Column(Order = 0)]
-        public virtual string Key { get; set; }
-
-        [Key, Column(Order = 1)]
-        public virtual TokenType TokenType { get; set; }
-
-        public virtual string SubjectId { get; set; }
+        [Key]
+        public virtual int Id { get; set; }
         [Required]
-        public virtual string ClientId { get; set; }
-        
-        [Required]
-        [DataType(DataType.Text)]
-        public virtual string JsonCode { get; set; }
+        public virtual string Provider { get; set; }
 
-        [Required]
-        public virtual DateTime Expiry { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

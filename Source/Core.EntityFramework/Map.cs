@@ -26,21 +26,28 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             Mapper.CreateMap<string, Uri>().ConvertUsing(s => String.IsNullOrWhiteSpace(s) ? null : new Uri(s));
 
-            Mapper.CreateMap<Entities.Scope, Models.Scope>()
+            Mapper.CreateMap<Entities.Scope, Models.Scope>(MemberList.Destination)
                 .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)));
-            Mapper.CreateMap<Entities.ScopeClaim, Models.ScopeClaim>();
+            Mapper.CreateMap<Entities.ScopeClaim, Models.ScopeClaim>(MemberList.Destination);
 
-            Mapper.CreateMap<Entities.Client, Models.Client>()
+            Mapper.CreateMap<Entities.Client, Models.Client>(MemberList.Destination)
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => x.Uri)))
+                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => x.Uri)))
+                .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => x.Provider)))
                 .ForMember(x => x.ScopeRestrictions, opt => opt.MapFrom(src => src.ScopeRestrictions.Select(x => x.Scope)));
 
-            Mapper.CreateMap<Models.Scope, Entities.Scope>()
+            Mapper.CreateMap<Models.Scope, Entities.Scope>(MemberList.Source)
+                .ForSourceMember(x => x.Claims, opts => opts.Ignore())
                 .ForMember(x => x.ScopeClaims, opts => opts.MapFrom(src => src.Claims.Select(x => x)));
-            Mapper.CreateMap<Models.ScopeClaim, Entities.ScopeClaim>();
+            Mapper.CreateMap<Models.ScopeClaim, Entities.ScopeClaim>(MemberList.Source);
 
-            Mapper.CreateMap<Models.Client, Entities.Client>()
-            .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new Entities.ClientRedirectUri { Uri = x.AbsoluteUri })))
-            .ForMember(x => x.ScopeRestrictions, opt => opt.MapFrom(src => src.ScopeRestrictions.Select(x => new Entities.ClientScopeRestriction { Scope = x })));
+            Mapper.CreateMap<Models.Client, Entities.Client>(MemberList.Source)
+                .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new Entities.ClientRedirectUri { Uri = x.AbsoluteUri })))
+                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new Entities.PostLogoutRedirectUri { Uri = x.AbsoluteUri })))
+                .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => new Entities.IdentityProviderRestriction { Provider = x })))
+                .ForMember(x => x.ScopeRestrictions, opt => opt.MapFrom(src => src.ScopeRestrictions.Select(x => new Entities.ClientScopeRestriction { Scope = x })));
+
+            Mapper.AssertConfigurationIsValid();
         }
 
         public static Models.Scope ToModel(this Entities.Scope s)

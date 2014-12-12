@@ -15,7 +15,7 @@
  */
 using System;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Connect.Models;
+using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
@@ -35,6 +35,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 var efToken = new Entities.Token
                 {
                     Key = key,
+                    SubjectId = value.SubjectId,
+                    ClientId = value.ClientId,
                     JsonCode = ConvertToJson(value),
                     Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime),
                     TokenType = TokenType

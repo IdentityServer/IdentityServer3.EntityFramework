@@ -16,9 +16,9 @@
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Thinktecture.IdentityServer.Core.Connect.Models;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.Core.Models;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
@@ -36,6 +36,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 var efCode = new Entities.Token
                 {
                     Key = key,
+                    SubjectId = code.SubjectId,
+                    ClientId = code.ClientId,
                     JsonCode = ConvertToJson(code),
                     Expiry = DateTime.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
                     TokenType = this.TokenType

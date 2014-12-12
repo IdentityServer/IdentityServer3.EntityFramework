@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,52 +31,82 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             _connectionString = connectionString;
         }
 
-        public Task<bool> RequiresConsentAsync(string client, string subject, IEnumerable<string> scopes)
+        public Task<Models.Consent> LoadAsync(string subject, string client)
         {
-            var orderedScopes = GetOrderedScopes(scopes);
-
             using (var db = new CoreDbContext(_connectionString))
             {
-                var exists = db.Consents.Any(c => c.ClientId == client &&
-                                                c.Scopes == orderedScopes &&
-                                                c.Subject == subject);
-
-                return Task.FromResult(!exists);
+                var found = db.Consents.SingleOrDefault(x => x.Subject == subject && x.ClientId == client);
+                if (found == null) return Task.FromResult<Models.Consent>(null);
+                
+                var result = new Models.Consent
+                {
+                    Subject = found.Subject,
+                    ClientId = found.ClientId,
+                    Scopes = ParseScopes(found.Scopes)
+                };
+                return Task.FromResult(result);
             }
         }
 
-        private static string GetOrderedScopes(IEnumerable<string> scopes)
-        {
-            return string.Join(" ", scopes.OrderBy(s => s).ToArray());
-        }
-
-        public async Task UpdateConsentAsync(string client, string subject, IEnumerable<string> scopes)
+        public Task UpdateAsync(Models.Consent consent)
         {
             using (var db = new CoreDbContext(_connectionString))
             {
-                var consent = await db.Consents.FindAsync(subject, client);
-
-                if (scopes.Any())
+                var item = db.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
+                if (item == null)
                 {
-                    if (consent == null)
-                    {
-                        consent = new Entities.Consent
-                        {
-                            ClientId = client,
-                            Subject = subject,
-                        };
-                        db.Consents.Add(consent);
-                    }
-
-                    consent.Scopes = GetOrderedScopes(scopes);
+                    item = new Entities.Consent { Subject = consent.Subject, ClientId = consent.ClientId };
+                    db.Consents.Add(item);
                 }
-                else if (consent != null)
+                
+                if (consent.Scopes == null || !consent.Scopes.Any())
                 {
-                    db.Consents.Remove(consent);
+                    db.Consents.Remove(item);
                 }
+
+                item.Scopes = StringifyScopes(consent.Scopes);
 
                 db.SaveChanges();
             }
+            
+            return Task.FromResult(0);
+        }
+
+        public Task<IEnumerable<Models.Consent>> LoadAllAsync(string subject)
+        {
+            using (var db = new CoreDbContext(_connectionString))
+            {
+                var found = db.Consents.Where(x => x.Subject == subject).ToArray();
+                var results = found.Select(x=>new Models.Consent{
+                    Subject = x.Subject, 
+                    ClientId = x.ClientId, 
+                    Scopes = ParseScopes(x.Scopes) 
+                });
+                return Task.FromResult(results.ToArray().AsEnumerable());
+            }
+        }
+
+        private IEnumerable<string> ParseScopes(string scopes)
+        {
+            if (scopes == null || String.IsNullOrWhiteSpace(scopes)) return Enumerable.Empty<string>();
+            return scopes.Split(',');
+        }
+
+        private string StringifyScopes(IEnumerable<string> scopes)
+        {
+            if (scopes == null || !scopes.Any()) return null;
+            return scopes.Aggregate((s1, s2) => s1 + "," + s2);
+        }
+
+        public Task RevokeAsync(string subject, string client)
+        {
+            using (var db = new CoreDbContext(_connectionString))
+            {
+                var found = db.Consents.Where(x => x.Subject == subject && x.ClientId == client);
+                db.Consents.RemoveRange(found.ToArray());
+                db.SaveChanges();
+            }
+            return Task.FromResult(0);
         }
     }
 }
