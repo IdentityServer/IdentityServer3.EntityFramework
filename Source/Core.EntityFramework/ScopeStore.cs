@@ -29,13 +29,42 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             _connectionString = connectionString;
         }
 
-        public Task<IEnumerable<Models.Scope>> GetScopesAsync()
+        public Task<IEnumerable<Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
             using (var db = new CoreDbContext(_connectionString))
             {
-                var scopes = db.Scopes
-                    .Include("ScopeClaims");
+                var scopes =
+                    from s in db.Scopes.Include("ScopeClaims")
+                    select s;
                 
+                if (scopeNames != null && scopeNames.Any())
+                {
+                    scopes = from s in scopes
+                             where scopeNames.Contains(s.Name)
+                             select s;
+                }
+
+                var models = scopes.ToList().Select(x => x.ToModel());
+
+                return Task.FromResult(models);
+            }
+        }
+
+        public Task<IEnumerable<Models.Scope>> GetScopesAsync(bool publicOnly = true)
+        {
+            using (var db = new CoreDbContext(_connectionString))
+            {
+                var scopes =
+                    from s in db.Scopes.Include("ScopeClaims")
+                    select s;
+                
+                if (publicOnly)
+                {
+                    scopes = from s in scopes
+                             where s.ShowInDiscoveryDocument == true
+                             select s;
+                }
+
                 var models = scopes.ToList().Select(x => x.ToModel());
 
                 return Task.FromResult(models);

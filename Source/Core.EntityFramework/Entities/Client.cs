@@ -24,6 +24,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
     {
         [Key]
         public virtual int Id { get; set; }
+
         public virtual bool Enabled { get; set; }
 
         [Required]
@@ -36,9 +37,12 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         public virtual bool RequireConsent { get; set; }
         public virtual bool AllowRememberConsent { get; set; }
-        public virtual bool AllowLocalLogin { get; set; }
 
         public virtual Flows Flow { get; set; }
+
+        public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
+        public virtual ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
+        public virtual ICollection<ClientScopeRestriction> ScopeRestrictions { get; set; }
 
         // in seconds
         [Range(0, Int32.MaxValue)]
@@ -52,21 +56,17 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual int AbsoluteRefreshTokenLifetime { get; set; }
         [Range(0, Int32.MaxValue)]
         public virtual int SlidingRefreshTokenLifetime { get; set; }
+
         public virtual TokenUsage RefreshTokenUsage { get; set; }
         public virtual TokenExpiration RefreshTokenExpiration { get; set; }
         
         public virtual SigningKeyTypes IdentityTokenSigningKeyType { get; set; }
         public virtual AccessTokenType AccessTokenType { get; set; }
 
-        // not implemented yet
-        //public virtual bool RequireSignedAuthorizeRequest { get; set; }
-        //public virtual SubjectTypes SubjectType { get; set; }
-        //public virtual string SectorIdentifierUri { get; set; }
-        //public virtual ApplicationTypes ApplicationType { get; set; }
+        public virtual bool AllowLocalLogin { get; set; }
 
-        public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
-        public virtual ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
-        public virtual ICollection<ClientScopeRestriction> ScopeRestrictions { get; set; }
         public virtual ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
+        
+        public bool IncludeJwtId { get; set; }
     }
 }

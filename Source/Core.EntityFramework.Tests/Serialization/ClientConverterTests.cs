@@ -10,6 +10,7 @@ using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.Services.InMemory;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
 {
@@ -28,7 +29,7 @@ namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
                 AccessTokenLifetime = 10, 
                 AccessTokenType = AccessTokenType.Jwt, 
                 AllowRememberConsent = true, 
-                RedirectUris = new System.Collections.Generic.List<Uri>{new Uri("http://foo.com")}
+                RedirectUris = new List<string>{"http://foo.com"}
             };
             var clientStore = new InMemoryClientStore(new Client[]{client});
             var converter = new ClientConverter(clientStore);

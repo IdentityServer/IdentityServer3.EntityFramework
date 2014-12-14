@@ -42,8 +42,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             Mapper.CreateMap<Models.ScopeClaim, Entities.ScopeClaim>(MemberList.Source);
 
             Mapper.CreateMap<Models.Client, Entities.Client>(MemberList.Source)
-                .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new Entities.ClientRedirectUri { Uri = x.AbsoluteUri })))
-                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new Entities.PostLogoutRedirectUri { Uri = x.AbsoluteUri })))
+                .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new Entities.ClientRedirectUri { Uri = x })))
+                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new Entities.PostLogoutRedirectUri { Uri = x })))
                 .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => new Entities.IdentityProviderRestriction { Provider = x })))
                 .ForMember(x => x.ScopeRestrictions, opt => opt.MapFrom(src => src.ScopeRestrictions.Select(x => new Entities.ClientScopeRestriction { Scope = x })));
 
@@ -84,7 +84,15 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             }
             if (s.RedirectUris == null)
             {
-                s.RedirectUris = new List<Uri>();
+                s.RedirectUris = new List<string>();
+            }
+            if (s.PostLogoutRedirectUris == null)
+            {
+                s.PostLogoutRedirectUris = new List<string>();
+            }
+            if (s.IdentityProviderRestrictions == null)
+            {
+                s.IdentityProviderRestrictions = new List<string>();
             }
 
             return Mapper.Map<Models.Client, Entities.Client>(s);
