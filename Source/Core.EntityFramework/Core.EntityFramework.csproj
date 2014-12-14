@@ -69,8 +69,10 @@
     <Compile Include="AuthorizationCodeStore.cs" />
     <Compile Include="BaseTokenStore.cs" />
     <Compile Include="ClientStore.cs" />
+    <Compile Include="IdentityServerServiceFactoryExtensions.cs" />
+    <Compile Include="OperationalDbContext.cs" />
     <Compile Include="ConsentStore.cs" />
-    <Compile Include="CoreDbContext.cs" />
+    <Compile Include="ConfigurationDbContext.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\ClientRedirectUri.cs" />
     <Compile Include="Entities\ClientScopeRestriction.cs" />
@@ -81,7 +83,6 @@
     <Compile Include="Entities\ScopeClaim.cs" />
     <Compile Include="Entities\Token.cs" />
     <Compile Include="Entities\TokenType.cs" />
-    <Compile Include="ExpiredTokenCollector.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RefreshTokenStore.cs" />
@@ -91,7 +92,7 @@
     <Compile Include="Serialization\ClaimsPrincipalConverter.cs" />
     <Compile Include="Serialization\ClientConverter.cs" />
     <Compile Include="Serialization\ScopeConverter.cs" />
-    <Compile Include="ServiceFactory.cs" />
+    <Compile Include="EntityFrameworkServiceFactory.cs" />
     <Compile Include="TokenHandleStore.cs" />
   </ItemGroup>
   <ItemGroup>

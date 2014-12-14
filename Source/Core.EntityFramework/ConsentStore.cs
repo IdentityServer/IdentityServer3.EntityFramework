@@ -33,7 +33,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<Models.Consent> LoadAsync(string subject, string client)
         {
-            using (var db = new CoreDbContext(_connectionString))
+            using (var db = new OperationalDbContext(_connectionString))
             {
                 var found = db.Consents.SingleOrDefault(x => x.Subject == subject && x.ClientId == client);
                 if (found == null) return Task.FromResult<Models.Consent>(null);
@@ -50,7 +50,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task UpdateAsync(Models.Consent consent)
         {
-            using (var db = new CoreDbContext(_connectionString))
+            using (var db = new OperationalDbContext(_connectionString))
             {
                 var item = db.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
                 if (item == null)
@@ -74,7 +74,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<IEnumerable<Models.Consent>> LoadAllAsync(string subject)
         {
-            using (var db = new CoreDbContext(_connectionString))
+            using (var db = new OperationalDbContext(_connectionString))
             {
                 var found = db.Consents.Where(x => x.Subject == subject).ToArray();
                 var results = found.Select(x=>new Models.Consent{
@@ -100,7 +100,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task RevokeAsync(string subject, string client)
         {
-            using (var db = new CoreDbContext(_connectionString))
+            using (var db = new OperationalDbContext(_connectionString))
             {
                 var found = db.Consents.Where(x => x.Subject == subject && x.ClientId == client);
                 db.Consents.RemoveRange(found.ToArray());

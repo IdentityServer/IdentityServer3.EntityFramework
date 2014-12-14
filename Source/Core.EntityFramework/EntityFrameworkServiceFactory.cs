@@ -16,53 +16,71 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class ServiceFactory
+    public class EntityFrameworkServiceFactory
     {
         private readonly string _connectionString;
-        public ServiceFactory(string connectionString)
+        public EntityFrameworkServiceFactory(string connectionString)
         {
             _connectionString = connectionString;
-            Database.SetInitializer(new CreateDatabaseIfNotExists<CoreDbContext>());
         }
 
-        public IClientStore CreateClientStore()
+        public Registration<IAuthorizationCodeStore> AuthorizationCodeStore
         {
-            return new ClientStore(_connectionString);
+            get
+            {
+                return Registration.RegisterFactory<IAuthorizationCodeStore>(() => new AuthorizationCodeStore(_connectionString));
+            }
         }
 
-        public IScopeStore CreateScopeStore()
+        public Registration<ITokenHandleStore> TokenHandleStore
         {
-            return new ScopeStore(_connectionString);
+            get
+            {
+                return Registration.RegisterFactory<ITokenHandleStore>(() => new TokenHandleStore(_connectionString));
+            }
         }
 
-        public IConsentStore CreateConsentStore()
+        public Registration<IConsentStore> ConsentStore
         {
-            return new ConsentStore(_connectionString);
+            get
+            {
+                return Registration.RegisterFactory<IConsentStore>(() => new ConsentStore(_connectionString));
+            }
         }
 
-        public IAuthorizationCodeStore CreateAuthorizationCodeStore()
+        public Registration<IRefreshTokenStore> RefreshTokenStore
         {
-            return new AuthorizationCodeStore(_connectionString);
+            get
+            {
+                return Registration.RegisterFactory<IRefreshTokenStore>(() => new RefreshTokenStore(_connectionString));
+            }
         }
 
-        public ITokenHandleStore CreateTokenHandleStore()
+        public Registration<IClientStore> ClientStore
         {
-            return new TokenHandleStore(_connectionString);
+            get
+            {
+                return Registration.RegisterFactory<IClientStore>(() => new ClientStore(_connectionString));
+            }
         }
 
-        public IRefreshTokenStore CreateRefreshTokenStore()
+        public Registration<IScopeStore> ScopeStore
         {
-            return new RefreshTokenStore(_connectionString);
+            get
+            {
+                return Registration.RegisterFactory<IScopeStore>(() => new ScopeStore(_connectionString));
+            }
         }
-
+     
         public void ConfigureClients(IEnumerable<Client> clients)
         {
-            using (var db = new CoreDbContext(_connectionString))
+            using (var db = new ConfigurationDbContext(_connectionString))
             {
                 if (!db.Clients.Any())
                 {
@@ -78,7 +96,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public void ConfigureScopes(IEnumerable<Scope> scopes)
         {
-            using (var db = new CoreDbContext(_connectionString))
+            using (var db = new ConfigurationDbContext(_connectionString))
             {
                 if (!db.Scopes.Any())
                 {

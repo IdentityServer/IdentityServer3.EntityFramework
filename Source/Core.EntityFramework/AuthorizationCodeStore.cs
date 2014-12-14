@@ -31,7 +31,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public override Task StoreAsync(string key, AuthorizationCode code)
         {
-            using (var db = new CoreDbContext(ConnectionString))
+            using (var db = new OperationalDbContext(ConnectionString))
             {
                 var efCode = new Entities.Token
                 {

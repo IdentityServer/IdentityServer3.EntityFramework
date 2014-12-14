@@ -30,7 +30,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<Models.Client> FindClientByIdAsync(string clientId)
         {
-            using(var db = new CoreDbContext(_connectionString))
+            using(var db = new ConfigurationDbContext(_connectionString))
             {
                 var client = db.Clients
                     .Include("RedirectUris")

@@ -64,7 +64,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<T> GetAsync(string key)
         {
-            using (var db = new CoreDbContext(ConnectionString))
+            using (var db = new OperationalDbContext(ConnectionString))
             {
                 var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
                 if (token == null || token.Expiry < DateTime.UtcNow) return Task.FromResult<T>(null);
@@ -76,7 +76,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task RemoveAsync(string key)
         {
-            using (var db = new CoreDbContext(ConnectionString))
+            using (var db = new OperationalDbContext(ConnectionString))
             {
                 var code = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
 
@@ -92,7 +92,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
         {
-            using (var db = new CoreDbContext(ConnectionString))
+            using (var db = new OperationalDbContext(ConnectionString))
             {
                 var tokens = db.Tokens.Where(x => 
                     x.SubjectId == subject &&
@@ -105,7 +105,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         
         public Task RevokeAsync(string subject, string client)
         {
-            using (var db = new CoreDbContext(ConnectionString))
+            using (var db = new OperationalDbContext(ConnectionString))
             {
                 var found = db.Tokens.Where(x => 
                     x.SubjectId == subject && 

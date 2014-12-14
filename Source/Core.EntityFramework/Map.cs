@@ -24,8 +24,6 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
     {
         static Map()
         {
-            Mapper.CreateMap<string, Uri>().ConvertUsing(s => String.IsNullOrWhiteSpace(s) ? null : new Uri(s));
-
             Mapper.CreateMap<Entities.Scope, Models.Scope>(MemberList.Destination)
                 .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)));
             Mapper.CreateMap<Entities.ScopeClaim, Models.ScopeClaim>(MemberList.Destination);
