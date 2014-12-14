@@ -40,7 +40,7 @@ namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
                 DisplayName = "foo",
                 Description = "desc",
             };
-            var converter = new ScopeConverter(new Scope[] { s1, s2 });
+            var converter = new ScopeConverter(new InMemoryScopeStore(new Scope[] { s1, s2 }));
 
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(converter);

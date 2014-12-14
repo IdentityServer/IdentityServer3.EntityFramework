@@ -22,8 +22,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class TokenHandleStore : BaseTokenStore<Token>, ITokenHandleStore
     {
-        public TokenHandleStore(string connectionString)
-            : base(connectionString, Entities.TokenType.TokenHandle)
+        public TokenHandleStore(string connectionString, IScopeStore scopeStore, IClientStore clientStore)
+            : base(connectionString, Entities.TokenType.TokenHandle, scopeStore, clientStore)
         {
         }
 

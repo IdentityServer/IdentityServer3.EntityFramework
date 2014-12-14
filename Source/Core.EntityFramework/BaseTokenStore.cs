@@ -21,6 +21,7 @@ using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using System.Collections.Generic;
 using Thinktecture.IdentityServer.Core.Models;
+using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
@@ -28,16 +29,20 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
     {
         private readonly string _connectionString;
         protected readonly TokenType TokenType;
+        protected readonly IScopeStore _scopeStore;
+        protected readonly IClientStore _clientStore;
 
         protected string ConnectionString
         {
             get { return _connectionString; }
         }
 
-        protected BaseTokenStore(string connectionString, TokenType tokenType)
+        protected BaseTokenStore(string connectionString, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
         {
             _connectionString = connectionString;
             TokenType = tokenType;
+            _scopeStore = scopeStore;
+            _clientStore = clientStore;
         }
 
         JsonSerializerSettings GetJsonSerializerSettings()
@@ -45,10 +50,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ClaimConverter());
             settings.Converters.Add(new ClaimsPrincipalConverter());
-            settings.Converters.Add(new ClientConverter(new ClientStore(ConnectionString)));
-            var svc = new ScopeStore(ConnectionString);
-            var scopes = AsyncHelper.RunSync(async () => await svc.GetScopesAsync());
-            settings.Converters.Add(new ScopeConverter(scopes.ToArray()));
+            settings.Converters.Add(new ClientConverter(_clientStore));
+            settings.Converters.Add(new ScopeConverter(_scopeStore));
             return settings;
         }
 

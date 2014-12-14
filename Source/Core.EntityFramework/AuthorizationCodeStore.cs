@@ -24,8 +24,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class AuthorizationCodeStore : BaseTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
-        public AuthorizationCodeStore(string connectionString)
-            : base(connectionString, TokenType.AuthorizationCode)
+        public AuthorizationCodeStore(string connectionString, IScopeStore scopeStore, IClientStore clientStore)
+            : base(connectionString, TokenType.AuthorizationCode, scopeStore, clientStore)
         {
         }
 

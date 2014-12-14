@@ -34,7 +34,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             get
             {
-                return Registration.RegisterFactory<IAuthorizationCodeStore>(() => new AuthorizationCodeStore(_connectionString));
+                return Registration.RegisterFactory<IAuthorizationCodeStore>((resolver) => new AuthorizationCodeStore(_connectionString, resolver.Resolve<IScopeStore>(), resolver.Resolve<IClientStore>()));
             }
         }
 
@@ -42,7 +42,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             get
             {
-                return Registration.RegisterFactory<ITokenHandleStore>(() => new TokenHandleStore(_connectionString));
+                return Registration.RegisterFactory<ITokenHandleStore>((resolver) => new TokenHandleStore(_connectionString, resolver.Resolve<IScopeStore>(), resolver.Resolve<IClientStore>()));
             }
         }
 
@@ -50,7 +50,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             get
             {
-                return Registration.RegisterFactory<IConsentStore>(() => new ConsentStore(_connectionString));
+                return Registration.RegisterFactory<IConsentStore>((resolver) => new ConsentStore(_connectionString));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             get
             {
-                return Registration.RegisterFactory<IRefreshTokenStore>(() => new RefreshTokenStore(_connectionString));
+                return Registration.RegisterFactory<IRefreshTokenStore>((resolver) => new RefreshTokenStore(_connectionString, resolver.Resolve<IScopeStore>(), resolver.Resolve<IClientStore>()));
             }
         }
 
@@ -66,7 +66,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             get
             {
-                return Registration.RegisterFactory<IClientStore>(() => new ClientStore(_connectionString));
+                return Registration.RegisterFactory<IClientStore>((resolver) => new ClientStore(_connectionString));
             }
         }
 
@@ -74,7 +74,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
             get
             {
-                return Registration.RegisterFactory<IScopeStore>(() => new ScopeStore(_connectionString));
+                return Registration.RegisterFactory<IScopeStore>((resolver) => new ScopeStore(_connectionString));
             }
         }
      

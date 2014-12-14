@@ -23,8 +23,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class RefreshTokenStore : BaseTokenStore<RefreshToken>, IRefreshTokenStore
     {
-        public RefreshTokenStore(string connectionstring)
-            : base(connectionstring, TokenType.RefreshToken)
+        public RefreshTokenStore(string connectionstring, IScopeStore scopeStore, IClientStore clientStore)
+            : base(connectionstring, TokenType.RefreshToken, scopeStore, clientStore)
         {
         }
 
