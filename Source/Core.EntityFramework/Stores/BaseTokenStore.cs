@@ -70,7 +70,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             using (var db = new OperationalDbContext(ConnectionString))
             {
                 var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
-                if (token == null || token.Expiry < DateTime.UtcNow) return Task.FromResult<T>(null);
+                if (token == null || token.Expiry < DateTimeOffset.UtcNow) return Task.FromResult<T>(null);
 
                 T value = ConvertFromJson(token.JsonCode);
                 return Task.FromResult(value);

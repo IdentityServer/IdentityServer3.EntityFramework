@@ -80,7 +80,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
      
         public void ConfigureClients(IEnumerable<Client> clients)
         {
-            using (var db = new ConfigurationDbContext(_connectionString))
+            using (var db = new ClientConfigurationDbContext(_connectionString))
             {
                 if (!db.Clients.Any())
                 {
@@ -96,7 +96,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public void ConfigureScopes(IEnumerable<Scope> scopes)
         {
-            using (var db = new ConfigurationDbContext(_connectionString))
+            using (var db = new ScopeConfigurationDbContext(_connectionString))
             {
                 if (!db.Scopes.Any())
                 {

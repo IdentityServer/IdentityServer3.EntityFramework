@@ -18,7 +18,7 @@ using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class OperationalDbContext : DbContext
+    public class OperationalDbContext : BaseDbContext
     {
         public OperationalDbContext(string connectionString)
             : base(connectionString)

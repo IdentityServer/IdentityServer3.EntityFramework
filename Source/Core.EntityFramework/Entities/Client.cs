@@ -28,10 +28,15 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual bool Enabled { get; set; }
 
         [Required]
+        [StringLength(200)]
         public virtual string ClientId { get; set; }
+        [StringLength(200)]
         public virtual string ClientSecret { get; set; }
+        
         [Required]
+        [StringLength(200)]
         public virtual string ClientName { get; set; }
+        [StringLength(2000)]
         public virtual string ClientUri { get; set; }
         public virtual string LogoUri { get; set; }
 
@@ -67,6 +72,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         public virtual ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
         
-        public bool IncludeJwtId { get; set; }
+        public virtual bool IncludeJwtId { get; set; }
+
+        public virtual ICollection<ClientClaim> Claims { get; set; }
+        public virtual bool AlwaysSendClientClaims { get; set; }
+        public virtual bool PrefixClientClaims { get; set; }
+
     }
 }

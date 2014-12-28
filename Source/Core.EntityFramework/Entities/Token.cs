@@ -27,8 +27,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         [Key, Column(Order = 1)]
         public virtual TokenType TokenType { get; set; }
 
+        [StringLength(200)]
         public virtual string SubjectId { get; set; }
+        
         [Required]
+        [StringLength(200)]
         public virtual string ClientId { get; set; }
         
         [Required]
@@ -36,6 +39,6 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual string JsonCode { get; set; }
 
         [Required]
-        public virtual DateTime Expiry { get; set; }
+        public virtual DateTimeOffset Expiry { get; set; }
     }
 }
