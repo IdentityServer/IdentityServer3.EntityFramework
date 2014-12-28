@@ -18,28 +18,18 @@ using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class ConfigurationDbContext : DbContext
+    public class ScopeConfigurationDbContext : BaseDbContext
     {
-        public ConfigurationDbContext(string connectionString)
+        public ScopeConfigurationDbContext(string connectionString)
             : base(connectionString)
         {
         }
 
-        public DbSet<Client> Clients { get; set; }
         public DbSet<Scope> Scopes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.RedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.PostLogoutRedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.ScopeRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.IdentityProviderRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
 
             modelBuilder.Entity<Scope>()
                 .HasMany(x => x.ScopeClaims).WithRequired(x => x.Scope).WillCascadeOnDelete();

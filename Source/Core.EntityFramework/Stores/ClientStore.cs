@@ -15,6 +15,7 @@
  */
 using System.Linq;
 using System.Threading.Tasks;
+using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
@@ -30,13 +31,14 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<Models.Client> FindClientByIdAsync(string clientId)
         {
-            using(var db = new ConfigurationDbContext(_connectionString))
+            using(var db = new ClientConfigurationDbContext(_connectionString))
             {
                 var client = db.Clients
                     .Include("RedirectUris")
                     .Include("PostLogoutRedirectUris")
                     .Include("ScopeRestrictions")
                     .Include("IdentityProviderRestrictions")
+                    .Include("Claims")
                     .SingleOrDefault(x => x.ClientId == clientId);
 
                 Models.Client model = client.ToModel();

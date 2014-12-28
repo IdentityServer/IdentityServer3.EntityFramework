@@ -28,10 +28,15 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual bool Enabled { get; set; }
 
         [Required]
+        [StringLength(200)]
         public virtual string ClientId { get; set; }
+        [StringLength(200)]
         public virtual string ClientSecret { get; set; }
+        
         [Required]
+        [StringLength(200)]
         public virtual string ClientName { get; set; }
+        [StringLength(2000)]
         public virtual string ClientUri { get; set; }
         public virtual string LogoUri { get; set; }
 
@@ -41,7 +46,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual Flows Flow { get; set; }
 
         public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
-        public virtual ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
+        public virtual ICollection<ClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
         public virtual ICollection<ClientScopeRestriction> ScopeRestrictions { get; set; }
 
         // in seconds
@@ -65,8 +70,13 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         public virtual bool AllowLocalLogin { get; set; }
 
-        public virtual ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
+        public virtual ICollection<ClientIdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
         
-        public bool IncludeJwtId { get; set; }
+        public virtual bool IncludeJwtId { get; set; }
+
+        public virtual ICollection<ClientClaim> Claims { get; set; }
+        public virtual bool AlwaysSendClientClaims { get; set; }
+        public virtual bool PrefixClientClaims { get; set; }
+
     }
 }

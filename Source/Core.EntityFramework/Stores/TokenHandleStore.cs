@@ -37,7 +37,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                     SubjectId = value.SubjectId,
                     ClientId = value.ClientId,
                     JsonCode = ConvertToJson(value),
-                    Expiry = DateTime.UtcNow.AddSeconds(value.Lifetime),
+                    Expiry = DateTimeOffset.UtcNow.AddSeconds(value.Lifetime),
                     TokenType = this.TokenType
                 };
 

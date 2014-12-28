@@ -15,34 +15,34 @@
  */
 using System;
 using System.Threading.Tasks;
+using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class RefreshTokenStore : BaseTokenStore<RefreshToken>, IRefreshTokenStore
+    public class AuthorizationCodeStore : BaseTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
-        public RefreshTokenStore(string connectionstring, IScopeStore scopeStore, IClientStore clientStore)
-            : base(connectionstring, TokenType.RefreshToken, scopeStore, clientStore)
+        public AuthorizationCodeStore(string connectionString, IScopeStore scopeStore, IClientStore clientStore)
+            : base(connectionString, TokenType.AuthorizationCode, scopeStore, clientStore)
         {
         }
 
-        public override Task StoreAsync(string key, RefreshToken value)
+        public override Task StoreAsync(string key, AuthorizationCode code)
         {
             using (var db = new OperationalDbContext(ConnectionString))
             {
-                var efToken = new Entities.Token
+                var efCode = new Entities.Token
                 {
                     Key = key,
-                    SubjectId = value.SubjectId,
-                    ClientId = value.ClientId,
-                    JsonCode = ConvertToJson(value),
-                    Expiry = DateTime.UtcNow.AddSeconds(value.LifeTime),
-                    TokenType = TokenType
+                    SubjectId = code.SubjectId,
+                    ClientId = code.ClientId,
+                    JsonCode = ConvertToJson(code),
+                    Expiry = DateTimeOffset.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
+                    TokenType = this.TokenType
                 };
 
-                db.Tokens.Add(efToken);
+                db.Tokens.Add(efCode);
                 db.SaveChanges();
             }
 

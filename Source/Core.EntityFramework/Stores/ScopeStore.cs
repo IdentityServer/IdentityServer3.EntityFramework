@@ -16,6 +16,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
@@ -31,7 +32,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<IEnumerable<Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
-            using (var db = new ConfigurationDbContext(_connectionString))
+            using (var db = new ScopeConfigurationDbContext(_connectionString))
             {
                 var scopes =
                     from s in db.Scopes.Include("ScopeClaims")
@@ -52,7 +53,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<IEnumerable<Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
-            using (var db = new ConfigurationDbContext(_connectionString))
+            using (var db = new ScopeConfigurationDbContext(_connectionString))
             {
                 var scopes =
                     from s in db.Scopes.Include("ScopeClaims")

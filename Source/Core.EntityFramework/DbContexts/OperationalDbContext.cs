@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+using System.Data.Entity;
+using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
+namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class PostLogoutRedirectUri
+    public class OperationalDbContext : BaseDbContext
     {
-        [Key]
-        public virtual int Id { get; set; }
-        [Required]
-        public virtual string Uri { get; set; }
+        public OperationalDbContext(string connectionString)
+            : base(connectionString)
+        {
+        }
 
-        public virtual Client Client { get; set; }
+        public DbSet<Consent> Consents { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }

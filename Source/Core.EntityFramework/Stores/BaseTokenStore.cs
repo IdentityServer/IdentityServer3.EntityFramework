@@ -1,4 +1,5 @@
-﻿/*
+﻿using Newtonsoft.Json;
+/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +15,11 @@
  * limitations under the License.
  */
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
-using System.Collections.Generic;
+using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
@@ -70,7 +70,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             using (var db = new OperationalDbContext(ConnectionString))
             {
                 var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
-                if (token == null || token.Expiry < DateTime.UtcNow) return Task.FromResult<T>(null);
+                if (token == null || token.Expiry < DateTimeOffset.UtcNow) return Task.FromResult<T>(null);
 
                 T value = ConvertFromJson(token.JsonCode);
                 return Task.FromResult(value);

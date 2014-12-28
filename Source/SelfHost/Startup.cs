@@ -1,6 +1,7 @@
 ﻿using Owin;
 using SelfHost.Config;
 using Thinktecture.IdentityServer.Core.Configuration;
+using Thinktecture.IdentityServer.Core.Logging;
 
 namespace SelfHost
 {
@@ -8,6 +9,8 @@ namespace SelfHost
     {
         public void Configuration(IAppBuilder appBuilder)
         {
+            LogProvider.SetCurrentLogProvider(new DiagnosticsTraceLogProvider());
+
             var options = new IdentityServerOptions
             {
                 IssuerUri = "https://idsrv3.com",

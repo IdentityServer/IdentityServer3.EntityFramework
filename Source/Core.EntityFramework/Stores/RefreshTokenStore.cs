@@ -15,35 +15,34 @@
  */
 using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Models;
+using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class AuthorizationCodeStore : BaseTokenStore<AuthorizationCode>, IAuthorizationCodeStore
+    public class RefreshTokenStore : BaseTokenStore<RefreshToken>, IRefreshTokenStore
     {
-        public AuthorizationCodeStore(string connectionString, IScopeStore scopeStore, IClientStore clientStore)
-            : base(connectionString, TokenType.AuthorizationCode, scopeStore, clientStore)
+        public RefreshTokenStore(string connectionstring, IScopeStore scopeStore, IClientStore clientStore)
+            : base(connectionstring, TokenType.RefreshToken, scopeStore, clientStore)
         {
         }
 
-        public override Task StoreAsync(string key, AuthorizationCode code)
+        public override Task StoreAsync(string key, RefreshToken value)
         {
             using (var db = new OperationalDbContext(ConnectionString))
             {
-                var efCode = new Entities.Token
+                var efToken = new Entities.Token
                 {
                     Key = key,
-                    SubjectId = code.SubjectId,
-                    ClientId = code.ClientId,
-                    JsonCode = ConvertToJson(code),
-                    Expiry = DateTime.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
-                    TokenType = this.TokenType
+                    SubjectId = value.SubjectId,
+                    ClientId = value.ClientId,
+                    JsonCode = ConvertToJson(value),
+                    Expiry = DateTimeOffset.UtcNow.AddSeconds(value.LifeTime),
+                    TokenType = TokenType
                 };
 
-                db.Tokens.Add(efCode);
+                db.Tokens.Add(efToken);
                 db.SaveChanges();
             }
 
