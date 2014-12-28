@@ -15,10 +15,9 @@
  */
 using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Models;
+using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {

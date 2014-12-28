@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using Thinktecture.IdentityServer.Core.Configuration;
 using Thinktecture.IdentityServer.Core.Models;

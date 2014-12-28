@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System.Collections.Generic;
 using AutoMapper;
-using System;
 using System.Linq;
 using System.Security.Claims;
 
-using Models = Thinktecture.IdentityServer.Core.Models;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 {

@@ -1,4 +1,5 @@
-﻿/*
+﻿using Newtonsoft.Json;
+/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +15,11 @@
  * limitations under the License.
  */
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
-using System.Collections.Generic;
+using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 

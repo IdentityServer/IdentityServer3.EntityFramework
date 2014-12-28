@@ -46,7 +46,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual Flows Flow { get; set; }
 
         public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
-        public virtual ICollection<PostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
+        public virtual ICollection<ClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
         public virtual ICollection<ClientScopeRestriction> ScopeRestrictions { get; set; }
 
         // in seconds
@@ -70,7 +70,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         public virtual bool AllowLocalLogin { get; set; }
 
-        public virtual ICollection<IdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
+        public virtual ICollection<ClientIdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
         
         public virtual bool IncludeJwtId { get; set; }
 

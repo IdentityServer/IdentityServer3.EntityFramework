@@ -13,22 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 {
-    public class IdentityProviderRestriction
+    public class ClientPostLogoutRedirectUri
     {
         [Key]
         public virtual int Id { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public virtual string Provider { get; set; }
+        [StringLength(2000)]
+        public virtual string Uri { get; set; }
 
         public virtual Client Client { get; set; }
     }

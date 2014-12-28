@@ -73,7 +73,7 @@
     <Compile Include="DbContexts\ScopeConfigurationDbContext.cs" />
     <Compile Include="Stores\ClientStore.cs" />
     <Compile Include="Entities\ClientClaim.cs" />
-    <Compile Include="IdentityServerServiceFactoryExtensions.cs" />
+    <Compile Include="Extensions\IdentityServerServiceFactoryExtensions.cs" />
     <Compile Include="DbContexts\OperationalDbContext.cs" />
     <Compile Include="Stores\ConsentStore.cs" />
     <Compile Include="DbContexts\ClientConfigurationDbContext.cs" />
@@ -81,8 +81,8 @@
     <Compile Include="Entities\ClientRedirectUri.cs" />
     <Compile Include="Entities\ClientScopeRestriction.cs" />
     <Compile Include="Entities\Consent.cs" />
-    <Compile Include="Entities\IdentityProviderRestriction.cs" />
-    <Compile Include="Entities\PostLogoutRedirectUri.cs" />
+    <Compile Include="Entities\ClientIdentityProviderRestriction.cs" />
+    <Compile Include="Entities\ClientPostLogoutRedirectUri.cs" />
     <Compile Include="Entities\Scope.cs" />
     <Compile Include="Entities\ScopeClaim.cs" />
     <Compile Include="Entities\Token.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="Extensions\EntitiesMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\RefreshTokenStore.cs" />
-    <Compile Include="ScopeStore.cs" />
+    <Compile Include="Stores\ScopeStore.cs" />
     <Compile Include="Serialization\AsyncHelper.cs" />
     <Compile Include="Serialization\ClaimConverter.cs" />
     <Compile Include="Serialization\ClaimsPrincipalConverter.cs" />

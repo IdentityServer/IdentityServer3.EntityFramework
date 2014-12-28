@@ -1,4 +1,5 @@
-﻿/*
+﻿using AutoMapper;
+/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +15,8 @@
  * limitations under the License.
  */
 using System.Collections.Generic;
-using AutoMapper;
-using System;
 using System.Linq;
-using System.Security.Claims;
-
-using Entities=Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Entities = Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.Models
 {
@@ -34,8 +31,8 @@ namespace Thinktecture.IdentityServer.Core.Models
 
             Mapper.CreateMap<Models.Client, Entities.Client>(MemberList.Source)
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new Entities.ClientRedirectUri { Uri = x })))
-                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new Entities.PostLogoutRedirectUri { Uri = x })))
-                .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => new Entities.IdentityProviderRestriction { Provider = x })))
+                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new Entities.ClientPostLogoutRedirectUri { Uri = x })))
+                .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => new Entities.ClientIdentityProviderRestriction { Provider = x })))
                 .ForMember(x => x.ScopeRestrictions, opt => opt.MapFrom(src => src.ScopeRestrictions.Select(x => new Entities.ClientScopeRestriction { Scope = x })))
                 .ForMember(x => x.Claims, opt => opt.MapFrom(src => src.Claims.Select(x => new Entities.ClientClaim { Type = x.Type, Value = x.Value })));
 
