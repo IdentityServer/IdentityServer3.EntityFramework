@@ -30,8 +30,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         [Required]
         [StringLength(200)]
         public virtual string ClientId { get; set; }
-        [StringLength(200)]
-        public virtual string ClientSecret { get; set; }
+
+        public virtual ICollection<ClientSecret> ClientSecrets { get; set; }
         
         [Required]
         [StringLength(200)]
@@ -70,7 +70,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
         public virtual bool AllowLocalLogin { get; set; }
 
-        public virtual ICollection<ClientIdentityProviderRestriction> IdentityProviderRestrictions { get; set; }
+        public virtual ICollection<ClientIdPRestriction> IdentityProviderRestrictions { get; set; }
         
         public virtual bool IncludeJwtId { get; set; }
 

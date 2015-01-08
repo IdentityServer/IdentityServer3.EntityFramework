@@ -16,7 +16,9 @@ namespace SelfHost.Config
                     ClientName = "Code Flow Clients",
                     Enabled = true,
                     ClientId = "codeclient",
-                    ClientSecret = "secret",
+                    ClientSecrets = new List<ClientSecret>{
+                        new ClientSecret("secret".Sha256())
+                    },
                     Flow = Flows.AuthorizationCode,
                     
                     RequireConsent = true,
@@ -52,7 +54,6 @@ namespace SelfHost.Config
                         "Google"
                     },
                     
-                    IdentityTokenSigningKeyType = SigningKeyTypes.Default,
                     //SubjectType = SubjectTypes.Global,
                     AccessTokenType = AccessTokenType.Reference,
                     
@@ -66,7 +67,9 @@ namespace SelfHost.Config
                     ClientName = "Implicit Clients",
                     Enabled = true,
                     ClientId = "implicitclient",
-                    ClientSecret = "secret",
+                    ClientSecrets = new List<ClientSecret>{
+                        new ClientSecret("secret".Sha256())
+                    },
                     Flow = Flows.Implicit,
                     
                     ClientUri = "http://www.thinktecture.com",
@@ -99,7 +102,6 @@ namespace SelfHost.Config
                         "write"
                     },
 
-                    IdentityTokenSigningKeyType = SigningKeyTypes.Default,
                     //SubjectType = SubjectTypes.Global,
                     AccessTokenType = AccessTokenType.Jwt,
                     
@@ -111,7 +113,9 @@ namespace SelfHost.Config
                     ClientName = "Client Credentials Flow Client",
                     Enabled = true,
                     ClientId = "client",
-                    ClientSecret = "secret",
+                    ClientSecrets = new List<ClientSecret>{
+                        new ClientSecret("secret".Sha256())
+                    },
                     Flow = Flows.ClientCredentials,
                     
                     ScopeRestrictions = new List<string>
@@ -128,7 +132,9 @@ namespace SelfHost.Config
                     ClientName = "Resource Owner Flow Client",
                     Enabled = true,
                     ClientId = "roclient",
-                    ClientSecret = "secret",
+                    ClientSecrets = new List<ClientSecret>{
+                        new ClientSecret("secret".Sha256())
+                    },
                     Flow = Flows.ResourceOwner,
                     
                     ScopeRestrictions = new List<string>

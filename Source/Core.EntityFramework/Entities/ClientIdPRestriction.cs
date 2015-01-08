@@ -17,7 +17,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 {
-    public class ClientIdentityProviderRestriction
+    public class ClientIdPRestriction
     {
         [Key]
         public virtual int Id { get; set; }

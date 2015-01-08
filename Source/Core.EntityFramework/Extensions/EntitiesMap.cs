@@ -28,6 +28,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
                 .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)));
             Mapper.CreateMap<Entities.ScopeClaim, Models.ScopeClaim>(MemberList.Destination);
 
+            Mapper.CreateMap<Entities.ClientSecret, Models.ClientSecret>(MemberList.Destination);
             Mapper.CreateMap<Entities.Client, Models.Client>(MemberList.Destination)
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => x.Uri)))
                 .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => x.Uri)))
