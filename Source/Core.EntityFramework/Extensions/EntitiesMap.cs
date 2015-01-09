@@ -30,6 +30,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
 
             Mapper.CreateMap<Entities.ClientSecret, Models.ClientSecret>(MemberList.Destination);
             Mapper.CreateMap<Entities.Client, Models.Client>(MemberList.Destination)
+                .ForMember(x => x.CustomGrantTypeRestrictions, opt => opt.MapFrom(src => src.CustomGrantTypeRestrictions.Select(x => x.GrantType)))
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => x.Uri)))
                 .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => x.Uri)))
                 .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => x.Provider)))

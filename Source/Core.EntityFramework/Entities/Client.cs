@@ -78,5 +78,6 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual bool AlwaysSendClientClaims { get; set; }
         public virtual bool PrefixClientClaims { get; set; }
 
+        public virtual ICollection<ClientGrantTypeRestriction> CustomGrantTypeRestrictions { get; set; }
     }
 }

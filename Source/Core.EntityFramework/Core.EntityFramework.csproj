@@ -62,10 +62,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="Thinktecture.IdentityServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thinktecture.IdentityServer.v3.1.0.0-pre-10188\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
+      <HintPath>..\packages\Thinktecture.IdentityServer.v3.1.0.0-pre-10198\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ClientGrantTypeRestriction.cs" />
     <Compile Include="Entities\ClientSecret.cs" />
     <Compile Include="Extensions\ModelsMap.cs" />
     <Compile Include="Stores\AuthorizationCodeStore.cs" />

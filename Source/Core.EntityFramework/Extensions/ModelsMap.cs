@@ -31,6 +31,7 @@ namespace Thinktecture.IdentityServer.Core.Models
 
             Mapper.CreateMap<Models.ClientSecret, Entities.ClientSecret>(MemberList.Source);
             Mapper.CreateMap<Models.Client, Entities.Client>(MemberList.Source)
+                .ForMember(x => x.CustomGrantTypeRestrictions, opt => opt.MapFrom(src => src.CustomGrantTypeRestrictions.Select(x => new Entities.ClientGrantTypeRestriction { GrantType = x })))
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new Entities.ClientRedirectUri { Uri = x })))
                 .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new Entities.ClientPostLogoutRedirectUri { Uri = x })))
                 .ForMember(x => x.IdentityProviderRestrictions, opt => opt.MapFrom(src => src.IdentityProviderRestrictions.Select(x => new Entities.ClientIdPRestriction { Provider = x })))
@@ -56,9 +57,9 @@ namespace Thinktecture.IdentityServer.Core.Models
         {
             if (s == null) return null;
 
-            if (s.ScopeRestrictions == null)
+            if (s.ClientSecrets == null)
             {
-                s.ScopeRestrictions = new List<string>();
+                s.ClientSecrets = new List<ClientSecret>();
             }
             if (s.RedirectUris == null)
             {
@@ -68,9 +69,17 @@ namespace Thinktecture.IdentityServer.Core.Models
             {
                 s.PostLogoutRedirectUris = new List<string>();
             }
+            if (s.ScopeRestrictions == null)
+            {
+                s.ScopeRestrictions = new List<string>();
+            }
             if (s.IdentityProviderRestrictions == null)
             {
                 s.IdentityProviderRestrictions = new List<string>();
+            }
+            if (s.CustomGrantTypeRestrictions == null)
+            {
+                s.CustomGrantTypeRestrictions = new List<string>();
             }
 
             return Mapper.Map<Models.Client, Entities.Client>(s);
