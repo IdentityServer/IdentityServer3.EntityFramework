@@ -10,6 +10,7 @@ using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.Services.InMemory;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
 {
@@ -27,7 +28,7 @@ namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
                 Emphasize = true,
                 DisplayName = "email foo",
                 Description = "desc foo",
-                Claims = new ScopeClaim[] { 
+                Claims = new List<ScopeClaim> { 
                     new ScopeClaim{Name = "email", Description = "email"}
                 }
             };
