@@ -39,6 +39,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                     .Include("ScopeRestrictions")
                     .Include("IdentityProviderRestrictions")
                     .Include("Claims")
+                    .Include("ClientSecrets")
+                    .Include("CustomGrantTypeRestrictions")
                     .SingleOrDefault(x => x.ClientId == clientId);
 
                 Models.Client model = client.ToModel();
