@@ -68,8 +68,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual SigningKeyTypes IdentityTokenSigningKeyType { get; set; }
         public virtual AccessTokenType AccessTokenType { get; set; }
 
-        public virtual bool AllowLocalLogin { get; set; }
-
+        public virtual bool EnableLocalLogin { get; set; }
         public virtual ICollection<ClientIdPRestriction> IdentityProviderRestrictions { get; set; }
         
         public virtual bool IncludeJwtId { get; set; }
