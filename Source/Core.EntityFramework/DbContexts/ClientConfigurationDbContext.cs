@@ -20,6 +20,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class ClientConfigurationDbContext : BaseDbContext
     {
+        public ClientConfigurationDbContext()
+            : this(EfConstants.ConnectionName)
+        {
+        }
+
         public ClientConfigurationDbContext(string connectionString)
             : base(connectionString)
         {

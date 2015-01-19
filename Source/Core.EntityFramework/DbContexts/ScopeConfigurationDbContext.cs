@@ -20,6 +20,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class ScopeConfigurationDbContext : BaseDbContext
     {
+        public ScopeConfigurationDbContext()
+            : this(EfConstants.ConnectionName)
+        {
+        }
+        
         public ScopeConfigurationDbContext(string connectionString)
             : base(connectionString)
         {

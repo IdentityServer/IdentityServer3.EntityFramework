@@ -20,6 +20,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class OperationalDbContext : BaseDbContext
     {
+        public OperationalDbContext()
+            : this(EfConstants.ConnectionName)
+        {
+        }
+
         public OperationalDbContext(string connectionString)
             : base(connectionString)
         {
