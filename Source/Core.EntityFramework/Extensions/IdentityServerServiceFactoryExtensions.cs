@@ -15,29 +15,46 @@
  */
 using System;
 using Thinktecture.IdentityServer.Core.EntityFramework;
+using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.Configuration
 {
     public static class IdentityServerServiceFactoryExtensions
     {
-        public static void RegisterOperationalServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceRegistration services)
+        public static void RegisterOperationalServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceOptions options)
         {
             if (factory == null) throw new ArgumentNullException("factory");
-            if (services == null) throw new ArgumentNullException("services");
+            if (options == null) throw new ArgumentNullException("options");
 
-            factory.AuthorizationCodeStore = services.AuthorizationCodeStore;
-            factory.TokenHandleStore = services.TokenHandleStore;
-            factory.ConsentStore = services.ConsentStore;
-            factory.RefreshTokenStore = services.RefreshTokenStore;
+            factory.Register(new Registration<OperationalDbContext>(resolver => new OperationalDbContext(options.ConnectionString, options.Schema)));
+            factory.AuthorizationCodeStore = new Registration<IAuthorizationCodeStore, AuthorizationCodeStore>();
+            factory.TokenHandleStore = new Registration<ITokenHandleStore, TokenHandleStore>();
+            factory.ConsentStore = new Registration<IConsentStore, ConsentStore>();
+            factory.RefreshTokenStore = new Registration<IRefreshTokenStore, RefreshTokenStore>();
         }
 
-        public static void RegisterConfigurationServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceRegistration services)
+        public static void RegisterConfigurationServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceOptions options)
+        {
+            factory.RegisterClientStore(options);
+            factory.RegisterScopeStore(options);
+        }
+
+        public static void RegisterClientStore(this IdentityServerServiceFactory factory, EntityFrameworkServiceOptions options)
         {
             if (factory == null) throw new ArgumentNullException("factory");
-            if (services == null) throw new ArgumentNullException("services");
+            if (options == null) throw new ArgumentNullException("options");
 
-            factory.ClientStore = services.ClientStore;
-            factory.ScopeStore = services.ScopeStore;
+            factory.Register(new Registration<ClientConfigurationDbContext>(resolver => new ClientConfigurationDbContext(options.ConnectionString, options.Schema)));
+            factory.ClientStore = new Registration<IClientStore, ClientStore>();
+        }
+        
+        public static void RegisterScopeStore(this IdentityServerServiceFactory factory, EntityFrameworkServiceOptions options)
+        {
+            if (factory == null) throw new ArgumentNullException("factory");
+            if (options == null) throw new ArgumentNullException("options");
+
+            factory.Register(new Registration<ScopeConfigurationDbContext>(resolver => new ScopeConfigurationDbContext(options.ConnectionString, options.Schema)));
+            factory.ScopeStore = new Registration<IScopeStore, ScopeStore>();
         }
     }
 }

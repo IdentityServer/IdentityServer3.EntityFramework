@@ -24,11 +24,19 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             : this(EfConstants.ConnectionName)
         {
         }
-        
+
         public ScopeConfigurationDbContext(string connectionString)
-            : base(connectionString)
+            : this(connectionString, null)
         {
         }
+        
+        public ScopeConfigurationDbContext(string connectionString, string schema)
+            : base(connectionString)
+        {
+            this.Schema = schema;
+        }
+
+        public string Schema { get; protected set; }
 
         public DbSet<Scope> Scopes { get; set; }
 
@@ -37,7 +45,10 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Scope>()
+                .ToTable(EfConstants.TableNames.Scope, Schema)
                 .HasMany(x => x.ScopeClaims).WithRequired(x => x.Scope).WillCascadeOnDelete();
+
+            modelBuilder.Entity<ScopeClaim>().ToTable(EfConstants.TableNames.ScopeClaim, Schema);
         }
     }
 }

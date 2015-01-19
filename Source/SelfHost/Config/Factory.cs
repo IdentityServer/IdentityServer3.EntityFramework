@@ -14,14 +14,18 @@ namespace SelfHost.Config
     {
         public static IdentityServerServiceFactory Configure(string connString)
         {
-            ConfigureClients(Clients.Get(), connString);
-            ConfigureScopes(Scopes.Get(), connString);
+            var efConfig = new EntityFrameworkServiceOptions {
+                ConnectionString = connString,
+            };
+
+            // these two calls just pre-populate the test DB from the in-memory config
+            ConfigureClients(Clients.Get(), efConfig);
+            ConfigureScopes(Scopes.Get(), efConfig);
 
             var factory = new IdentityServerServiceFactory();
 
-            var efServices = new EntityFrameworkServiceRegistration(connString);
-            factory.RegisterConfigurationServices(efServices);
-            factory.RegisterOperationalServices(efServices);
+            factory.RegisterConfigurationServices(efConfig);
+            factory.RegisterOperationalServices(efConfig);
 
             var userService = new Thinktecture.IdentityServer.Core.Services.InMemory.InMemoryUserService(Users.Get());
             factory.UserService = new Registration<IUserService>(resolver => userService);
@@ -29,9 +33,9 @@ namespace SelfHost.Config
             return factory;
         }
 
-        public static void ConfigureClients(IEnumerable<Client> clients, string connString)
+        public static void ConfigureClients(IEnumerable<Client> clients, EntityFrameworkServiceOptions options)
         {
-            using (var db = new ClientConfigurationDbContext(connString))
+            using (var db = new ClientConfigurationDbContext(options.ConnectionString, options.Schema))
             {
                 if (!db.Clients.Any())
                 {
@@ -45,9 +49,9 @@ namespace SelfHost.Config
             }
         }
 
-        public static void ConfigureScopes(IEnumerable<Scope> scopes, string connString)
+        public static void ConfigureScopes(IEnumerable<Scope> scopes, EntityFrameworkServiceOptions options)
         {
-            using (var db = new ScopeConfigurationDbContext(connString))
+            using (var db = new ScopeConfigurationDbContext(options.ConnectionString, options.Schema))
             {
                 if (!db.Scopes.Any())
                 {

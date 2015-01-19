@@ -27,22 +27,21 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public abstract class BaseTokenStore<T> where T : class
     {
-        private readonly string _connectionString;
-        protected readonly TokenType TokenType;
-        protected readonly IScopeStore _scopeStore;
-        protected readonly IClientStore _clientStore;
+        protected readonly OperationalDbContext context;
+        protected readonly TokenType tokenType;
+        protected readonly IScopeStore scopeStore;
+        protected readonly IClientStore clientStore;
 
-        protected string ConnectionString
+        protected BaseTokenStore(OperationalDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
         {
-            get { return _connectionString; }
-        }
-
-        protected BaseTokenStore(string connectionString, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
-        {
-            _connectionString = connectionString;
-            TokenType = tokenType;
-            _scopeStore = scopeStore;
-            _clientStore = clientStore;
+            if (context == null) throw new ArgumentNullException("context");
+            if (scopeStore == null) throw new ArgumentNullException("scopeStore");
+            if (clientStore == null) throw new ArgumentNullException("clientStore");
+            
+            this.context = context;
+            this.tokenType = tokenType;
+            this.scopeStore = scopeStore;
+            this.clientStore = clientStore;
         }
 
         JsonSerializerSettings GetJsonSerializerSettings()
@@ -50,8 +49,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ClaimConverter());
             settings.Converters.Add(new ClaimsPrincipalConverter());
-            settings.Converters.Add(new ClientConverter(_clientStore));
-            settings.Converters.Add(new ScopeConverter(_scopeStore));
+            settings.Converters.Add(new ClientConverter(clientStore));
+            settings.Converters.Add(new ScopeConverter(scopeStore));
             return settings;
         }
 
@@ -67,27 +66,23 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<T> GetAsync(string key)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
-                if (token == null || token.Expiry < DateTimeOffset.UtcNow) return Task.FromResult<T>(null);
+            var token = context.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == tokenType);
+            
+            if (token == null || token.Expiry < DateTimeOffset.UtcNow) return Task.FromResult<T>(null);
 
-                T value = ConvertFromJson(token.JsonCode);
-                return Task.FromResult(value);
-            }
+            T value = ConvertFromJson(token.JsonCode);
+            
+            return Task.FromResult(value);
         }
 
         public Task RemoveAsync(string key)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var code = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
+            var code = context.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == tokenType);
 
-                if (code != null)
-                {
-                    db.Tokens.Remove(code);
-                    db.SaveChanges();
-                }
+            if (code != null)
+            {
+                context.Tokens.Remove(code);
+                context.SaveChanges();
             }
 
             return Task.FromResult(0);
@@ -95,29 +90,24 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
         public Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var tokens = db.Tokens.Where(x => 
-                    x.SubjectId == subject &&
-                    x.TokenType == TokenType).ToArray();
-                var results = tokens.Select(x=>ConvertFromJson(x.JsonCode)).ToArray();
-                
-                return Task.FromResult(results.Cast<ITokenMetadata>());
-            }
+            var tokens = context.Tokens.Where(x => 
+                x.SubjectId == subject &&
+                x.TokenType == tokenType).ToArray();
+            
+            var results = tokens.Select(x=>ConvertFromJson(x.JsonCode)).ToArray();
+            
+            return Task.FromResult(results.Cast<ITokenMetadata>());
         }
         
         public Task RevokeAsync(string subject, string client)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var found = db.Tokens.Where(x => 
-                    x.SubjectId == subject && 
-                    x.ClientId == client && 
-                    x.TokenType == TokenType).ToArray();
-                db.Tokens.RemoveRange(found);
-
-                db.SaveChanges();
-            }
+            var found = context.Tokens.Where(x => 
+                x.SubjectId == subject && 
+                x.ClientId == client && 
+                x.TokenType == tokenType).ToArray();
+            
+            context.Tokens.RemoveRange(found);
+            context.SaveChanges();
 
             return Task.FromResult(0);
         }

@@ -1,4 +1,5 @@
-﻿/*
+﻿using System;
+/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,30 +23,29 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class ClientStore : IClientStore
     {
-        private readonly string _connectionString;
+        private readonly ClientConfigurationDbContext context;
 
-        public ClientStore(string connectionString)
+        public ClientStore(ClientConfigurationDbContext context)
         {
-            _connectionString = connectionString;
+            if (context == null) throw new ArgumentNullException("context");
+            
+            this.context = context;
         }
 
         public Task<Models.Client> FindClientByIdAsync(string clientId)
         {
-            using(var db = new ClientConfigurationDbContext(_connectionString))
-            {
-                var client = db.Clients
-                    .Include("ClientSecrets")
-                    .Include("RedirectUris")
-                    .Include("PostLogoutRedirectUris")
-                    .Include("ScopeRestrictions")
-                    .Include("IdentityProviderRestrictions")
-                    .Include("Claims")
-                    .Include("CustomGrantTypeRestrictions")
-                    .SingleOrDefault(x => x.ClientId == clientId);
+            var client = context.Clients
+                .Include("ClientSecrets")
+                .Include("RedirectUris")
+                .Include("PostLogoutRedirectUris")
+                .Include("ScopeRestrictions")
+                .Include("IdentityProviderRestrictions")
+                .Include("Claims")
+                .Include("CustomGrantTypeRestrictions")
+                .SingleOrDefault(x => x.ClientId == clientId);
 
-                Models.Client model = client.ToModel();
-                return Task.FromResult(model);    
-            }
+            Models.Client model = client.ToModel();
+            return Task.FromResult(model);    
         }
     }
 }

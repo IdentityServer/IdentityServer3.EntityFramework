@@ -26,9 +26,17 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         }
 
         public ClientConfigurationDbContext(string connectionString)
-            : base(connectionString)
+            : this(connectionString, null)
         {
         }
+        
+        public ClientConfigurationDbContext(string connectionString, string schema)
+            : base(connectionString)
+        {
+            this.Schema = schema;
+        }
+
+        public string Schema { get; protected set; }
 
         public DbSet<Client> Clients { get; set; }
 
@@ -37,6 +45,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Client>()
+                .ToTable(EfConstants.TableNames.Client, Schema)
                 .HasMany(x => x.ClientSecrets).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.RedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
@@ -50,6 +59,14 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 .HasMany(x => x.Claims).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.CustomGrantTypeRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
+
+            modelBuilder.Entity<ClientClaim>().ToTable(EfConstants.TableNames.ClientClaim, Schema);
+            modelBuilder.Entity<ClientGrantTypeRestriction>().ToTable(EfConstants.TableNames.ClientGrantTypeRestriction, Schema);
+            modelBuilder.Entity<ClientIdPRestriction>().ToTable(EfConstants.TableNames.ClientIdPRestriction, Schema);
+            modelBuilder.Entity<ClientPostLogoutRedirectUri>().ToTable(EfConstants.TableNames.ClientPostLogoutRedirectUri, Schema);
+            modelBuilder.Entity<ClientRedirectUri>().ToTable(EfConstants.TableNames.ClientRedirectUri, Schema);
+            modelBuilder.Entity<ClientScopeRestriction>().ToTable(EfConstants.TableNames.ClientScopeRestriction, Schema);
+            modelBuilder.Entity<ClientSecret>().ToTable(EfConstants.TableNames.ClientSecret, Schema);
         }
     }
 }

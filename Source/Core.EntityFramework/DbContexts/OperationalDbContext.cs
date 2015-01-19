@@ -26,11 +26,27 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         }
 
         public OperationalDbContext(string connectionString)
-            : base(connectionString)
+            : this(connectionString, null)
         {
         }
 
+        public OperationalDbContext(string connectionString, string schema)
+            : base(connectionString)
+        {
+            this.Schema = schema;
+        }
+        
+        public string Schema { get; protected set; }
+
         public DbSet<Consent> Consents { get; set; }
         public DbSet<Token> Tokens { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Consent>().ToTable(EfConstants.TableNames.Consent, Schema);
+            modelBuilder.Entity<Token>().ToTable(EfConstants.TableNames.Token, Schema);
+        }
     }
 }
