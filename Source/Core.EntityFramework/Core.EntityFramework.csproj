@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EfConstants.cs" />
     <Compile Include="Entities\ClientGrantTypeRestriction.cs" />
     <Compile Include="Entities\ClientSecret.cs" />
     <Compile Include="Extensions\ModelsMap.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="Serialization\ClaimsPrincipalConverter.cs" />
     <Compile Include="Serialization\ClientConverter.cs" />
     <Compile Include="Serialization\ScopeConverter.cs" />
-    <Compile Include="EntityFrameworkServiceFactory.cs" />
+    <Compile Include="EntityFrameworkServiceRegistration.cs" />
     <Compile Include="Stores\TokenHandleStore.cs" />
   </ItemGroup>
   <ItemGroup>

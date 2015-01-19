@@ -20,7 +20,7 @@ namespace Thinktecture.IdentityServer.Core.Configuration
 {
     public static class IdentityServerServiceFactoryExtensions
     {
-        public static void RegisterOperationalServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceFactory services)
+        public static void RegisterOperationalServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceRegistration services)
         {
             if (factory == null) throw new ArgumentNullException("factory");
             if (services == null) throw new ArgumentNullException("services");
@@ -31,7 +31,7 @@ namespace Thinktecture.IdentityServer.Core.Configuration
             factory.RefreshTokenStore = services.RefreshTokenStore;
         }
 
-        public static void RegisterConfigurationServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceFactory services)
+        public static void RegisterConfigurationServices(this IdentityServerServiceFactory factory, EntityFrameworkServiceRegistration services)
         {
             if (factory == null) throw new ArgumentNullException("factory");
             if (services == null) throw new ArgumentNullException("services");

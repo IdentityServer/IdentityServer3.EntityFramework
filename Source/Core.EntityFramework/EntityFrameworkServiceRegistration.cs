@@ -21,10 +21,10 @@ using Thinktecture.IdentityServer.Core.Services;
 
 namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
-    public class EntityFrameworkServiceFactory
+    public class EntityFrameworkServiceRegistration
     {
         private readonly string _connectionString;
-        public EntityFrameworkServiceFactory(string connectionString)
+        public EntityFrameworkServiceRegistration(string connectionString)
         {
             _connectionString = connectionString;
         }

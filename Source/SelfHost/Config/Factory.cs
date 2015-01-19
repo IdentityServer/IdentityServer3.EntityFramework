@@ -14,13 +14,14 @@ namespace SelfHost.Config
     {
         public static IdentityServerServiceFactory Configure(string connString)
         {
-            var svcFactory = new EntityFrameworkServiceFactory(connString);
             ConfigureClients(Clients.Get(), connString);
             ConfigureScopes(Scopes.Get(), connString);
 
             var factory = new IdentityServerServiceFactory();
-            factory.RegisterConfigurationServices(svcFactory);
-            factory.RegisterOperationalServices(svcFactory);
+
+            var efServices = new EntityFrameworkServiceRegistration(connString);
+            factory.RegisterConfigurationServices(efServices);
+            factory.RegisterOperationalServices(efServices);
 
             var userService = new Thinktecture.IdentityServer.Core.Services.InMemory.InMemoryUserService(Users.Get());
             factory.UserService = new Registration<IUserService>(resolver => userService);
