@@ -32,6 +32,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Client>()
+                .HasMany(x => x.ClientSecrets).WithRequired(x => x.Client).WillCascadeOnDelete();
+            modelBuilder.Entity<Client>()
                 .HasMany(x => x.RedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.PostLogoutRedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
@@ -41,6 +43,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 .HasMany(x => x.IdentityProviderRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.Claims).WithRequired(x => x.Client).WillCascadeOnDelete();
+            modelBuilder.Entity<Client>()
+                .HasMany(x => x.CustomGrantTypeRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
         }
     }
 }

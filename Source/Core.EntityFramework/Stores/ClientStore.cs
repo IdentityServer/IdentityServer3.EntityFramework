@@ -34,12 +34,12 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             using(var db = new ClientConfigurationDbContext(_connectionString))
             {
                 var client = db.Clients
+                    .Include("ClientSecrets")
                     .Include("RedirectUris")
                     .Include("PostLogoutRedirectUris")
                     .Include("ScopeRestrictions")
                     .Include("IdentityProviderRestrictions")
                     .Include("Claims")
-                    .Include("ClientSecrets")
                     .Include("CustomGrantTypeRestrictions")
                     .SingleOrDefault(x => x.ClientId == clientId);
 
