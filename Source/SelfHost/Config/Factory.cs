@@ -16,6 +16,7 @@ namespace SelfHost.Config
         {
             var efConfig = new EntityFrameworkServiceOptions {
                 ConnectionString = connString,
+                //Schema = "foo"
             };
 
             // these two calls just pre-populate the test DB from the in-memory config

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -21,9 +22,17 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 {
     public class BaseDbContext : DbContext
     {
+        public string Schema { get; protected set; }
+
         public BaseDbContext(string connectionString)
+            : this(connectionString, null)
+        {
+        }
+        
+        public BaseDbContext(string connectionString, string schema)
             : base(connectionString)
         {
+            this.Schema = schema;
         }
 
         public override int SaveChanges()

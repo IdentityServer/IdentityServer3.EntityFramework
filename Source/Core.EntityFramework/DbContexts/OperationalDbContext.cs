@@ -26,18 +26,15 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         }
 
         public OperationalDbContext(string connectionString)
-            : this(connectionString, null)
+            : base(connectionString)
         {
         }
 
         public OperationalDbContext(string connectionString, string schema)
-            : base(connectionString)
+            : base(connectionString, schema)
         {
-            this.Schema = schema;
         }
         
-        public string Schema { get; protected set; }
-
         public DbSet<Consent> Consents { get; set; }
         public DbSet<Token> Tokens { get; set; }
 

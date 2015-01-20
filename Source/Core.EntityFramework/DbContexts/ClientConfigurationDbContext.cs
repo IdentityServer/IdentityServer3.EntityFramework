@@ -26,17 +26,14 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         }
 
         public ClientConfigurationDbContext(string connectionString)
-            : this(connectionString, null)
+            : base(connectionString)
         {
         }
         
         public ClientConfigurationDbContext(string connectionString, string schema)
-            : base(connectionString)
+            : base(connectionString, schema)
         {
-            this.Schema = schema;
         }
-
-        public string Schema { get; protected set; }
 
         public DbSet<Client> Clients { get; set; }
 
