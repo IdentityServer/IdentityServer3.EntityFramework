@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-/*
+﻿/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
@@ -87,15 +89,14 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             }
         }
 
-        public Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
+        public async Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
         {
-            var tokens = context.Tokens.Where(x => 
+            var tokens = await context.Tokens.Where(x => 
                 x.SubjectId == subject &&
-                x.TokenType == tokenType).ToArray();
+                x.TokenType == tokenType).ToArrayAsync();
             
             var results = tokens.Select(x=>ConvertFromJson(x.JsonCode)).ToArray();
-            
-            return Task.FromResult(results.Cast<ITokenMetadata>());
+            return results.Cast<ITokenMetadata>();
         }
         
         public async Task RevokeAsync(string subject, string client)

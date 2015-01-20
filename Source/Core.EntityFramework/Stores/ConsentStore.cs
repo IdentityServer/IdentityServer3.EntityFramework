@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -73,9 +75,9 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             await context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Models.Consent>> LoadAllAsync(string subject)
+        public async Task<IEnumerable<Models.Consent>> LoadAllAsync(string subject)
         {
-            var found = context.Consents.Where(x => x.Subject == subject).ToArray();
+            var found = await context.Consents.Where(x => x.Subject == subject).ToArrayAsync();
             
             var results = found.Select(x=>new Models.Consent{
                 Subject = x.Subject, 
@@ -83,7 +85,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 Scopes = ParseScopes(x.Scopes) 
             });
 
-            return Task.FromResult(results.ToArray().AsEnumerable());
+            return results.ToArray().AsEnumerable();
         }
 
         private IEnumerable<string> ParseScopes(string scopes)

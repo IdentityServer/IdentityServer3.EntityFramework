@@ -1,5 +1,4 @@
-﻿using System;
-/*
+﻿/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Services;
@@ -33,7 +35,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             this.context = context;
         }
 
-        public Task<IEnumerable<Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
             var scopes =
                 from s in context.Scopes.Include("ScopeClaims")
@@ -46,12 +48,11 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                             select s;
             }
 
-            var models = scopes.ToList().Select(x => x.ToModel());
-
-            return Task.FromResult(models);
+            var list = await scopes.ToListAsync();
+            return list.Select(x => x.ToModel());
         }
 
-        public Task<IEnumerable<Models.Scope>> GetScopesAsync(bool publicOnly = true)
+        public async Task<IEnumerable<Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
             var scopes =
                 from s in context.Scopes.Include("ScopeClaims")
@@ -64,9 +65,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                             select s;
             }
 
-            var models = scopes.ToList().Select(x => x.ToModel());
-
-            return Task.FromResult(models);
+            var list = await scopes.ToListAsync();
+            return list.Select(x => x.ToModel());
         }
     }
 }
