@@ -64,28 +64,27 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             return JsonConvert.DeserializeObject<T>(json, GetJsonSerializerSettings());
         }
 
-        public Task<T> GetAsync(string key)
+        public async Task<T> GetAsync(string key)
         {
-            var token = context.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == tokenType);
-            
-            if (token == null || token.Expiry < DateTimeOffset.UtcNow) return Task.FromResult<T>(null);
+            var token = await context.Tokens.FindAsync(key, tokenType);
 
-            T value = ConvertFromJson(token.JsonCode);
-            
-            return Task.FromResult(value);
-        }
-
-        public Task RemoveAsync(string key)
-        {
-            var code = context.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == tokenType);
-
-            if (code != null)
+            if (token == null || token.Expiry < DateTimeOffset.UtcNow)
             {
-                context.Tokens.Remove(code);
-                context.SaveChanges();
+                return null;
             }
 
-            return Task.FromResult(0);
+            return ConvertFromJson(token.JsonCode);
+        }
+
+        public async Task RemoveAsync(string key)
+        {
+            var token = await context.Tokens.FindAsync(key, tokenType);
+
+            if (token != null)
+            {
+                context.Tokens.Remove(token);
+                await context.SaveChangesAsync();
+            }
         }
 
         public Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
@@ -99,7 +98,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             return Task.FromResult(results.Cast<ITokenMetadata>());
         }
         
-        public Task RevokeAsync(string subject, string client)
+        public async Task RevokeAsync(string subject, string client)
         {
             var found = context.Tokens.Where(x => 
                 x.SubjectId == subject && 
@@ -107,9 +106,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 x.TokenType == tokenType).ToArray();
             
             context.Tokens.RemoveRange(found);
-            context.SaveChanges();
-
-            return Task.FromResult(0);
+            await context.SaveChangesAsync();
         }
 
         public abstract Task StoreAsync(string key, T value);

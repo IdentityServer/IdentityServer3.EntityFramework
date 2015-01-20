@@ -28,7 +28,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
         }
 
-        public override Task StoreAsync(string key, RefreshToken value)
+        public override async Task StoreAsync(string key, RefreshToken value)
         {
             var efToken = new Entities.Token
             {
@@ -41,9 +41,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             };
 
             context.Tokens.Add(efToken);
-            context.SaveChanges();
-
-            return Task.FromResult(0);
+            await context.SaveChangesAsync();
         }
     }
 }

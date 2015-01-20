@@ -32,12 +32,12 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             this.context = context;
         }
 
-        public Task<Models.Consent> LoadAsync(string subject, string client)
+        public async Task<Models.Consent> LoadAsync(string subject, string client)
         {
-            var found = context.Consents.SingleOrDefault(x => x.Subject == subject && x.ClientId == client);
+            var found = await context.Consents.FindAsync(subject, client);
             if (found == null)
             {
-                return Task.FromResult<Models.Consent>(null);
+                return null;
             }
                 
             var result = new Models.Consent
@@ -47,15 +47,19 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 Scopes = ParseScopes(found.Scopes)
             };
 
-            return Task.FromResult(result);
+            return result;
         }
 
-        public Task UpdateAsync(Models.Consent consent)
+        public async Task UpdateAsync(Models.Consent consent)
         {
-            var item = context.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
+            var item = await context.Consents.FindAsync(consent.Subject, consent.ClientId);
             if (item == null)
             {
-                item = new Entities.Consent { Subject = consent.Subject, ClientId = consent.ClientId };
+                item = new Entities.Consent 
+                { 
+                    Subject = consent.Subject, 
+                    ClientId = consent.ClientId 
+                };
                 context.Consents.Add(item);
             }
                 
@@ -66,9 +70,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
 
             item.Scopes = StringifyScopes(consent.Scopes);
 
-            context.SaveChanges();
-            
-            return Task.FromResult(0);
+            await context.SaveChangesAsync();
         }
 
         public Task<IEnumerable<Models.Consent>> LoadAllAsync(string subject)
@@ -104,15 +106,15 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             return scopes.Aggregate((s1, s2) => s1 + "," + s2);
         }
 
-        public Task RevokeAsync(string subject, string client)
+        public async Task RevokeAsync(string subject, string client)
         {
-            var found = context.Consents.Where(x => x.Subject == subject && x.ClientId == client);
-            
-            context.Consents.RemoveRange(found.ToArray());
-            
-            context.SaveChanges();
+            var found = await context.Consents.FindAsync(subject, client);
 
-            return Task.FromResult(0);
+            if (found != null)
+            {
+                context.Consents.Remove(found);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

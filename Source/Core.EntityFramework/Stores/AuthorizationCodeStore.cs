@@ -28,7 +28,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
         {
         }
 
-        public override Task StoreAsync(string key, AuthorizationCode code)
+        public override async Task StoreAsync(string key, AuthorizationCode code)
         {
             var efCode = new Entities.Token
             {
@@ -41,9 +41,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             };
 
             context.Tokens.Add(efCode);
-            context.SaveChanges();
-
-            return Task.FromResult(0);
+            await context.SaveChangesAsync();
         }
     }
 }
