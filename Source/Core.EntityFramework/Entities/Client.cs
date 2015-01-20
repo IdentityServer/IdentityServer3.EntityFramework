@@ -65,7 +65,6 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual TokenUsage RefreshTokenUsage { get; set; }
         public virtual TokenExpiration RefreshTokenExpiration { get; set; }
         
-        public virtual SigningKeyTypes IdentityTokenSigningKeyType { get; set; }
         public virtual AccessTokenType AccessTokenType { get; set; }
 
         public virtual bool EnableLocalLogin { get; set; }
