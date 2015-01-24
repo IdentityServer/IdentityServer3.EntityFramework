@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
+namespace Thinktecture.IdentityServer.EntityFramework.Tests.Serialization
 {
     [TestClass]
     public class ScopeConverterTests

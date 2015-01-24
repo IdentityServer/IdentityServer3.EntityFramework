@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.EntityFramework.Serialization;
 
-namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
+namespace Thinktecture.IdentityServer.EntityFramework.Tests.Serialization
 {
     [TestClass]
     public class ClaimConverterTests

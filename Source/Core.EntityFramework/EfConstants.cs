@@ -23,7 +23,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
 {
     class EfConstants
     {
-        public const string ConnectionName = "Thinktecture.IdentityServer.v3";
+        public const string ConnectionName = "Thinktecture.IdentityServer3";
 
         public class TableNames
         {
