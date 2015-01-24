@@ -16,7 +16,7 @@
  */
 using System.ComponentModel.DataAnnotations;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
+namespace Thinktecture.IdentityServer.EntityFramework.Entities
 {
     public class ClientSecret
     {
@@ -27,7 +27,12 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         [StringLength(250)]
         public virtual string Value { get; set; }
 
+        [StringLength(250)]
+        public string ClientSecretType { get; set; }
+
+        [StringLength(2000)]
         public virtual string Description { get; set; }
+
         public virtual DateTimeOffset? Expiration { get; set; }
         
         public virtual Client Client { get; set; }

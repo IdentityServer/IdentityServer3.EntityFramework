@@ -13,37 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class ClientStore : IClientStore
     {
-        private readonly string _connectionString;
+        private readonly ClientConfigurationDbContext context;
 
-        public ClientStore(string connectionString)
+        public ClientStore(ClientConfigurationDbContext context)
         {
-            _connectionString = connectionString;
+            if (context == null) throw new ArgumentNullException("context");
+            
+            this.context = context;
         }
 
-        public Task<Models.Client> FindClientByIdAsync(string clientId)
+        public async Task<Thinktecture.IdentityServer.Core.Models.Client> FindClientByIdAsync(string clientId)
         {
-            using(var db = new ClientConfigurationDbContext(_connectionString))
-            {
-                var client = db.Clients
-                    .Include("RedirectUris")
-                    .Include("PostLogoutRedirectUris")
-                    .Include("ScopeRestrictions")
-                    .Include("IdentityProviderRestrictions")
-                    .Include("Claims")
-                    .SingleOrDefault(x => x.ClientId == clientId);
+            var client = await context.Clients
+                .Include("ClientSecrets")
+                .Include("RedirectUris")
+                .Include("PostLogoutRedirectUris")
+                .Include("ScopeRestrictions")
+                .Include("IdentityProviderRestrictions")
+                .Include("Claims")
+                .Include("CustomGrantTypeRestrictions")
+                .SingleOrDefaultAsync(x => x.ClientId == clientId);
 
-                Models.Client model = client.ToModel();
-                return Task.FromResult(model);    
-            }
+            Thinktecture.IdentityServer.Core.Models.Client model = client.ToModel();
+            return model;    
         }
     }
 }

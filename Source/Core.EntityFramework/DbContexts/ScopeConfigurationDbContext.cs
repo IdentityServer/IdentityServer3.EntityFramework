@@ -14,14 +14,24 @@
  * limitations under the License.
  */
 using System.Data.Entity;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class ScopeConfigurationDbContext : BaseDbContext
     {
+        public ScopeConfigurationDbContext()
+            : this(EfConstants.ConnectionName)
+        {
+        }
+
         public ScopeConfigurationDbContext(string connectionString)
             : base(connectionString)
+        {
+        }
+        
+        public ScopeConfigurationDbContext(string connectionString, string schema)
+            : base(connectionString, schema)
         {
         }
 
@@ -32,7 +42,10 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Scope>()
+                .ToTable(EfConstants.TableNames.Scope, Schema)
                 .HasMany(x => x.ScopeClaims).WithRequired(x => x.Scope).WillCascadeOnDelete();
+
+            modelBuilder.Entity<ScopeClaim>().ToTable(EfConstants.TableNames.ScopeClaim, Schema);
         }
     }
 }

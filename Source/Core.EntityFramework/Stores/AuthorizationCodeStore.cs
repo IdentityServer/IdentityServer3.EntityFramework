@@ -15,38 +15,33 @@
  */
 using System;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class AuthorizationCodeStore : BaseTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
-        public AuthorizationCodeStore(string connectionString, IScopeStore scopeStore, IClientStore clientStore)
-            : base(connectionString, TokenType.AuthorizationCode, scopeStore, clientStore)
+        public AuthorizationCodeStore(OperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+            : base(context, TokenType.AuthorizationCode, scopeStore, clientStore)
         {
         }
 
-        public override Task StoreAsync(string key, AuthorizationCode code)
+        public override async Task StoreAsync(string key, AuthorizationCode code)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
+            var efCode = new Entities.Token
             {
-                var efCode = new Entities.Token
-                {
-                    Key = key,
-                    SubjectId = code.SubjectId,
-                    ClientId = code.ClientId,
-                    JsonCode = ConvertToJson(code),
-                    Expiry = DateTimeOffset.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
-                    TokenType = this.TokenType
-                };
+                Key = key,
+                SubjectId = code.SubjectId,
+                ClientId = code.ClientId,
+                JsonCode = ConvertToJson(code),
+                Expiry = DateTimeOffset.UtcNow.AddSeconds(code.Client.AuthorizationCodeLifetime),
+                TokenType = this.tokenType
+            };
 
-                db.Tokens.Add(efCode);
-                db.SaveChanges();
-            }
-
-            return Task.FromResult(0);
+            context.Tokens.Add(efCode);
+            await context.SaveChangesAsync();
         }
     }
 }

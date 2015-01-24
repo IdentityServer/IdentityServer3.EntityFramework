@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Thinktecture.IdentityServer.v3.EntityFramework.Tests")]
+[assembly: AssemblyTitle("Thinktecture.IdentityServer3.EntityFramework.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Thinktecture.IdentityServer.v3.EntityFramework.Tests")]
+[assembly: AssemblyProduct("Thinktecture.IdentityServer3.EntityFramework.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

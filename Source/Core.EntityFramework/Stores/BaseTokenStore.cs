@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-/*
+﻿/*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,35 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
-using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public abstract class BaseTokenStore<T> where T : class
     {
-        private readonly string _connectionString;
-        protected readonly TokenType TokenType;
-        protected readonly IScopeStore _scopeStore;
-        protected readonly IClientStore _clientStore;
+        protected readonly OperationalDbContext context;
+        protected readonly TokenType tokenType;
+        protected readonly IScopeStore scopeStore;
+        protected readonly IClientStore clientStore;
 
-        protected string ConnectionString
+        protected BaseTokenStore(OperationalDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
         {
-            get { return _connectionString; }
-        }
-
-        protected BaseTokenStore(string connectionString, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
-        {
-            _connectionString = connectionString;
-            TokenType = tokenType;
-            _scopeStore = scopeStore;
-            _clientStore = clientStore;
+            if (context == null) throw new ArgumentNullException("context");
+            if (scopeStore == null) throw new ArgumentNullException("scopeStore");
+            if (clientStore == null) throw new ArgumentNullException("clientStore");
+            
+            this.context = context;
+            this.tokenType = tokenType;
+            this.scopeStore = scopeStore;
+            this.clientStore = clientStore;
         }
 
         JsonSerializerSettings GetJsonSerializerSettings()
@@ -50,8 +51,8 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ClaimConverter());
             settings.Converters.Add(new ClaimsPrincipalConverter());
-            settings.Converters.Add(new ClientConverter(_clientStore));
-            settings.Converters.Add(new ScopeConverter(_scopeStore));
+            settings.Converters.Add(new ClientConverter(clientStore));
+            settings.Converters.Add(new ScopeConverter(scopeStore));
             return settings;
         }
 
@@ -65,61 +66,48 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             return JsonConvert.DeserializeObject<T>(json, GetJsonSerializerSettings());
         }
 
-        public Task<T> GetAsync(string key)
+        public async Task<T> GetAsync(string key)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var token = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
-                if (token == null || token.Expiry < DateTimeOffset.UtcNow) return Task.FromResult<T>(null);
+            var token = await context.Tokens.FindAsync(key, tokenType);
 
-                T value = ConvertFromJson(token.JsonCode);
-                return Task.FromResult(value);
+            if (token == null || token.Expiry < DateTimeOffset.UtcNow)
+            {
+                return null;
+            }
+
+            return ConvertFromJson(token.JsonCode);
+        }
+
+        public async Task RemoveAsync(string key)
+        {
+            var token = await context.Tokens.FindAsync(key, tokenType);
+
+            if (token != null)
+            {
+                context.Tokens.Remove(token);
+                await context.SaveChangesAsync();
             }
         }
 
-        public Task RemoveAsync(string key)
+        public async Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var code = db.Tokens.FirstOrDefault(c => c.Key == key && c.TokenType == TokenType);
-
-                if (code != null)
-                {
-                    db.Tokens.Remove(code);
-                    db.SaveChanges();
-                }
-            }
-
-            return Task.FromResult(0);
-        }
-
-        public Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
-        {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var tokens = db.Tokens.Where(x => 
-                    x.SubjectId == subject &&
-                    x.TokenType == TokenType).ToArray();
-                var results = tokens.Select(x=>ConvertFromJson(x.JsonCode)).ToArray();
-                
-                return Task.FromResult(results.Cast<ITokenMetadata>());
-            }
+            var tokens = await context.Tokens.Where(x => 
+                x.SubjectId == subject &&
+                x.TokenType == tokenType).ToArrayAsync();
+            
+            var results = tokens.Select(x=>ConvertFromJson(x.JsonCode)).ToArray();
+            return results.Cast<ITokenMetadata>();
         }
         
-        public Task RevokeAsync(string subject, string client)
+        public async Task RevokeAsync(string subject, string client)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
-            {
-                var found = db.Tokens.Where(x => 
-                    x.SubjectId == subject && 
-                    x.ClientId == client && 
-                    x.TokenType == TokenType).ToArray();
-                db.Tokens.RemoveRange(found);
-
-                db.SaveChanges();
-            }
-
-            return Task.FromResult(0);
+            var found = context.Tokens.Where(x => 
+                x.SubjectId == subject && 
+                x.ClientId == client && 
+                x.TokenType == tokenType).ToArray();
+            
+            context.Tokens.RemoveRange(found);
+            await context.SaveChangesAsync();
         }
 
         public abstract Task StoreAsync(string key, T value);

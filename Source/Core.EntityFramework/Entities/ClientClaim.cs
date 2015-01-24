@@ -15,7 +15,7 @@
  */
 using System.ComponentModel.DataAnnotations;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
+namespace Thinktecture.IdentityServer.EntityFramework.Entities
 {
     public class ClientClaim
     {

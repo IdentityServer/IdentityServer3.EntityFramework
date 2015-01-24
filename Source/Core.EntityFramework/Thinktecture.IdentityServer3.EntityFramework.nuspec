@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Thinktecture.IdentityServer.v3.EntityFramework</id>
+    <id>Thinktecture.IdentityServer3.EntityFramework</id>
     <version>0.0.0</version>
-    <title>Thinktecture IdentityServer v3 - Entity Framework</title>
+    <title>Thinktecture IdentityServer3 - Entity Framework</title>
     <authors>Brock Allen, Dominick Baier, and contributors</authors>
     <owners>Brock Allen, Dominick Baier</owners>
-    <projectUrl>https://github.com/thinktecture/Thinktecture.IdentityServer.v3.EntityFramework</projectUrl>
+    <projectUrl>https://github.com/IdentityServer/Thinktecture.IdentityServer3.EntityFramework</projectUrl>
     <iconUrl>http://www.thinktecture.com/images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>"Thinktecture IdentityServer v3 - Entity Framework" is an Entity Framework-based persistence layer for Thinktecture IdentityServer v3</description>
+    <description>"Thinktecture IdentityServer3 - Entity Framework" is an Entity Framework-based persistence layer for Thinktecture IdentityServer3</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright 2014</copyright>
+    <copyright>Copyright 2015</copyright>
     <tags>Thinktecture IdentityServer OpenIDConnect OAuth2 OWIN EF EntityFramework</tags>
   </metadata>
 </package>

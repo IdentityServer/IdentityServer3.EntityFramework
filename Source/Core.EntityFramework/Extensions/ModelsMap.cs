@@ -16,7 +16,8 @@
  */
 using System.Collections.Generic;
 using System.Linq;
-using Entities = Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using System.Security.Claims;
+using Entities = Thinktecture.IdentityServer.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.Models
 {
@@ -76,6 +77,10 @@ namespace Thinktecture.IdentityServer.Core.Models
             if (s.IdentityProviderRestrictions == null)
             {
                 s.IdentityProviderRestrictions = new List<string>();
+            }
+            if (s.Claims == null)
+            {
+                s.Claims = new List<Claim>();
             }
             if (s.CustomGrantTypeRestrictions == null)
             {

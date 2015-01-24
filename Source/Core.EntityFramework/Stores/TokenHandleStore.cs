@@ -18,34 +18,29 @@ using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class TokenHandleStore : BaseTokenStore<Token>, ITokenHandleStore
     {
-        public TokenHandleStore(string connectionString, IScopeStore scopeStore, IClientStore clientStore)
-            : base(connectionString, Entities.TokenType.TokenHandle, scopeStore, clientStore)
+        public TokenHandleStore(OperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+            : base(context, Entities.TokenType.TokenHandle, scopeStore, clientStore)
         {
         }
 
-        public override Task StoreAsync(string key, Token value)
+        public override async Task StoreAsync(string key, Token value)
         {
-            using (var db = new OperationalDbContext(ConnectionString))
+            var efToken = new Entities.Token
             {
-                var efToken = new Entities.Token
-                {
-                    Key = key,
-                    SubjectId = value.SubjectId,
-                    ClientId = value.ClientId,
-                    JsonCode = ConvertToJson(value),
-                    Expiry = DateTimeOffset.UtcNow.AddSeconds(value.Lifetime),
-                    TokenType = this.TokenType
-                };
+                Key = key,
+                SubjectId = value.SubjectId,
+                ClientId = value.ClientId,
+                JsonCode = ConvertToJson(value),
+                Expiry = DateTimeOffset.UtcNow.AddSeconds(value.Lifetime),
+                TokenType = this.tokenType
+            };
 
-                db.Tokens.Add(efToken);
-                db.SaveChanges();
-            }
-            
-            return Task.FromResult(0);
+            context.Tokens.Add(efToken);
+            await context.SaveChangesAsync();
         }
     }
 }

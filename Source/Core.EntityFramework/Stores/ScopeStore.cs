@@ -13,63 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class ScopeStore : IScopeStore
     {
-        private readonly string _connectionString;
+        private readonly ScopeConfigurationDbContext context;
 
-        public ScopeStore(string connectionString)
+        public ScopeStore(ScopeConfigurationDbContext context)
         {
-            _connectionString = connectionString;
+            if (context == null) throw new ArgumentNullException("context");
+
+            this.context = context;
         }
 
-        public Task<IEnumerable<Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
-            using (var db = new ScopeConfigurationDbContext(_connectionString))
-            {
-                var scopes =
-                    from s in db.Scopes.Include("ScopeClaims")
-                    select s;
+            var scopes =
+                from s in context.Scopes.Include("ScopeClaims")
+                select s;
                 
-                if (scopeNames != null && scopeNames.Any())
-                {
-                    scopes = from s in scopes
-                             where scopeNames.Contains(s.Name)
-                             select s;
-                }
-
-                var models = scopes.ToList().Select(x => x.ToModel());
-
-                return Task.FromResult(models);
+            if (scopeNames != null && scopeNames.Any())
+            {
+                scopes = from s in scopes
+                            where scopeNames.Contains(s.Name)
+                            select s;
             }
+
+            var list = await scopes.ToListAsync();
+            return list.Select(x => x.ToModel());
         }
 
-        public Task<IEnumerable<Models.Scope>> GetScopesAsync(bool publicOnly = true)
+        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
-            using (var db = new ScopeConfigurationDbContext(_connectionString))
-            {
-                var scopes =
-                    from s in db.Scopes.Include("ScopeClaims")
-                    select s;
+            var scopes =
+                from s in context.Scopes.Include("ScopeClaims")
+                select s;
                 
-                if (publicOnly)
-                {
-                    scopes = from s in scopes
-                             where s.ShowInDiscoveryDocument == true
-                             select s;
-                }
-
-                var models = scopes.ToList().Select(x => x.ToModel());
-
-                return Task.FromResult(models);
+            if (publicOnly)
+            {
+                scopes = from s in scopes
+                            where s.ShowInDiscoveryDocument == true
+                            select s;
             }
+
+            var list = await scopes.ToListAsync();
+            return list.Select(x => x.ToModel());
         }
     }
 }

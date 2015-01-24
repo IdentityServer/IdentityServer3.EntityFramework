@@ -5,14 +5,14 @@ using System.Security.Claims;
 using Thinktecture.IdentityServer.Core;
 using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
+using Thinktecture.IdentityServer.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.Services.InMemory;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
+namespace Thinktecture.IdentityServer.EntityFramework.Tests.Serialization
 {
     [TestClass]
     public class ScopeConverterTests

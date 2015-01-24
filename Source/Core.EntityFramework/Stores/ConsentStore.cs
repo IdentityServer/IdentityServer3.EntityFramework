@@ -13,99 +13,110 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class ConsentStore : IConsentStore
     {
-        private readonly string _connectionString;
+        private readonly OperationalDbContext context;
 
-        public ConsentStore(string connectionString)
+        public ConsentStore(OperationalDbContext context)
         {
-            _connectionString = connectionString;
-        }
-
-        public Task<Models.Consent> LoadAsync(string subject, string client)
-        {
-            using (var db = new OperationalDbContext(_connectionString))
-            {
-                var found = db.Consents.SingleOrDefault(x => x.Subject == subject && x.ClientId == client);
-                if (found == null) return Task.FromResult<Models.Consent>(null);
-                
-                var result = new Models.Consent
-                {
-                    Subject = found.Subject,
-                    ClientId = found.ClientId,
-                    Scopes = ParseScopes(found.Scopes)
-                };
-                return Task.FromResult(result);
-            }
-        }
-
-        public Task UpdateAsync(Models.Consent consent)
-        {
-            using (var db = new OperationalDbContext(_connectionString))
-            {
-                var item = db.Consents.SingleOrDefault(x => x.Subject == consent.Subject && x.ClientId == consent.ClientId);
-                if (item == null)
-                {
-                    item = new Entities.Consent { Subject = consent.Subject, ClientId = consent.ClientId };
-                    db.Consents.Add(item);
-                }
-                
-                if (consent.Scopes == null || !consent.Scopes.Any())
-                {
-                    db.Consents.Remove(item);
-                }
-
-                item.Scopes = StringifyScopes(consent.Scopes);
-
-                db.SaveChanges();
-            }
+            if (context == null) throw new ArgumentNullException("context");
             
-            return Task.FromResult(0);
+            this.context = context;
         }
 
-        public Task<IEnumerable<Models.Consent>> LoadAllAsync(string subject)
+        public async Task<Thinktecture.IdentityServer.Core.Models.Consent> LoadAsync(string subject, string client)
         {
-            using (var db = new OperationalDbContext(_connectionString))
+            var found = await context.Consents.FindAsync(subject, client);
+            if (found == null)
             {
-                var found = db.Consents.Where(x => x.Subject == subject).ToArray();
-                var results = found.Select(x=>new Models.Consent{
-                    Subject = x.Subject, 
-                    ClientId = x.ClientId, 
-                    Scopes = ParseScopes(x.Scopes) 
-                });
-                return Task.FromResult(results.ToArray().AsEnumerable());
+                return null;
             }
+                
+            var result = new Thinktecture.IdentityServer.Core.Models.Consent
+            {
+                Subject = found.Subject,
+                ClientId = found.ClientId,
+                Scopes = ParseScopes(found.Scopes)
+            };
+
+            return result;
+        }
+
+        public async Task UpdateAsync(Thinktecture.IdentityServer.Core.Models.Consent consent)
+        {
+            var item = await context.Consents.FindAsync(consent.Subject, consent.ClientId);
+            if (item == null)
+            {
+                item = new Entities.Consent 
+                { 
+                    Subject = consent.Subject, 
+                    ClientId = consent.ClientId 
+                };
+                context.Consents.Add(item);
+            }
+                
+            if (consent.Scopes == null || !consent.Scopes.Any())
+            {
+                context.Consents.Remove(item);
+            }
+
+            item.Scopes = StringifyScopes(consent.Scopes);
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Consent>> LoadAllAsync(string subject)
+        {
+            var found = await context.Consents.Where(x => x.Subject == subject).ToArrayAsync();
+            
+            var results = found.Select(x=>new Thinktecture.IdentityServer.Core.Models.Consent{
+                Subject = x.Subject, 
+                ClientId = x.ClientId, 
+                Scopes = ParseScopes(x.Scopes) 
+            });
+
+            return results.ToArray().AsEnumerable();
         }
 
         private IEnumerable<string> ParseScopes(string scopes)
         {
-            if (scopes == null || String.IsNullOrWhiteSpace(scopes)) return Enumerable.Empty<string>();
+            if (scopes == null || String.IsNullOrWhiteSpace(scopes))
+            {
+                return Enumerable.Empty<string>();
+            }
+
             return scopes.Split(',');
         }
 
         private string StringifyScopes(IEnumerable<string> scopes)
         {
-            if (scopes == null || !scopes.Any()) return null;
+            if (scopes == null || !scopes.Any())
+            {
+                return null;
+            }
+
             return scopes.Aggregate((s1, s2) => s1 + "," + s2);
         }
 
-        public Task RevokeAsync(string subject, string client)
+        public async Task RevokeAsync(string subject, string client)
         {
-            using (var db = new OperationalDbContext(_connectionString))
+            var found = await context.Consents.FindAsync(subject, client);
+
+            if (found != null)
             {
-                var found = db.Consents.Where(x => x.Subject == subject && x.ClientId == client);
-                db.Consents.RemoveRange(found.ToArray());
-                db.SaveChanges();
+                context.Consents.Remove(found);
+                await context.SaveChangesAsync();
             }
-            return Task.FromResult(0);
         }
     }
 }

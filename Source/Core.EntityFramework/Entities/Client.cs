@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Thinktecture.IdentityServer.Core.Models;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
+namespace Thinktecture.IdentityServer.EntityFramework.Entities
 {
     public class Client
     {
@@ -65,11 +65,9 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
         public virtual TokenUsage RefreshTokenUsage { get; set; }
         public virtual TokenExpiration RefreshTokenExpiration { get; set; }
         
-        public virtual SigningKeyTypes IdentityTokenSigningKeyType { get; set; }
         public virtual AccessTokenType AccessTokenType { get; set; }
 
-        public virtual bool AllowLocalLogin { get; set; }
-
+        public virtual bool EnableLocalLogin { get; set; }
         public virtual ICollection<ClientIdPRestriction> IdentityProviderRestrictions { get; set; }
         
         public virtual bool IncludeJwtId { get; set; }

@@ -14,18 +14,36 @@
  * limitations under the License.
  */
 using System.Data.Entity;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class OperationalDbContext : BaseDbContext
     {
+        public OperationalDbContext()
+            : this(EfConstants.ConnectionName)
+        {
+        }
+
         public OperationalDbContext(string connectionString)
             : base(connectionString)
         {
         }
 
+        public OperationalDbContext(string connectionString, string schema)
+            : base(connectionString, schema)
+        {
+        }
+        
         public DbSet<Consent> Consents { get; set; }
         public DbSet<Token> Tokens { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Consent>().ToTable(EfConstants.TableNames.Consent, Schema);
+            modelBuilder.Entity<Token>().ToTable(EfConstants.TableNames.Token, Schema);
+        }
     }
 }
