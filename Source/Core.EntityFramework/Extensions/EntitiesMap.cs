@@ -17,19 +17,18 @@ using AutoMapper;
 using System.Linq;
 using System.Security.Claims;
 
-
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
+namespace Thinktecture.IdentityServer.EntityFramework.Entities
 {
     public static class EntitiesMap
     {
         static EntitiesMap()
         {
-            Mapper.CreateMap<Entities.Scope, Models.Scope>(MemberList.Destination)
+            Mapper.CreateMap<Entities.Scope, Thinktecture.IdentityServer.Core.Models.Scope>(MemberList.Destination)
                 .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)));
-            Mapper.CreateMap<Entities.ScopeClaim, Models.ScopeClaim>(MemberList.Destination);
+            Mapper.CreateMap<Entities.ScopeClaim, Thinktecture.IdentityServer.Core.Models.ScopeClaim>(MemberList.Destination);
 
-            Mapper.CreateMap<Entities.ClientSecret, Models.ClientSecret>(MemberList.Destination);
-            Mapper.CreateMap<Entities.Client, Models.Client>(MemberList.Destination)
+            Mapper.CreateMap<Entities.ClientSecret, Thinktecture.IdentityServer.Core.Models.ClientSecret>(MemberList.Destination);
+            Mapper.CreateMap<Entities.Client, Thinktecture.IdentityServer.Core.Models.Client>(MemberList.Destination)
                 .ForMember(x => x.CustomGrantTypeRestrictions, opt => opt.MapFrom(src => src.CustomGrantTypeRestrictions.Select(x => x.GrantType)))
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => x.Uri)))
                 .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => x.Uri)))
@@ -40,16 +39,16 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
             Mapper.AssertConfigurationIsValid();
         }
 
-        public static Models.Scope ToModel(this Entities.Scope s)
+        public static Thinktecture.IdentityServer.Core.Models.Scope ToModel(this Entities.Scope s)
         {
             if (s == null) return null;
-            return Mapper.Map<Entities.Scope, Models.Scope>(s);
+            return Mapper.Map<Entities.Scope, Thinktecture.IdentityServer.Core.Models.Scope>(s);
         }
 
-        public static Models.Client ToModel(this Entities.Client s)
+        public static Thinktecture.IdentityServer.Core.Models.Client ToModel(this Entities.Client s)
         {
             if (s == null) return null;
-            return Mapper.Map<Entities.Client, Models.Client>(s);
+            return Mapper.Map<Entities.Client, Thinktecture.IdentityServer.Core.Models.Client>(s);
         }
     }
 }

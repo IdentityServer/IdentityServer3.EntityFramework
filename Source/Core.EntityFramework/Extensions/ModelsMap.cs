@@ -17,7 +17,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Entities = Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Entities = Thinktecture.IdentityServer.EntityFramework.Entities;
 
 namespace Thinktecture.IdentityServer.Core.Models
 {

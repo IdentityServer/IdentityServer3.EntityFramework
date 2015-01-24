@@ -19,10 +19,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class ScopeStore : IScopeStore
     {
@@ -35,7 +35,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             this.context = context;
         }
 
-        public async Task<IEnumerable<Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
             var scopes =
                 from s in context.Scopes.Include("ScopeClaims")
@@ -52,7 +52,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             return list.Select(x => x.ToModel());
         }
 
-        public async Task<IEnumerable<Models.Scope>> GetScopesAsync(bool publicOnly = true)
+        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
             var scopes =
                 from s in context.Scopes.Include("ScopeClaims")

@@ -20,12 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
-using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Serialization;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public abstract class BaseTokenStore<T> where T : class
     {

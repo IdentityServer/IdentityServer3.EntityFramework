@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Thinktecture.IdentityServer.Core.Models;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Entities
+namespace Thinktecture.IdentityServer.EntityFramework.Entities
 {
     public class Client
     {

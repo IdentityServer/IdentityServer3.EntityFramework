@@ -19,7 +19,7 @@ using System.Linq;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
+namespace Thinktecture.IdentityServer.EntityFramework.Serialization
 {
     public class ScopeLite
     {

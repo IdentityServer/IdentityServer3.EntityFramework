@@ -18,10 +18,10 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.EntityFramework.Entities;
+using Thinktecture.IdentityServer.EntityFramework.Entities;
 using Thinktecture.IdentityServer.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework
+namespace Thinktecture.IdentityServer.EntityFramework
 {
     public class ClientStore : IClientStore
     {
@@ -34,7 +34,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
             this.context = context;
         }
 
-        public async Task<Models.Client> FindClientByIdAsync(string clientId)
+        public async Task<Thinktecture.IdentityServer.Core.Models.Client> FindClientByIdAsync(string clientId)
         {
             var client = await context.Clients
                 .Include("ClientSecrets")
@@ -46,7 +46,7 @@ namespace Thinktecture.IdentityServer.Core.EntityFramework
                 .Include("CustomGrantTypeRestrictions")
                 .SingleOrDefaultAsync(x => x.ClientId == clientId);
 
-            Models.Client model = client.ToModel();
+            Thinktecture.IdentityServer.Core.Models.Client model = client.ToModel();
             return model;    
         }
     }

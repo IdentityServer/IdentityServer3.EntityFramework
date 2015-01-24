@@ -17,7 +17,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
+namespace Thinktecture.IdentityServer.EntityFramework.Serialization
 {
     internal static class AsyncHelper
     {

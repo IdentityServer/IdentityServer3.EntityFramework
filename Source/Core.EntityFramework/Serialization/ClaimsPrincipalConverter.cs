@@ -18,7 +18,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 
-namespace Thinktecture.IdentityServer.Core.EntityFramework.Serialization
+namespace Thinktecture.IdentityServer.EntityFramework.Serialization
 {
     public class ClaimsPrincipalLite
     {

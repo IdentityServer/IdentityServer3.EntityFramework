@@ -5,7 +5,7 @@ using System.Security.Claims;
 using Thinktecture.IdentityServer.Core;
 using Newtonsoft.Json;
 using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.Core.EntityFramework.Serialization;
+using Thinktecture.IdentityServer.EntityFramework.Serialization;
 
 namespace Thinktecture.IdentityServer.v3.EntityFramework.Tests.Serialization
 {
