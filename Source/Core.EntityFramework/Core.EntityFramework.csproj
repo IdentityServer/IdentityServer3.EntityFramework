@@ -32,7 +32,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\build\Thinktecture.IdentityServer3.EntityFramework.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
@@ -114,7 +115,9 @@
       <Link>default.licenseheader</Link>
     </None>
     <None Include="App.config" />
-    <None Include="Thinktecture.IdentityServer.v3.EntityFramework.nuspec" />
+    <None Include="Thinktecture.IdentityServer3.EntityFramework.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
