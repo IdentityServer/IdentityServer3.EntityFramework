@@ -9,9 +9,9 @@
     <projectUrl>https://github.com/IdentityServer/Thinktecture.IdentityServer3.EntityFramework</projectUrl>
     <iconUrl>http://www.thinktecture.com/images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>"Thinktecture IdentityServer3 - Entity Framework" is an Entity Framework-based persistence layer for Thinktecture IdentityServer3</description>
+    <summary>Entity Framework-based persistence layer for IdentityServer3</summary>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>Thinktecture IdentityServer OpenIDConnect OAuth2 OWIN EF EntityFramework</tags>
+    <tags>Thinktecture IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity EF EntityFramework</tags>
   </metadata>
 </package>
