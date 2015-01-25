@@ -9,6 +9,7 @@
     <projectUrl>https://github.com/IdentityServer/Thinktecture.IdentityServer3.EntityFramework</projectUrl>
     <iconUrl>http://www.thinktecture.com/images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/IdentityServer/Thinktecture.IdentityServer3.EntityFramework/blob/master/LICENSE</licenseUrl>
     <summary>Entity Framework-based persistence layer for IdentityServer3</summary>
     <description>Entity Framework-based persistence layer for IdentityServer3</description>
     <releaseNotes></releaseNotes>
