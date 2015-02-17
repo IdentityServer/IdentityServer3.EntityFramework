@@ -31,6 +31,8 @@ namespace SelfHost.Config
             factory.RegisterConfigurationServices(efConfig);
             factory.RegisterOperationalServices(efConfig);
 
+            factory.CorsPolicyService = new ClientConfigurationCorsPolicyRegistration(efConfig);
+
             var userService = new Thinktecture.IdentityServer.Core.Services.InMemory.InMemoryUserService(Users.Get());
             factory.UserService = new Registration<IUserService>(resolver => userService);
 
