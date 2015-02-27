@@ -32,7 +32,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
             this.context = ctx;
         }
 
-        public async Task<bool> IsOriginAllowed(string origin)
+        public async Task<bool> IsOriginAllowedAsync(string origin)
         {
             var query =
                 from client in context.Clients
