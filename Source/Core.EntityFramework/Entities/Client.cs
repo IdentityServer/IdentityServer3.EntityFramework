@@ -44,6 +44,7 @@ namespace Thinktecture.IdentityServer.EntityFramework.Entities
         public virtual bool AllowRememberConsent { get; set; }
 
         public virtual Flows Flow { get; set; }
+        public virtual bool AllowClientCredentialsOnly { get; set; }
 
         public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
         public virtual ICollection<ClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
@@ -63,6 +64,8 @@ namespace Thinktecture.IdentityServer.EntityFramework.Entities
         public virtual int SlidingRefreshTokenLifetime { get; set; }
 
         public virtual TokenUsage RefreshTokenUsage { get; set; }
+        public virtual bool UpdateAccessTokenClaimsOnRefresh { get; set; }
+
         public virtual TokenExpiration RefreshTokenExpiration { get; set; }
         
         public virtual AccessTokenType AccessTokenType { get; set; }
@@ -77,5 +80,6 @@ namespace Thinktecture.IdentityServer.EntityFramework.Entities
         public virtual bool PrefixClientClaims { get; set; }
 
         public virtual ICollection<ClientGrantTypeRestriction> CustomGrantTypeRestrictions { get; set; }
+        public virtual ICollection<ClientCorsOrigin> AllowedCorsOrigins { get; set; }
     }
 }

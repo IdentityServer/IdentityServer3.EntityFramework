@@ -35,6 +35,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
             public const string ClientRedirectUri = "ClientRedirectUris";
             public const string ClientScopeRestriction = "ClientScopeRestrictions";
             public const string ClientSecret = "ClientSecrets";
+            public const string ClientCorsOrigin = "ClientCorsOrigins";
 
             public const string Scope = "Scopes";
             public const string ScopeClaim = "ScopeClaims";

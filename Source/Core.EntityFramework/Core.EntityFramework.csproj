@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EfConstants.cs" />
+    <Compile Include="Entities\ClientCorsOrigin.cs" />
     <Compile Include="Entities\ClientGrantTypeRestriction.cs" />
     <Compile Include="Entities\ClientSecret.cs" />
     <Compile Include="EntityFrameworkServiceOptions.cs" />

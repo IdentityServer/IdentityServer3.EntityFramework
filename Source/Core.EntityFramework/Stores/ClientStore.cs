@@ -44,6 +44,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
                 .Include("IdentityProviderRestrictions")
                 .Include("Claims")
                 .Include("CustomGrantTypeRestrictions")
+                .Include("AllowedCorsOrigins")
                 .SingleOrDefaultAsync(x => x.ClientId == clientId);
 
             Thinktecture.IdentityServer.Core.Models.Client model = client.ToModel();

@@ -36,12 +36,14 @@ namespace Thinktecture.IdentityServer.EntityFramework
         {
             var query =
                 from client in context.Clients
-                from url in client.RedirectUris
-                select url.Uri;
+                from allowed in client.AllowedCorsOrigins
+                select allowed.Origin;
             var urls = await query.ToArrayAsync();
 
             var origins = urls.Select(x => x.GetOrigin()).Where(x => x != null).Distinct();
+            
             var result = origins.Contains(origin, StringComparer.OrdinalIgnoreCase);
+            
             return result;
         }
     }
