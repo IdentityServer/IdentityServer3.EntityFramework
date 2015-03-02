@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Thinktecture.IdentityServer.Core.Models;
 
 namespace Thinktecture.IdentityServer.EntityFramework.Entities
@@ -29,6 +30,7 @@ namespace Thinktecture.IdentityServer.EntityFramework.Entities
 
         [Required]
         [StringLength(200)]
+        [Index(IsUnique=true)]
         public virtual string ClientId { get; set; }
 
         public virtual ICollection<ClientSecret> ClientSecrets { get; set; }
