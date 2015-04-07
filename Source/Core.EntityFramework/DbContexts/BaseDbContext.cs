@@ -18,7 +18,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class BaseDbContext : DbContext
     {

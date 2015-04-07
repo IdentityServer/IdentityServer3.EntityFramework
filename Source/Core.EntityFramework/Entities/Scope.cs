@@ -16,7 +16,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Entities
+namespace IdentityServer3.EntityFramework.Entities
 {
     public class Scope
     {

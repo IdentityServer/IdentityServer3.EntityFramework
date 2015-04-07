@@ -16,7 +16,7 @@
  */
 using System.ComponentModel.DataAnnotations;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Entities
+namespace IdentityServer3.EntityFramework.Entities
 {
     public class ClientSecret
     {
@@ -28,7 +28,7 @@ namespace Thinktecture.IdentityServer.EntityFramework.Entities
         public virtual string Value { get; set; }
 
         [StringLength(250)]
-        public string ClientSecretType { get; set; }
+        public string Type { get; set; }
 
         [StringLength(2000)]
         public virtual string Description { get; set; }

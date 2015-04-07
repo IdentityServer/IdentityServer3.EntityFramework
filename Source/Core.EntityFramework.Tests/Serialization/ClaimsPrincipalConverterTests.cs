@@ -2,12 +2,12 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Claims;
-using Thinktecture.IdentityServer.Core;
+using IdentityServer3.Core;
 using Newtonsoft.Json;
-using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.EntityFramework.Serialization;
+using IdentityServer3.Core.Models;
+using IdentityServer3.EntityFramework.Serialization;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Tests.Serialization
+namespace IdentityServer3.EntityFramework.Tests.Serialization
 {
     [TestClass]
     public class ClaimsPrincipalConverterTests

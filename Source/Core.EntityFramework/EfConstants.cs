@@ -19,21 +19,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     class EfConstants
     {
-        public const string ConnectionName = "Thinktecture.IdentityServer3";
+        public const string ConnectionName = "IdentityServer33";
 
         public class TableNames
         {
             public const string Client = "Clients";
             public const string ClientClaim = "ClientClaims";
-            public const string ClientGrantTypeRestriction = "ClientGrantTypeRestrictions";
+            public const string ClientCustomGrantType = "ClientCustomGrantTypes";
             public const string ClientIdPRestriction = "ClientIdPRestrictions";
             public const string ClientPostLogoutRedirectUri = "ClientPostLogoutRedirectUris";
             public const string ClientRedirectUri = "ClientRedirectUris";
-            public const string ClientScopeRestriction = "ClientScopeRestrictions";
+            public const string ClientScopes = "ClientScopes";
             public const string ClientSecret = "ClientSecrets";
             public const string ClientCorsOrigin = "ClientCorsOrigins";
 

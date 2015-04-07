@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Entities
+namespace IdentityServer3.EntityFramework.Entities
 {
     public class ClientCorsOrigin
     {

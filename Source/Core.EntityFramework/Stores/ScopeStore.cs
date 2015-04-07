@@ -19,10 +19,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.EntityFramework.Entities;
-using Thinktecture.IdentityServer.Core.Services;
+using IdentityServer3.EntityFramework.Entities;
+using IdentityServer3.Core.Services;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class ScopeStore : IScopeStore
     {
@@ -35,10 +35,10 @@ namespace Thinktecture.IdentityServer.EntityFramework
             this.context = context;
         }
 
-        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
+        public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
             var scopes =
-                from s in context.Scopes.Include("ScopeClaims")
+                from s in context.Scopes.Include(x=>x.ScopeClaims)
                 select s;
                 
             if (scopeNames != null && scopeNames.Any())
@@ -52,7 +52,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
             return list.Select(x => x.ToModel());
         }
 
-        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
+        public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
             var scopes =
                 from s in context.Scopes.Include("ScopeClaims")

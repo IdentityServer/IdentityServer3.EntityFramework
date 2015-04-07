@@ -1,7 +1,7 @@
 ﻿using Owin;
 using SelfHost.Config;
-using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Logging;
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Logging;
 
 namespace SelfHost
 {

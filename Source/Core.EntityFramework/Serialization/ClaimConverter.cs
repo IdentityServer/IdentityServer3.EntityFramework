@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 using System;
 using System.Security.Claims;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Serialization
+namespace IdentityServer3.EntityFramework.Serialization
 {
     public class ClaimConverter : JsonConverter
     {

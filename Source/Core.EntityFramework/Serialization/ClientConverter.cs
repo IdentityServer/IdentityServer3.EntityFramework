@@ -15,10 +15,10 @@
  */
 using Newtonsoft.Json;
 using System;
-using Thinktecture.IdentityServer.Core.Models;
-using Thinktecture.IdentityServer.Core.Services;
+using IdentityServer3.Core.Models;
+using IdentityServer3.Core.Services;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Serialization
+namespace IdentityServer3.EntityFramework.Serialization
 {
     public class ClientLite
     {

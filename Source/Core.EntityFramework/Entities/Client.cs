@@ -17,9 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Thinktecture.IdentityServer.Core.Models;
+using IdentityServer3.Core.Models;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Entities
+namespace IdentityServer3.EntityFramework.Entities
 {
     public class Client
     {
@@ -50,7 +50,9 @@ namespace Thinktecture.IdentityServer.EntityFramework.Entities
 
         public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
         public virtual ICollection<ClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
-        public virtual ICollection<ClientScopeRestriction> ScopeRestrictions { get; set; }
+
+        public virtual bool AllowAccessToAllScopes { get; set; }
+        public virtual ICollection<ClientScope> AllowedScopes { get; set; }
 
         // in seconds
         [Range(0, Int32.MaxValue)]
@@ -81,7 +83,9 @@ namespace Thinktecture.IdentityServer.EntityFramework.Entities
         public virtual bool AlwaysSendClientClaims { get; set; }
         public virtual bool PrefixClientClaims { get; set; }
 
-        public virtual ICollection<ClientGrantTypeRestriction> CustomGrantTypeRestrictions { get; set; }
+        public virtual bool AllowAccessToAllCustomGrantTypes { get; set; }
+
+        public virtual ICollection<ClientCustomGrantType> AllowedCustomGrantTypes { get; set; }
         public virtual ICollection<ClientCorsOrigin> AllowedCorsOrigins { get; set; }
     }
 }

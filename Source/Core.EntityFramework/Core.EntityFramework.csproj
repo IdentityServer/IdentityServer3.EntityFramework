@@ -52,6 +52,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="IdentityServer3, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityServer3.2.0.0-build00019\lib\net45\IdentityServer3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -68,15 +72,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thinktecture.IdentityServer3, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Thinktecture.IdentityServer3.1.3.0-build00165\lib\net45\Thinktecture.IdentityServer3.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Packages\LibLog.4.1\LibLog.cs" />
     <Compile Include="EfConstants.cs" />
     <Compile Include="Entities\ClientCorsOrigin.cs" />
-    <Compile Include="Entities\ClientGrantTypeRestriction.cs" />
+    <Compile Include="Entities\ClientCustomGrantType.cs" />
     <Compile Include="Entities\ClientSecret.cs" />
     <Compile Include="EntityFrameworkServiceOptions.cs" />
     <Compile Include="Extensions\ModelsMap.cs" />
@@ -95,7 +96,7 @@
     <Compile Include="DbContexts\ClientConfigurationDbContext.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\ClientRedirectUri.cs" />
-    <Compile Include="Entities\ClientScopeRestriction.cs" />
+    <Compile Include="Entities\ClientScope.cs" />
     <Compile Include="Entities\Consent.cs" />
     <Compile Include="Entities\ClientIdPRestriction.cs" />
     <Compile Include="Entities\ClientPostLogoutRedirectUri.cs" />

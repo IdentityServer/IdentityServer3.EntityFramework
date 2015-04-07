@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 using System.Data.Entity;
-using Thinktecture.IdentityServer.EntityFramework.Entities;
+using IdentityServer3.EntityFramework.Entities;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class OperationalDbContext : BaseDbContext
     {

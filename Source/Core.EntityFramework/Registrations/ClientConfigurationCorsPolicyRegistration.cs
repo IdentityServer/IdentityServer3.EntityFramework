@@ -18,10 +18,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Configuration;
-using Thinktecture.IdentityServer.Core.Services;
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Services;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class ClientConfigurationCorsPolicyRegistration : Registration<ICorsPolicyService, ClientConfigurationCorsPolicyService>
     {

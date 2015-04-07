@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 using System;
-using Thinktecture.IdentityServer.EntityFramework;
-using Thinktecture.IdentityServer.Core.Services;
+using IdentityServer3.EntityFramework;
+using IdentityServer3.Core.Services;
 
-namespace Thinktecture.IdentityServer.Core.Configuration
+namespace IdentityServer3.Core.Configuration
 {
     public static class IdentityServerServiceFactoryExtensions
     {

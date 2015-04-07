@@ -19,9 +19,9 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Services;
+using IdentityServer3.Core.Services;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class ConsentStore : IConsentStore
     {
@@ -34,7 +34,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
             this.context = context;
         }
 
-        public async Task<Thinktecture.IdentityServer.Core.Models.Consent> LoadAsync(string subject, string client)
+        public async Task<IdentityServer3.Core.Models.Consent> LoadAsync(string subject, string client)
         {
             var found = await context.Consents.FindAsync(subject, client);
             if (found == null)
@@ -42,7 +42,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
                 return null;
             }
                 
-            var result = new Thinktecture.IdentityServer.Core.Models.Consent
+            var result = new IdentityServer3.Core.Models.Consent
             {
                 Subject = found.Subject,
                 ClientId = found.ClientId,
@@ -52,7 +52,7 @@ namespace Thinktecture.IdentityServer.EntityFramework
             return result;
         }
 
-        public async Task UpdateAsync(Thinktecture.IdentityServer.Core.Models.Consent consent)
+        public async Task UpdateAsync(IdentityServer3.Core.Models.Consent consent)
         {
             var item = await context.Consents.FindAsync(consent.Subject, consent.ClientId);
             if (item == null)
@@ -75,11 +75,11 @@ namespace Thinktecture.IdentityServer.EntityFramework
             await context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Thinktecture.IdentityServer.Core.Models.Consent>> LoadAllAsync(string subject)
+        public async Task<IEnumerable<IdentityServer3.Core.Models.Consent>> LoadAllAsync(string subject)
         {
             var found = await context.Consents.Where(x => x.Subject == subject).ToArrayAsync();
             
-            var results = found.Select(x=>new Thinktecture.IdentityServer.Core.Models.Consent{
+            var results = found.Select(x=>new IdentityServer3.Core.Models.Consent{
                 Subject = x.Subject, 
                 ClientId = x.ClientId, 
                 Scopes = ParseScopes(x.Scopes) 

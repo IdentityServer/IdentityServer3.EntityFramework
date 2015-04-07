@@ -18,10 +18,10 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.EntityFramework.Entities;
-using Thinktecture.IdentityServer.Core.Services;
+using IdentityServer3.EntityFramework.Entities;
+using IdentityServer3.Core.Services;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class ClientStore : IClientStore
     {
@@ -34,20 +34,20 @@ namespace Thinktecture.IdentityServer.EntityFramework
             this.context = context;
         }
 
-        public async Task<Thinktecture.IdentityServer.Core.Models.Client> FindClientByIdAsync(string clientId)
+        public async Task<IdentityServer3.Core.Models.Client> FindClientByIdAsync(string clientId)
         {
             var client = await context.Clients
-                .Include("ClientSecrets")
-                .Include("RedirectUris")
-                .Include("PostLogoutRedirectUris")
-                .Include("ScopeRestrictions")
-                .Include("IdentityProviderRestrictions")
-                .Include("Claims")
-                .Include("CustomGrantTypeRestrictions")
-                .Include("AllowedCorsOrigins")
+                .Include(x=>x.ClientSecrets)
+                .Include(x => x.RedirectUris)
+                .Include(x => x.PostLogoutRedirectUris)
+                .Include(x => x.AllowedScopes)
+                .Include(x => x.IdentityProviderRestrictions)
+                .Include(x => x.Claims)
+                .Include(x => x.AllowedCustomGrantTypes)
+                .Include(x => x.AllowedCorsOrigins)
                 .SingleOrDefaultAsync(x => x.ClientId == clientId);
 
-            Thinktecture.IdentityServer.Core.Models.Client model = client.ToModel();
+            IdentityServer3.Core.Models.Client model = client.ToModel();
             return model;    
         }
     }

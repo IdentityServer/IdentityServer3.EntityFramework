@@ -20,9 +20,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.Core.Logging;
+using Thinktecture.IdentityServer.EntityFramework.Logging;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class TokenCleanup
     {

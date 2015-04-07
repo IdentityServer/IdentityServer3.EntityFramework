@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 using System.Data.Entity;
-using Thinktecture.IdentityServer.EntityFramework.Entities;
+using IdentityServer3.EntityFramework.Entities;
 
-namespace Thinktecture.IdentityServer.EntityFramework
+namespace IdentityServer3.EntityFramework
 {
     public class ClientConfigurationDbContext : BaseDbContext
     {
@@ -50,23 +50,23 @@ namespace Thinktecture.IdentityServer.EntityFramework
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.PostLogoutRedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
-                .HasMany(x => x.ScopeRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
+                .HasMany(x => x.AllowedScopes).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.IdentityProviderRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.Claims).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
-                .HasMany(x => x.CustomGrantTypeRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
+                .HasMany(x => x.AllowedCustomGrantTypes).WithRequired(x => x.Client).WillCascadeOnDelete();
             modelBuilder.Entity<Client>()
                 .HasMany(x => x.AllowedCorsOrigins).WithRequired(x => x.Client).WillCascadeOnDelete();
 
             modelBuilder.Entity<ClientSecret>().ToTable(EfConstants.TableNames.ClientSecret, Schema);
             modelBuilder.Entity<ClientRedirectUri>().ToTable(EfConstants.TableNames.ClientRedirectUri, Schema);
             modelBuilder.Entity<ClientPostLogoutRedirectUri>().ToTable(EfConstants.TableNames.ClientPostLogoutRedirectUri, Schema);
-            modelBuilder.Entity<ClientScopeRestriction>().ToTable(EfConstants.TableNames.ClientScopeRestriction, Schema);
+            modelBuilder.Entity<ClientScope>().ToTable(EfConstants.TableNames.ClientScopes, Schema);
             modelBuilder.Entity<ClientIdPRestriction>().ToTable(EfConstants.TableNames.ClientIdPRestriction, Schema);
             modelBuilder.Entity<ClientClaim>().ToTable(EfConstants.TableNames.ClientClaim, Schema);
-            modelBuilder.Entity<ClientGrantTypeRestriction>().ToTable(EfConstants.TableNames.ClientGrantTypeRestriction, Schema);
+            modelBuilder.Entity<ClientCustomGrantType>().ToTable(EfConstants.TableNames.ClientCustomGrantType, Schema);
             modelBuilder.Entity<ClientCorsOrigin>().ToTable(EfConstants.TableNames.ClientCorsOrigin, Schema);
         }
     }

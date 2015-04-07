@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Thinktecture.IdentityServer.EntityFramework.Entities
+namespace IdentityServer3.EntityFramework.Entities
 {
-    public class ClientScopeRestriction
+    public class ClientCustomGrantType
     {
         [Key]
         public virtual int Id { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public virtual string Scope { get; set; }
+        [StringLength(250)]
+        public virtual string GrantType { get; set; }
 
         public virtual Client Client { get; set; }
     }
