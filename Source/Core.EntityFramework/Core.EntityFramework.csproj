@@ -7,8 +7,8 @@
     <ProjectGuid>{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinktecture.IdentityServer.EntityFramework</RootNamespace>
-    <AssemblyName>Thinktecture.IdentityServer3.EntityFramework</AssemblyName>
+    <RootNamespace>IdentityServer3.EntityFramework</RootNamespace>
+    <AssemblyName>IdentityServer3.EntityFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>

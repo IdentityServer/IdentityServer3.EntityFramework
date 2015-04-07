@@ -13,7 +13,7 @@ namespace SelfHost
 
             var options = new IdentityServerOptions
             {
-                SiteName = "Thinktecture IdentityServer3 (EntityFramework)",
+                SiteName = "IdentityServer3 (EntityFramework)",
                 SigningCertificate = Certificate.Get(),
                 Factory = Factory.Configure("IdSvr3Config")
             };

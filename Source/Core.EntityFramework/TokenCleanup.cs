@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Thinktecture.IdentityServer.EntityFramework.Logging;
+using IdentityServer3.EntityFramework.Logging;
 
 namespace IdentityServer3.EntityFramework
 {

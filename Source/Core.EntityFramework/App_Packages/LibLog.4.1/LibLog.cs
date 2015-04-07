@@ -31,16 +31,16 @@
 // If you copied this file manually, you need to change all "YourRootNameSpace" so not to clash with other libraries
 // that use LibLog
 #if LIBLOG_PROVIDERS_ONLY
-namespace Thinktecture.IdentityServer.EntityFramework.LibLog
+namespace IdentityServer3.EntityFramework.LibLog
 #else
-namespace Thinktecture.IdentityServer.EntityFramework.Logging
+namespace IdentityServer3.EntityFramework.Logging
 #endif
 {
     using System.Collections.Generic;
 #if LIBLOG_PROVIDERS_ONLY
-    using Thinktecture.IdentityServer.EntityFramework.LibLog.LogProviders;
+    using IdentityServer3.EntityFramework.LibLog.LogProviders;
 #else
-    using Thinktecture.IdentityServer.EntityFramework.Logging.LogProviders;
+    using IdentityServer3.EntityFramework.Logging.LogProviders;
 #endif
     using System;
 #if !LIBLOG_PROVIDERS_ONLY
@@ -402,7 +402,7 @@ namespace Thinktecture.IdentityServer.EntityFramework.Logging
         /// The disable logging environment variable. If the environment variable is set to 'true', then logging
         /// will be disabled.
         /// </summary>
-        public const string DisableLoggingEnvironmentVariable = "Thinktecture.IdentityServer.EntityFramework_LIBLOG_DISABLE";
+        public const string DisableLoggingEnvironmentVariable = "IdentityServer3.EntityFramework_LIBLOG_DISABLE";
         private const string NullLogProvider = "Current Log Provider is not set. Call SetCurrentLogProvider " +
                                                "with a non-null value first.";
         private static dynamic _currentLogProvider;
@@ -698,9 +698,9 @@ namespace Thinktecture.IdentityServer.EntityFramework.Logging
 }
 
 #if LIBLOG_PROVIDERS_ONLY
-namespace Thinktecture.IdentityServer.EntityFramework.LibLog.LogProviders
+namespace IdentityServer3.EntityFramework.LibLog.LogProviders
 #else
-namespace Thinktecture.IdentityServer.EntityFramework.Logging.LogProviders
+namespace IdentityServer3.EntityFramework.Logging.LogProviders
 #endif
 {
     using System;

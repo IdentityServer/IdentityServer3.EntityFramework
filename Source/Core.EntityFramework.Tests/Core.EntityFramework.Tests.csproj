@@ -6,8 +6,8 @@
     <ProjectGuid>{646E3903-80EF-49B8-93C6-21FB86F0F81B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Thinktecture.IdentityServer.v3.EntityFramework.Tests</RootNamespace>
-    <AssemblyName>Thinktecture.IdentityServer.v3.EntityFramework.Tests</AssemblyName>
+    <RootNamespace>IdentityServer3.EntityFramework.Tests</RootNamespace>
+    <AssemblyName>IdentityServer3.EntityFramework.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
