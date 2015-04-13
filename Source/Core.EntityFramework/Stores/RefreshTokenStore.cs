@@ -31,17 +31,21 @@ namespace Thinktecture.IdentityServer.EntityFramework
 
         public override async Task StoreAsync(string key, RefreshToken value)
         {
-            var efToken = new Entities.Token
+            var token = await context.Tokens.FindAsync(key, tokenType);
+            if (token == null)
             {
-                Key = key,
-                SubjectId = value.SubjectId,
-                ClientId = value.ClientId,
-                JsonCode = ConvertToJson(value),
-                Expiry = DateTimeOffset.UtcNow.AddSeconds(value.LifeTime),
-                TokenType = tokenType
-            };
+                token = new Entities.Token
+                {
+                    Key = key,
+                    SubjectId = value.SubjectId,
+                    ClientId = value.ClientId,
+                    JsonCode = ConvertToJson(value),
+                    TokenType = tokenType
+                };
+                context.Tokens.Add(token);
+            }
 
-            context.Tokens.Add(efToken);
+            token.Expiry = DateTimeOffset.UtcNow.AddSeconds(value.LifeTime);
             await context.SaveChangesAsync();
         }
     }
