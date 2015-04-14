@@ -42,6 +42,8 @@ namespace IdentityServer3.EntityFramework.Serialization
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var source = serializer.Deserialize<ClaimsPrincipalLite>(reader);
+            if (source == null) return null;
+            
             var claims = source.Claims.Select(x => new Claim(x.Type, x.Value));
             var id = new ClaimsIdentity(claims, source.AuthenticationType);
             var target = new ClaimsPrincipal(id);
