@@ -45,7 +45,7 @@ namespace IdentityServer3.EntityFramework.Serialization
             if (source == null) return null;
             
             var claims = source.Claims.Select(x => new Claim(x.Type, x.Value));
-            var id = new ClaimsIdentity(claims, source.AuthenticationType);
+            var id = new ClaimsIdentity(claims, source.AuthenticationType, Constants.ClaimTypes.Name, Constants.ClaimTypes.Role);
             var target = new ClaimsPrincipal(id);
             return target;
         }
