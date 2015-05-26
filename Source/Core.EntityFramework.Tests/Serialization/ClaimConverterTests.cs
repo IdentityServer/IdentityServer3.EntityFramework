@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Claims;
 using IdentityServer3.Core;
 using Newtonsoft.Json;
 using IdentityServer3.Core.Models;
 using IdentityServer3.EntityFramework.Serialization;
+using Xunit;
 
 namespace IdentityServer3.EntityFramework.Tests.Serialization
 {
-    [TestClass]
     public class ClaimConverterTests
     {
-        [TestMethod]
+        [Fact]
         public void CanSerializeAndDeserializeAClaim()
         {
             var claim = new Claim(Constants.ClaimTypes.Subject, "alice");
@@ -22,8 +21,8 @@ namespace IdentityServer3.EntityFramework.Tests.Serialization
             var json = JsonConvert.SerializeObject(claim, settings);
 
             claim = JsonConvert.DeserializeObject<Claim>(json, settings);
-            Assert.AreEqual(Constants.ClaimTypes.Subject, claim.Type);
-            Assert.AreEqual("alice", claim.Value);
+            Assert.Equal(Constants.ClaimTypes.Subject, claim.Type);
+            Assert.Equal("alice", claim.Value);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Claims;
 using IdentityServer3.Core;
 using Newtonsoft.Json;
@@ -11,13 +10,13 @@ using IdentityServer3.Core.Services.InMemory;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
+using Xunit;
 
 namespace IdentityServer3.EntityFramework.Tests.Serialization
 {
-    [TestClass]
     public class ScopeConverterTests
     {
-        [TestMethod]
+        [Fact]
         public void CanSerializeAndDeserializeAScope()
         {
             var s1 = new Scope
@@ -48,7 +47,7 @@ namespace IdentityServer3.EntityFramework.Tests.Serialization
             var json = JsonConvert.SerializeObject(s1, settings);
 
             var result = JsonConvert.DeserializeObject<Scope>(json, settings);
-            Assert.AreSame(s1, result);
+            Assert.Same(s1, result);
         }
     }
 }
