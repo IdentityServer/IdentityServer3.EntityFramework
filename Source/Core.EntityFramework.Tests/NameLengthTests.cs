@@ -11,7 +11,7 @@ namespace IdentityServer3.EntityFramework.Tests
 {
     public class NameLengthTests
     {
-        //[Fact]
+        [Fact]
         public void NamesAreNotMoreThan30Chars()
         {
             var assembly = Assembly.GetAssembly(typeof(ClientConfigurationDbContext));

@@ -68,7 +68,7 @@ namespace IdentityServer3.EntityFramework.Entities
         public virtual int SlidingRefreshTokenLifetime { get; set; }
 
         public virtual TokenUsage RefreshTokenUsage { get; set; }
-        public virtual bool UpdateAccessTokenClaimsOnRefresh { get; set; }
+        public virtual bool UpdateAccessTokenOnRefresh { get; set; }
 
         public virtual TokenExpiration RefreshTokenExpiration { get; set; }
         
@@ -83,7 +83,7 @@ namespace IdentityServer3.EntityFramework.Entities
         public virtual bool AlwaysSendClientClaims { get; set; }
         public virtual bool PrefixClientClaims { get; set; }
 
-        public virtual bool AllowAccessToAllCustomGrantTypes { get; set; }
+        public virtual bool AllowAccessToAllGrantTypes { get; set; }
 
         public virtual ICollection<ClientCustomGrantType> AllowedCustomGrantTypes { get; set; }
         public virtual ICollection<ClientCorsOrigin> AllowedCorsOrigins { get; set; }
