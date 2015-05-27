@@ -17,6 +17,50 @@ namespace Core.EntityFramework.IntegrationTests
         }
 
         [Fact]
+        public void CanAddAndDeleteClientScopes()
+        {
+            using (var db = new ClientConfigurationDbContext(ConfigConnectionStringName))
+            {
+                db.Clients.Add(new Client
+                {
+                    ClientId = "test-client-scopes",
+                    ClientName = "Test Client"
+                });
+
+                db.SaveChanges();
+            }
+
+            using (var db = new ClientConfigurationDbContext(ConfigConnectionStringName))
+            {
+                var client = db.Clients.First();
+
+                client.AllowedScopes.Add(new ClientScope
+                {
+                    Scope = "test"
+                });
+
+                db.SaveChanges();
+            }
+
+            using (var db = new ClientConfigurationDbContext(ConfigConnectionStringName))
+            {
+                var client = db.Clients.First();
+                var scope = client.AllowedScopes.First();
+
+                client.AllowedScopes.Remove(scope);
+
+                db.SaveChanges();
+            }
+
+            using (var db = new ClientConfigurationDbContext(ConfigConnectionStringName))
+            {
+                var client = db.Clients.First();
+
+                Assert.Equal(0, client.AllowedScopes.Count());
+            }
+        }
+
+        [Fact]
         public void CanAddAndDeleteClientRedirectUri()
         {
             using (var db = new ClientConfigurationDbContext(ConfigConnectionStringName))

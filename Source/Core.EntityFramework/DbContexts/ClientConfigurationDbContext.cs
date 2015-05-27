@@ -15,6 +15,7 @@
  */
 using System.Data.Entity;
 using IdentityServer3.EntityFramework.Entities;
+using System.Collections.Specialized;
 
 namespace IdentityServer3.EntityFramework
 {
@@ -33,6 +34,28 @@ namespace IdentityServer3.EntityFramework
         public ClientConfigurationDbContext(string connectionString, string schema)
             : base(connectionString, schema)
         {
+        }
+
+        protected override void ConfigureChildCollections()
+        {
+            this.Set<Client>().Local.CollectionChanged +=
+                delegate(object sender, NotifyCollectionChangedEventArgs e)
+                {
+                    if (e.Action == NotifyCollectionChangedAction.Add)
+                    {
+                        foreach (Client item in e.NewItems)
+                        {
+                            RegisterDeleteOnRemove(item.ClientSecrets);
+                            RegisterDeleteOnRemove(item.RedirectUris);
+                            RegisterDeleteOnRemove(item.PostLogoutRedirectUris);
+                            RegisterDeleteOnRemove(item.AllowedScopes);
+                            RegisterDeleteOnRemove(item.IdentityProviderRestrictions);
+                            RegisterDeleteOnRemove(item.Claims);
+                            RegisterDeleteOnRemove(item.AllowedCustomGrantTypes);
+                            RegisterDeleteOnRemove(item.AllowedCorsOrigins);
+                        }
+                    }
+                };
         }
 
         public DbSet<Client> Clients { get; set; }

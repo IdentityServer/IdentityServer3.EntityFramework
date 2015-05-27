@@ -34,7 +34,7 @@ namespace IdentityServer3.EntityFramework
             : base(connectionString, schema)
         {
         }
-        
+
         public DbSet<Consent> Consents { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
