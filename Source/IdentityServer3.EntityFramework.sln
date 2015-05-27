@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "SelfHost\Host.cspro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework.Tests", "Core.EntityFramework.Tests\Core.EntityFramework.Tests.csproj", "{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework.IntegrationTests", "Core.EntityFramework.IntegrationTests\Core.EntityFramework.IntegrationTests.csproj", "{10DFC7DC-3CF0-4687-8806-DC678069A866}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10DFC7DC-3CF0-4687-8806-DC678069A866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10DFC7DC-3CF0-4687-8806-DC678069A866}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10DFC7DC-3CF0-4687-8806-DC678069A866}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10DFC7DC-3CF0-4687-8806-DC678069A866}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
