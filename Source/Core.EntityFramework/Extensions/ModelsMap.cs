@@ -32,6 +32,8 @@ namespace IdentityServer3.Core.Models
 
             Mapper.CreateMap<Models.Secret, Entities.ClientSecret>(MemberList.Source);
             Mapper.CreateMap<Models.Client, Entities.Client>(MemberList.Source)
+                .ForMember(x => x.UpdateAccessTokenOnRefresh, opt => opt.MapFrom(src => src.UpdateAccessTokenClaimsOnRefresh))
+                .ForMember(x => x.AllowAccessToAllGrantTypes, opt => opt.MapFrom(src => src.AllowAccessToAllCustomGrantTypes))
                 .ForMember(x => x.AllowedCustomGrantTypes, opt => opt.MapFrom(src => src.AllowedCustomGrantTypes.Select(x => new Entities.ClientCustomGrantType { GrantType = x })))
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(src => src.RedirectUris.Select(x => new Entities.ClientRedirectUri { Uri = x })))
                 .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(src => src.PostLogoutRedirectUris.Select(x => new Entities.ClientPostLogoutRedirectUri { Uri = x })))
