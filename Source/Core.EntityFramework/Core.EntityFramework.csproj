@@ -121,7 +121,7 @@
       <Link>default.licenseheader</Link>
     </None>
     <None Include="App.config" />
-    <None Include="Thinktecture.IdentityServer3.EntityFramework.nuspec">
+    <None Include="IdentityServer3.EntityFramework.nuspec">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
