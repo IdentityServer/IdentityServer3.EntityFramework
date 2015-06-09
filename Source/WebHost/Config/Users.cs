@@ -3,7 +3,7 @@ using System.Security.Claims;
 using IdentityServer3.Core;
 using IdentityServer3.Core.Services.InMemory;
 
-namespace SelfHost.Config
+namespace WebHost.Config
 {
     static class Users
     {

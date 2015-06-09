@@ -8,7 +8,7 @@ using IdentityServer3.EntityFramework;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services;
 
-namespace SelfHost.Config
+namespace WebHost.Config
 {
     class Factory
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using IdentityServer3.Core;
 using IdentityServer3.Core.Models;
 
-namespace SelfHost.Config
+namespace WebHost.Config
 {
     public class Scopes
     {

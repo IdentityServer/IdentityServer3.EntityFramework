@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
-namespace SelfHost.Config
+namespace WebHost.Config
 {
     static class Certificate
     {
         public static X509Certificate2 Get()
         {
             var assembly = typeof(Certificate).Assembly;
-            using (var stream = assembly.GetManifestResourceStream("SelfHost.Config.idsrv3test.pfx"))
+            using (var stream = assembly.GetManifestResourceStream("WebHost.Config.idsrv3test.pfx"))
             {
                 return new X509Certificate2(ReadStream(stream), "idsrv3test");
             }

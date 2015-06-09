@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{314549
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework", "Core.EntityFramework\Core.EntityFramework.csproj", "{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "SelfHost\Host.csproj", "{F0B58CB4-548B-4934-84D3-8003160FF046}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework.Tests", "Core.EntityFramework.Tests\Core.EntityFramework.Tests.csproj", "{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.EntityFramework.IntegrationTests", "Core.EntityFramework.IntegrationTests\Core.EntityFramework.IntegrationTests.csproj", "{10DFC7DC-3CF0-4687-8806-DC678069A866}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "WebHost\WebHost.csproj", "{C319CAD5-F092-483C-BC50-8C5CB7C34EF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +26,6 @@ Global
 		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C0430D-3B41-422A-B1A6-BA6C68400FF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0B58CB4-548B-4934-84D3-8003160FF046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0B58CB4-548B-4934-84D3-8003160FF046}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0B58CB4-548B-4934-84D3-8003160FF046}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0B58CB4-548B-4934-84D3-8003160FF046}.Release|Any CPU.Build.0 = Release|Any CPU
 		{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{060B3BCF-EBA0-4F2F-9E5B-11E2A628EC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,6 +34,10 @@ Global
 		{10DFC7DC-3CF0-4687-8806-DC678069A866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10DFC7DC-3CF0-4687-8806-DC678069A866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10DFC7DC-3CF0-4687-8806-DC678069A866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C319CAD5-F092-483C-BC50-8C5CB7C34EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C319CAD5-F092-483C-BC50-8C5CB7C34EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C319CAD5-F092-483C-BC50-8C5CB7C34EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C319CAD5-F092-483C-BC50-8C5CB7C34EF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
