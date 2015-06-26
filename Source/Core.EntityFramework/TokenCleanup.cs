@@ -46,7 +46,7 @@ namespace IdentityServer3.EntityFramework
             if (source != null) throw new InvalidOperationException("Already started. Call Stop first.");
             
             source = new CancellationTokenSource();
-            Start(source.Token);
+            Task.Factory.StartNew(()=>Start(source.Token));
         }
         
         public void Stop()
