@@ -31,8 +31,7 @@ namespace WebHost.Config
             factory.RegisterConfigurationServices(efConfig);
             factory.RegisterOperationalServices(efConfig);
 
-            var userService = new IdentityServer3.Core.Services.InMemory.InMemoryUserService(Users.Get());
-            factory.UserService = new Registration<IUserService>(resolver => userService);
+            factory.UseInMemoryUsers(Users.Get());
 
             return factory;
         }
