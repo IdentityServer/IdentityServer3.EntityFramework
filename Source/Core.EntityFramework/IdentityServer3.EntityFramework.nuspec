@@ -16,11 +16,11 @@
     <copyright>Copyright 2015</copyright>
     <tags>IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity EF EntityFramework</tags>
 
-    <dependencies>
+    <!--<dependencies>
       <dependency id="IdentityServer3" version="2.0.0-rc1"  />
       <dependency id="AutoMapper" version="3.3.1" />
       <dependency id="EntityFramework" version="6.1.2" />
       <dependency id="Newtonsoft.Json" version="6.0.8" />
-    </dependencies>
+    </dependencies>-->
   </metadata>
 </package>
