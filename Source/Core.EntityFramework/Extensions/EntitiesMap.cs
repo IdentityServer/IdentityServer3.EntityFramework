@@ -38,8 +38,6 @@ namespace IdentityServer3.EntityFramework.Entities
                 .ForMember(x => x.AllowedScopes, opt => opt.MapFrom(src => src.AllowedScopes.Select(x => x.Scope)))
                 .ForMember(x => x.AllowedCorsOrigins, opt => opt.MapFrom(src => src.AllowedCorsOrigins.Select(x => x.Origin)))
                 .ForMember(x => x.Claims, opt => opt.MapFrom(src => src.Claims.Select(x => new Claim(x.Type, x.Value))));
-
-            Mapper.AssertConfigurationIsValid();
         }
 
         public static IdentityServer3.Core.Models.Scope ToModel(this Entities.Scope s)
