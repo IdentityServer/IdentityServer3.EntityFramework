@@ -6,10 +6,10 @@
     <title>IdentityServer3 - Entity Framework</title>
     <authors>Brock Allen, Dominick Baier, and contributors</authors>
     <owners>Brock Allen, Dominick Baier</owners>
-    <projectUrl>https://github.com/IdentityServer/IdentityServer33.EntityFramework</projectUrl>
+    <projectUrl>https://github.com/IdentityServer/IdentityServer3.EntityFramework</projectUrl>
     <iconUrl>https://identityserver.github.io/Documentation/assets/images/icons/IDserver_icon128.jpg</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/IdentityServer/IdentityServer33.EntityFramework/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/IdentityServer/IdentityServer3.EntityFramework/blob/master/LICENSE</licenseUrl>
     <summary>Entity Framework-based persistence layer for IdentityServer3</summary>
     <description>Entity Framework-based persistence layer for IdentityServer3</description>
     <releaseNotes></releaseNotes>
