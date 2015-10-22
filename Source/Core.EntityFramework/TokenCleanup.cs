@@ -87,13 +87,18 @@ namespace IdentityServer3.EntityFramework
             }
         }
 
+        public virtual IOperationalDbContext CreateOperationalDbContext()
+        {
+            return new OperationalDbContext(options.ConnectionString, options.Schema);
+        }
+
         private async Task ClearTokens()
         {
             try
             {
                 Logger.Info("Clearing tokens");
 
-                using (var db = new OperationalDbContext(this.options.ConnectionString, this.options.Schema))
+                using (var db = CreateOperationalDbContext())
                 {
                     var query =
                         from token in db.Tokens

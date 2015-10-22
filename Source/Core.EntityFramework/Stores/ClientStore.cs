@@ -25,9 +25,9 @@ namespace IdentityServer3.EntityFramework
 {
     public class ClientStore : IClientStore
     {
-        private readonly ClientConfigurationDbContext context;
+        private readonly IClientConfigurationDbContext context;
 
-        public ClientStore(ClientConfigurationDbContext context)
+        public ClientStore(IClientConfigurationDbContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             

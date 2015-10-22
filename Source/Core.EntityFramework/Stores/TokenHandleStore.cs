@@ -22,7 +22,7 @@ namespace IdentityServer3.EntityFramework
 {
     public class TokenHandleStore : BaseTokenStore<Token>, ITokenHandleStore
     {
-        public TokenHandleStore(OperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+        public TokenHandleStore(IOperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
             : base(context, Entities.TokenType.TokenHandle, scopeStore, clientStore)
         {
         }

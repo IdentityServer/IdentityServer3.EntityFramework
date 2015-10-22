@@ -24,7 +24,7 @@ namespace IdentityServer3.EntityFramework
 {
     public class RefreshTokenStore : BaseTokenStore<RefreshToken>, IRefreshTokenStore
     {
-        public RefreshTokenStore(OperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+        public RefreshTokenStore(IOperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
             : base(context, TokenType.RefreshToken, scopeStore, clientStore)
         {
         }

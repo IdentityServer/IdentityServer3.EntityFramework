@@ -25,9 +25,9 @@ namespace IdentityServer3.EntityFramework
 {
     public class ConsentStore : IConsentStore
     {
-        private readonly OperationalDbContext context;
+        private readonly IOperationalDbContext context;
 
-        public ConsentStore(OperationalDbContext context)
+        public ConsentStore(IOperationalDbContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             

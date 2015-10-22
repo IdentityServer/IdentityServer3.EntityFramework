@@ -26,9 +26,9 @@ namespace IdentityServer3.EntityFramework
 {
     public class ScopeStore : IScopeStore
     {
-        private readonly ScopeConfigurationDbContext context;
+        private readonly IScopeConfigurationDbContext context;
 
-        public ScopeStore(ScopeConfigurationDbContext context)
+        public ScopeStore(IScopeConfigurationDbContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
 

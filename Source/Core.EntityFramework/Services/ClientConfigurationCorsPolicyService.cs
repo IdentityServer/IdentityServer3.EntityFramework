@@ -25,9 +25,9 @@ namespace IdentityServer3.EntityFramework
 {
     public class ClientConfigurationCorsPolicyService : ICorsPolicyService
     {
-        ClientConfigurationDbContext context;
+        private readonly IClientConfigurationDbContext context;
 
-        public ClientConfigurationCorsPolicyService(ClientConfigurationDbContext ctx)
+        public ClientConfigurationCorsPolicyService(IClientConfigurationDbContext ctx)
         {
             this.context = ctx;
         }

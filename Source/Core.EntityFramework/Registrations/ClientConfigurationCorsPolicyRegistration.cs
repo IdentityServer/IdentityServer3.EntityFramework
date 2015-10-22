@@ -34,7 +34,7 @@ namespace IdentityServer3.EntityFramework
         {
             if (options == null) throw new ArgumentNullException("options");
 
-            this.AdditionalRegistrations.Add(new Registration<ClientConfigurationDbContext>(resolver => new ClientConfigurationDbContext(options.ConnectionString, options.Schema)));
+            this.AdditionalRegistrations.Add(new Registration<IClientConfigurationDbContext>(resolver => new ClientConfigurationDbContext(options.ConnectionString, options.Schema)));
         }
     }
 }

@@ -29,12 +29,12 @@ namespace IdentityServer3.EntityFramework
 {
     public abstract class BaseTokenStore<T> where T : class
     {
-        protected readonly OperationalDbContext context;
+        protected readonly IOperationalDbContext context;
         protected readonly TokenType tokenType;
         protected readonly IScopeStore scopeStore;
         protected readonly IClientStore clientStore;
 
-        protected BaseTokenStore(OperationalDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
+        protected BaseTokenStore(IOperationalDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (scopeStore == null) throw new ArgumentNullException("scopeStore");

@@ -23,7 +23,7 @@ namespace IdentityServer3.EntityFramework
 {
     public class AuthorizationCodeStore : BaseTokenStore<AuthorizationCode>, IAuthorizationCodeStore
     {
-        public AuthorizationCodeStore(OperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+        public AuthorizationCodeStore(IOperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
             : base(context, TokenType.AuthorizationCode, scopeStore, clientStore)
         {
         }
