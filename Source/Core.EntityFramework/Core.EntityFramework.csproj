@@ -76,8 +76,12 @@
     <Compile Include="Entities\ClientCustomGrantType.cs" />
     <Compile Include="Entities\ClientSecret.cs" />
     <Compile Include="EntityFrameworkServiceOptions.cs" />
+    <Compile Include="Extensions\DbModelBuilderExtensions.cs" />
     <Compile Include="Extensions\ModelsMap.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Interfaces\IClientConfigurationDbContext.cs" />
+    <Compile Include="Interfaces\IOperationalDbContext.cs" />
+    <Compile Include="Interfaces\IScopeConfigurationDbContext.cs" />
     <Compile Include="Registrations\ClientConfigurationCorsPolicyRegistration.cs" />
     <Compile Include="Services\ClientConfigurationCorsPolicyService.cs" />
     <Compile Include="Stores\AuthorizationCodeStore.cs" />

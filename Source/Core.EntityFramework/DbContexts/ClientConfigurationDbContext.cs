@@ -15,11 +15,10 @@
  */
 using System.Data.Entity;
 using IdentityServer3.EntityFramework.Entities;
-using System.Collections.Specialized;
 
 namespace IdentityServer3.EntityFramework
 {
-    public class ClientConfigurationDbContext : BaseDbContext
+    public class ClientConfigurationDbContext : BaseDbContext, IClientConfigurationDbContext
     {
         public ClientConfigurationDbContext()
             : this(EfConstants.ConnectionName)
@@ -38,24 +37,7 @@ namespace IdentityServer3.EntityFramework
 
         protected override void ConfigureChildCollections()
         {
-            this.Set<Client>().Local.CollectionChanged +=
-                delegate(object sender, NotifyCollectionChangedEventArgs e)
-                {
-                    if (e.Action == NotifyCollectionChangedAction.Add)
-                    {
-                        foreach (Client item in e.NewItems)
-                        {
-                            RegisterDeleteOnRemove(item.ClientSecrets);
-                            RegisterDeleteOnRemove(item.RedirectUris);
-                            RegisterDeleteOnRemove(item.PostLogoutRedirectUris);
-                            RegisterDeleteOnRemove(item.AllowedScopes);
-                            RegisterDeleteOnRemove(item.IdentityProviderRestrictions);
-                            RegisterDeleteOnRemove(item.Claims);
-                            RegisterDeleteOnRemove(item.AllowedCustomGrantTypes);
-                            RegisterDeleteOnRemove(item.AllowedCorsOrigins);
-                        }
-                    }
-                };
+            this.RegisterClientChildTablesForDelete<Client>();
         }
 
         public DbSet<Client> Clients { get; set; }
@@ -63,34 +45,7 @@ namespace IdentityServer3.EntityFramework
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Client>()
-                .ToTable(EfConstants.TableNames.Client, Schema);
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.ClientSecrets).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.RedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.PostLogoutRedirectUris).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.AllowedScopes).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.IdentityProviderRestrictions).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.Claims).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.AllowedCustomGrantTypes).WithRequired(x => x.Client).WillCascadeOnDelete();
-            modelBuilder.Entity<Client>()
-                .HasMany(x => x.AllowedCorsOrigins).WithRequired(x => x.Client).WillCascadeOnDelete();
-
-            modelBuilder.Entity<ClientSecret>().ToTable(EfConstants.TableNames.ClientSecret, Schema);
-            modelBuilder.Entity<ClientRedirectUri>().ToTable(EfConstants.TableNames.ClientRedirectUri, Schema);
-            modelBuilder.Entity<ClientPostLogoutRedirectUri>().ToTable(EfConstants.TableNames.ClientPostLogoutRedirectUri, Schema);
-            modelBuilder.Entity<ClientScope>().ToTable(EfConstants.TableNames.ClientScopes, Schema);
-            modelBuilder.Entity<ClientIdPRestriction>().ToTable(EfConstants.TableNames.ClientIdPRestriction, Schema);
-            modelBuilder.Entity<ClientClaim>().ToTable(EfConstants.TableNames.ClientClaim, Schema);
-            modelBuilder.Entity<ClientCustomGrantType>().ToTable(EfConstants.TableNames.ClientCustomGrantType, Schema);
-            modelBuilder.Entity<ClientCorsOrigin>().ToTable(EfConstants.TableNames.ClientCorsOrigin, Schema);
+            modelBuilder.ConfigureClients(Schema);
         }
     }
 }

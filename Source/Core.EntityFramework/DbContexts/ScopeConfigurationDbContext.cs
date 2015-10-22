@@ -15,11 +15,10 @@
  */
 using System.Data.Entity;
 using IdentityServer3.EntityFramework.Entities;
-using System.Collections.Specialized;
 
 namespace IdentityServer3.EntityFramework
 {
-    public class ScopeConfigurationDbContext : BaseDbContext
+    public class ScopeConfigurationDbContext : BaseDbContext, IScopeConfigurationDbContext
     {
         public ScopeConfigurationDbContext()
             : this(EfConstants.ConnectionName)
@@ -38,17 +37,7 @@ namespace IdentityServer3.EntityFramework
 
         protected override void ConfigureChildCollections()
         {
-            this.Set<Scope>().Local.CollectionChanged +=
-                delegate(object sender, NotifyCollectionChangedEventArgs e)
-                {
-                    if (e.Action == NotifyCollectionChangedAction.Add)
-                    {
-                        foreach (Scope item in e.NewItems)
-                        {
-                            RegisterDeleteOnRemove(item.ScopeClaims);
-                        }
-                    }
-                };
+            this.RegisterScopeChildTablesForDelete<Scope>();
         }
 
         public DbSet<Scope> Scopes { get; set; }
@@ -56,12 +45,7 @@ namespace IdentityServer3.EntityFramework
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Scope>()
-                .ToTable(EfConstants.TableNames.Scope, Schema)
-                .HasMany(x => x.ScopeClaims).WithRequired(x => x.Scope).WillCascadeOnDelete();
-
-            modelBuilder.Entity<ScopeClaim>().ToTable(EfConstants.TableNames.ScopeClaim, Schema);
+            modelBuilder.ConfigureScopes(Schema);
         }
     }
 }

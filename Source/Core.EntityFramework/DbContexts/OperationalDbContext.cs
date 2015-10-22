@@ -18,7 +18,7 @@ using IdentityServer3.EntityFramework.Entities;
 
 namespace IdentityServer3.EntityFramework
 {
-    public class OperationalDbContext : BaseDbContext
+    public class OperationalDbContext : BaseDbContext, IOperationalDbContext
     {
         public OperationalDbContext()
             : this(EfConstants.ConnectionName)
@@ -35,15 +35,20 @@ namespace IdentityServer3.EntityFramework
         {
         }
 
+        protected override void ConfigureChildCollections()
+        {
+            this.RegisterConsentChildTablesForDelete<Consent>();
+            this.RegisterTokenChildTablesForDelete<Token>();
+        }
+
         public DbSet<Consent> Consents { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Consent>().ToTable(EfConstants.TableNames.Consent, Schema);
-            modelBuilder.Entity<Token>().ToTable(EfConstants.TableNames.Token, Schema);
+            modelBuilder.ConfigureConsents(Schema);
+            modelBuilder.ConfigureTokens(Schema);
         }
     }
 }
