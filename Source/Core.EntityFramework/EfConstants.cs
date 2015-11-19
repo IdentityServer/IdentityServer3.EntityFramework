@@ -39,6 +39,7 @@ namespace IdentityServer3.EntityFramework
 
             public const string Scope = "Scopes";
             public const string ScopeClaim = "ScopeClaims";
+            public const string ScopeSecrets = "ScopeSecrets";
 
             public const string Consent = "Consents";
             public const string Token = "Tokens";

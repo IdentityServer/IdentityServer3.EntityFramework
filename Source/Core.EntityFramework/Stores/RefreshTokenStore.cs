@@ -45,7 +45,7 @@ namespace IdentityServer3.EntityFramework
                 context.Tokens.Add(token);
             }
 
-            token.Expiry = DateTimeOffset.UtcNow.AddSeconds(value.LifeTime);
+            token.Expiry = value.CreationTime.AddSeconds(value.LifeTime);
             await context.SaveChangesAsync();
         }
     }

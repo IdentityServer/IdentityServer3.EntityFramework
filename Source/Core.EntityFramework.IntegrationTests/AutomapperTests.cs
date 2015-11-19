@@ -16,9 +16,15 @@ namespace Core.EntityFramework.IntegrationTests
             };
             var e = s.ToEntity();
 
+            IdentityServer3.Core.Models.Client c = new IdentityServer3.Core.Models.Client()
+            {
+            };
+            var e2 = c.ToEntity();
+
             IdentityServer3.EntityFramework.Entities.Scope s2 = new IdentityServer3.EntityFramework.Entities.Scope()
             {
-                ScopeClaims = new HashSet<IdentityServer3.EntityFramework.Entities.ScopeClaim>()
+                ScopeClaims = new HashSet<IdentityServer3.EntityFramework.Entities.ScopeClaim>(),
+                ScopeSecrets = new HashSet<IdentityServer3.EntityFramework.Entities.ScopeSecret>(),
             };
             var m = s2.ToModel();
 
