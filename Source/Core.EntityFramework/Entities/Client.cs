@@ -51,6 +51,9 @@ namespace IdentityServer3.EntityFramework.Entities
         public virtual ICollection<ClientRedirectUri> RedirectUris { get; set; }
         public virtual ICollection<ClientPostLogoutRedirectUri> PostLogoutRedirectUris { get; set; }
 
+        public virtual string LogoutUri { get; set; }
+        public virtual bool LogoutSessionRequired { get; set; }
+
         public virtual bool AllowAccessToAllScopes { get; set; }
         public virtual ICollection<ClientScope> AllowedScopes { get; set; }
 
