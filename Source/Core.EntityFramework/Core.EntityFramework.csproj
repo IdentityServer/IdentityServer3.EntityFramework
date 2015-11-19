@@ -75,6 +75,7 @@
     <Compile Include="Entities\ClientCorsOrigin.cs" />
     <Compile Include="Entities\ClientCustomGrantType.cs" />
     <Compile Include="Entities\ClientSecret.cs" />
+    <Compile Include="Entities\ScopeSecret.cs" />
     <Compile Include="EntityFrameworkServiceOptions.cs" />
     <Compile Include="Extensions\ModelsMap.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

@@ -121,6 +121,7 @@ namespace WebHost.Config
 
                         // OWIN middleware client
                         "http://localhost:2671/",
+                        "https://localhost:44301/"
                     },
 
                     PostLogoutRedirectUris = new List<string>
@@ -132,7 +133,10 @@ namespace WebHost.Config
                     AllowedCorsOrigins = new List<string>{
                         "http://localhost:21575"
                     },
-                    
+
+                    LogoutUri = "https://localhost:44301/Home/SignoutCleanup",
+                    LogoutSessionRequired = true,
+
                     IdentityTokenLifetime = 360,
                     AccessTokenLifetime = 3600
                 },

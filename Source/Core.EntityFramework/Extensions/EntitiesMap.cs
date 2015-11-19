@@ -24,8 +24,10 @@ namespace IdentityServer3.EntityFramework.Entities
         static EntitiesMap()
         {
             Mapper.CreateMap<Entities.Scope, IdentityServer3.Core.Models.Scope>(MemberList.Destination)
-                .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)));
+                .ForMember(x => x.Claims, opts => opts.MapFrom(src => src.ScopeClaims.Select(x => x)))
+                .ForMember(x => x.ScopeSecrets, opts => opts.MapFrom(src => src.ScopeSecrets.Select(x => x)));
             Mapper.CreateMap<Entities.ScopeClaim, IdentityServer3.Core.Models.ScopeClaim>(MemberList.Destination);
+            Mapper.CreateMap<Entities.ScopeSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination);
 
             Mapper.CreateMap<Entities.ClientSecret, IdentityServer3.Core.Models.Secret>(MemberList.Destination);
             Mapper.CreateMap<Entities.Client, IdentityServer3.Core.Models.Client>(MemberList.Destination)

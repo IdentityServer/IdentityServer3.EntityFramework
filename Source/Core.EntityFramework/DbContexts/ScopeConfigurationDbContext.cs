@@ -46,6 +46,7 @@ namespace IdentityServer3.EntityFramework
                         foreach (Scope item in e.NewItems)
                         {
                             RegisterDeleteOnRemove(item.ScopeClaims);
+                            RegisterDeleteOnRemove(item.ScopeSecrets);
                         }
                     }
                 };
@@ -57,11 +58,15 @@ namespace IdentityServer3.EntityFramework
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Scope>().ToTable(EfConstants.TableNames.Scope, Schema);
+                
             modelBuilder.Entity<Scope>()
-                .ToTable(EfConstants.TableNames.Scope, Schema)
                 .HasMany(x => x.ScopeClaims).WithRequired(x => x.Scope).WillCascadeOnDelete();
+            modelBuilder.Entity<Scope>()
+                .HasMany(x => x.ScopeSecrets).WithRequired(x => x.Scope).WillCascadeOnDelete();
 
             modelBuilder.Entity<ScopeClaim>().ToTable(EfConstants.TableNames.ScopeClaim, Schema);
+            modelBuilder.Entity<ScopeSecret>().ToTable(EfConstants.TableNames.ScopeSecrets, Schema);
         }
     }
 }

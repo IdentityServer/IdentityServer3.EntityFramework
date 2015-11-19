@@ -38,7 +38,7 @@ namespace IdentityServer3.EntityFramework
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> FindScopesAsync(IEnumerable<string> scopeNames)
         {
             var scopes =
-                from s in context.Scopes.Include(x=>x.ScopeClaims)
+                from s in context.Scopes.Include(x=>x.ScopeClaims).Include(x=>x.ScopeSecrets)
                 select s;
                 
             if (scopeNames != null && scopeNames.Any())
@@ -55,7 +55,7 @@ namespace IdentityServer3.EntityFramework
         public async Task<IEnumerable<IdentityServer3.Core.Models.Scope>> GetScopesAsync(bool publicOnly = true)
         {
             var scopes =
-                from s in context.Scopes.Include("ScopeClaims")
+                from s in context.Scopes.Include(x=>x.ScopeClaims).Include(x=>x.ScopeSecrets)
                 select s;
                 
             if (publicOnly)

@@ -13,38 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace IdentityServer3.EntityFramework.Entities
 {
-    public class Scope
+    public class ScopeSecret
     {
         [Key]
         public virtual int Id { get; set; }
-        public virtual bool Enabled { get; set; }
-        
-        [Required]
-        [StringLength(200)]
-        public virtual string Name { get; set; }
-        
-        [StringLength(200)]
-        public virtual string DisplayName { get; set; }
-        
+
         [StringLength(1000)]
         public virtual string Description { get; set; }
-        
-        public virtual bool Required { get; set; }
-        public virtual bool Emphasize { get; set; }
-        public virtual int Type { get; set; }
-        public virtual ICollection<ScopeClaim> ScopeClaims { get; set; }
-        public virtual bool IncludeAllClaimsForUser { get; set; }
-        public virtual ICollection<ScopeSecret> ScopeSecrets { get; set; }
 
-        [StringLength(200)]
-        public virtual string ClaimsRule { get; set; }
-        
-        public virtual bool ShowInDiscoveryDocument { get; set; }
+        public virtual DateTimeOffset? Expiration { get; set; }
 
+        [StringLength(250)]
+        public virtual string Type { get; set; }
+
+        [Required]
+        [StringLength(250)]
+        public virtual string Value { get; set; }
+
+        public virtual Scope Scope { get; set; }
     }
 }
