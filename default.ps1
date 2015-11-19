@@ -6,7 +6,7 @@ properties {
 	$sln_file = "$src_directory\IdentityServer3.EntityFramework.sln"
 	$target_config = "Release"
 	$framework_version = "v4.5"
-	$xunit_path = "$src_directory\packages\xunit.runners.1.9.2\tools\xunit.console.clr4.exe"
+	$xunit_path = "$src_directory\packages\xunit.runners.2.0.0\tools\xunit.console.exe"
 	$nuget_path = "$src_directory\.nuget\nuget.exe"
 	
 	$buildNumber = 0;
@@ -25,6 +25,10 @@ task Clean {
 
 task Compile -depends UpdateVersion {
 	exec { msbuild /nologo /verbosity:q $sln_file /p:Configuration=$target_config /p:TargetFrameworkVersion=v4.5 }
+
+	if ($LastExitCode -ne 0) {
+        exit $LastExitCode
+    }
 }
 
 task UpdateVersion {
@@ -48,7 +52,7 @@ task UpdateVersion {
 task RunTests -depends Compile {
 	$project = "IdentityServer3.EntityFramework.Tests"
 	mkdir $output_directory\xunit\$project -ea SilentlyContinue
-	.$xunit_path "$output_directory\$project.dll" /html "$output_directory\xunit\$project\index.html"
+	.$xunit_path "$src_directory\Tests\UnitTests\bin\Release\$project.dll"
 }
 
 task CreateNuGetPackage -depends Compile {
@@ -70,6 +74,7 @@ task CreateNuGetPackage -depends Compile {
 	}
 
   md $dist_directory
-
-	exec { . $nuget_path pack $src_directory\Core.EntityFramework\Core.EntityFramework.csproj -o $dist_directory -version $packageVersion }
+	copy-item $src_directory\IdentityServer3.EntityFramework.nuspec $dist_directory
+	#copy-item $output_directory\IdentityServer3.EntityFramework.xml $dist_directory\lib\net45\
+	exec { . $nuget_path pack $dist_directory\IdentityServer3.EntityFramework.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
 }
