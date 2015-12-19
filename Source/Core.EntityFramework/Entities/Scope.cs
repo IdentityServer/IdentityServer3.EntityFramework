@@ -43,8 +43,9 @@ namespace IdentityServer3.EntityFramework.Entities
 
         [StringLength(200)]
         public virtual string ClaimsRule { get; set; }
-        
+
         public virtual bool ShowInDiscoveryDocument { get; set; }
+        public virtual bool AllowUnrestrictedIntrospection { get; set; }
 
     }
 }
