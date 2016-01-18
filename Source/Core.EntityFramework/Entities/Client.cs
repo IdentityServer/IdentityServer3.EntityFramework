@@ -53,6 +53,7 @@ namespace IdentityServer3.EntityFramework.Entities
 
         public virtual string LogoutUri { get; set; }
         public virtual bool LogoutSessionRequired { get; set; }
+        public virtual bool RequireSignOutPrompt { get; set; }
 
         public virtual bool AllowAccessToAllScopes { get; set; }
         public virtual ICollection<ClientScope> AllowedScopes { get; set; }
