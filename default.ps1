@@ -7,7 +7,7 @@ properties {
 	$target_config = "Release"
 	$framework_version = "v4.5"
 	$xunit_path = "$src_directory\packages\xunit.runners.2.0.0\tools\xunit.console.exe"
-	$nuget_path = "$src_directory\.nuget\nuget.exe"
+	$nuget_path = "$base_directory\nuget.exe"
 	
 	$buildNumber = 0;
 	$version = "2.5.1.0"
