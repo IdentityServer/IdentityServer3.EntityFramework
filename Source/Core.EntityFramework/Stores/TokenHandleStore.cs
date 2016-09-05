@@ -27,6 +27,11 @@ namespace IdentityServer3.EntityFramework
         {
         }
 
+        public TokenHandleStore(EntityFrameworkServiceOptions options, IOperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+            : base(options, context, Entities.TokenType.TokenHandle, scopeStore, clientStore)
+        {
+        }
+
         public override async Task StoreAsync(string key, Token value)
         {
             var efToken = new Entities.Token

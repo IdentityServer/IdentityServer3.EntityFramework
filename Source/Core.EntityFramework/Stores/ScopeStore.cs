@@ -27,11 +27,20 @@ namespace IdentityServer3.EntityFramework
     public class ScopeStore : IScopeStore
     {
         private readonly IScopeConfigurationDbContext context;
+        private readonly EntityFrameworkServiceOptions options;
 
         public ScopeStore(IScopeConfigurationDbContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
 
+            this.context = context;
+        }
+
+        public ScopeStore(EntityFrameworkServiceOptions options, IScopeConfigurationDbContext context)
+        {
+            if (context == null) throw new ArgumentNullException("context");
+
+            this.options = options;
             this.context = context;
         }
 
@@ -48,7 +57,16 @@ namespace IdentityServer3.EntityFramework
                             select s;
             }
 
-            var list = await scopes.ToListAsync();
+            Scope[] list = null;
+            if (options != null && options.SynchronousReads)
+            {
+                list = scopes.ToArray();
+            }
+            else
+            {
+                list = await scopes.ToArrayAsync();
+            }
+
             return list.Select(x => x.ToModel());
         }
 
@@ -65,7 +83,15 @@ namespace IdentityServer3.EntityFramework
                             select s;
             }
 
-            var list = await scopes.ToListAsync();
+            Scope[] list = null;
+            if (options != null && options.SynchronousReads)
+            {
+                list = scopes.ToArray();
+            }
+            else
+            {
+                list = await scopes.ToArrayAsync();
+            }
             return list.Select(x => x.ToModel());
         }
     }

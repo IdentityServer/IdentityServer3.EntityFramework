@@ -29,9 +29,23 @@ namespace IdentityServer3.EntityFramework
         {
         }
 
+        public RefreshTokenStore(EntityFrameworkServiceOptions options, IOperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+            : base(options, context, TokenType.RefreshToken, scopeStore, clientStore)
+        {
+        }
+
         public override async Task StoreAsync(string key, RefreshToken value)
         {
-            var token = await context.Tokens.FindAsync(key, tokenType);
+            Entities.Token token = null;
+            if (options != null && options.SynchronousReads)
+            {
+                token = context.Tokens.Find(key, tokenType);
+            }
+            else
+            {
+                token = await context.Tokens.FindAsync(key, tokenType);
+            }
+
             if (token == null)
             {
                 token = new Entities.Token

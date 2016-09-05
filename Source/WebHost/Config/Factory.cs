@@ -16,7 +16,8 @@ namespace WebHost.Config
         {
             var efConfig = new EntityFrameworkServiceOptions {
                 ConnectionString = connString,
-                //Schema = "foo"
+                //Schema = "foo",
+                //SynchronousReads = true
             };
 
             var cleanup = new TokenCleanup(efConfig, 10);
@@ -30,6 +31,9 @@ namespace WebHost.Config
 
             factory.RegisterConfigurationServices(efConfig);
             factory.RegisterOperationalServices(efConfig);
+
+            //factory.ConfigureClientStoreCache();
+            //factory.ConfigureScopeStoreCache();
 
             factory.UseInMemoryUsers(Users.Get());
 

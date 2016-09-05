@@ -28,6 +28,11 @@ namespace IdentityServer3.EntityFramework
         {
         }
 
+        public AuthorizationCodeStore(EntityFrameworkServiceOptions options, IOperationalDbContext context, IScopeStore scopeStore, IClientStore clientStore)
+            : base(options, context, TokenType.AuthorizationCode, scopeStore, clientStore)
+        {
+        }
+
         public override async Task StoreAsync(string key, AuthorizationCode code)
         {
             var efCode = new Entities.Token

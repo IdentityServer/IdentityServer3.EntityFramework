@@ -33,6 +33,7 @@ namespace IdentityServer3.EntityFramework
         protected readonly TokenType tokenType;
         protected readonly IScopeStore scopeStore;
         protected readonly IClientStore clientStore;
+        protected readonly EntityFrameworkServiceOptions options;
 
         protected BaseTokenStore(IOperationalDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
         {
@@ -40,6 +41,19 @@ namespace IdentityServer3.EntityFramework
             if (scopeStore == null) throw new ArgumentNullException("scopeStore");
             if (clientStore == null) throw new ArgumentNullException("clientStore");
             
+            this.context = context;
+            this.tokenType = tokenType;
+            this.scopeStore = scopeStore;
+            this.clientStore = clientStore;
+        }
+
+        protected BaseTokenStore(EntityFrameworkServiceOptions options, IOperationalDbContext context, TokenType tokenType, IScopeStore scopeStore, IClientStore clientStore)
+        {
+            if (context == null) throw new ArgumentNullException("context");
+            if (scopeStore == null) throw new ArgumentNullException("scopeStore");
+            if (clientStore == null) throw new ArgumentNullException("clientStore");
+
+            this.options = options;
             this.context = context;
             this.tokenType = tokenType;
             this.scopeStore = scopeStore;
@@ -68,7 +82,15 @@ namespace IdentityServer3.EntityFramework
 
         public async Task<T> GetAsync(string key)
         {
-            var token = await context.Tokens.FindAsync(key, tokenType);
+            Entities.Token token = null;
+            if (options != null && options.SynchronousReads)
+            {
+                token = context.Tokens.Find(key, tokenType);
+            }
+            else
+            {
+                token = await context.Tokens.FindAsync(key, tokenType);
+            }
 
             if (token == null || token.Expiry < DateTimeOffset.UtcNow)
             {
@@ -80,7 +102,15 @@ namespace IdentityServer3.EntityFramework
 
         public async Task RemoveAsync(string key)
         {
-            var token = await context.Tokens.FindAsync(key, tokenType);
+            Entities.Token token = null;
+            if (options != null && options.SynchronousReads)
+            {
+                token = context.Tokens.Find(key, tokenType);
+            }
+            else
+            {
+                token = await context.Tokens.FindAsync(key, tokenType);
+            }
 
             if (token != null)
             {
@@ -91,22 +121,43 @@ namespace IdentityServer3.EntityFramework
 
         public async Task<IEnumerable<ITokenMetadata>> GetAllAsync(string subject)
         {
-            var tokens = await context.Tokens.Where(x => 
-                x.SubjectId == subject &&
-                x.TokenType == tokenType).ToArrayAsync();
-            
+            Entities.Token[] tokens = null;
+            if (options != null && options.SynchronousReads)
+            {
+                tokens = context.Tokens.Where(x =>
+                    x.SubjectId == subject &&
+                    x.TokenType == tokenType).ToArray();
+            }
+            else
+            {
+                tokens = await context.Tokens.Where(x => 
+                    x.SubjectId == subject &&
+                    x.TokenType == tokenType).ToArrayAsync();
+            }
+
             var results = tokens.Select(x=>ConvertFromJson(x.JsonCode)).ToArray();
             return results.Cast<ITokenMetadata>();
         }
         
         public async Task RevokeAsync(string subject, string client)
         {
-            var found = context.Tokens.Where(x => 
-                x.SubjectId == subject && 
-                x.ClientId == client && 
-                x.TokenType == tokenType).ToArray();
-            
-            context.Tokens.RemoveRange(found);
+            Entities.Token[] tokens = null;
+            if (options != null && options.SynchronousReads)
+            {
+                tokens = context.Tokens.Where(x =>
+                    x.SubjectId == subject &&
+                    x.ClientId == client &&
+                    x.TokenType == tokenType).ToArray();
+            }
+            else
+            {
+                tokens = await context.Tokens.Where(x => 
+                    x.SubjectId == subject && 
+                    x.ClientId == client && 
+                    x.TokenType == tokenType).ToArrayAsync();
+            }
+
+            context.Tokens.RemoveRange(tokens);
             await context.SaveChangesAsync();
         }
 

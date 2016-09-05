@@ -26,26 +26,44 @@ namespace IdentityServer3.EntityFramework
     public class ClientStore : IClientStore
     {
         private readonly IClientConfigurationDbContext context;
+        private readonly EntityFrameworkServiceOptions options;
 
         public ClientStore(IClientConfigurationDbContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
-            
+
+            this.context = context;
+        }
+
+        public ClientStore(EntityFrameworkServiceOptions options, IClientConfigurationDbContext context)
+        {
+            if (context == null) throw new ArgumentNullException("context");
+
+            this.options = options;
             this.context = context;
         }
 
         public async Task<IdentityServer3.Core.Models.Client> FindClientByIdAsync(string clientId)
         {
-            var client = await context.Clients
-                .Include(x=>x.ClientSecrets)
-                .Include(x => x.RedirectUris)
-                .Include(x => x.PostLogoutRedirectUris)
-                .Include(x => x.AllowedScopes)
-                .Include(x => x.IdentityProviderRestrictions)
-                .Include(x => x.Claims)
-                .Include(x => x.AllowedCustomGrantTypes)
-                .Include(x => x.AllowedCorsOrigins)
-                .SingleOrDefaultAsync(x => x.ClientId == clientId);
+            var query = context.Clients
+                    .Include(x => x.ClientSecrets)
+                    .Include(x => x.RedirectUris)
+                    .Include(x => x.PostLogoutRedirectUris)
+                    .Include(x => x.AllowedScopes)
+                    .Include(x => x.IdentityProviderRestrictions)
+                    .Include(x => x.Claims)
+                    .Include(x => x.AllowedCustomGrantTypes)
+                    .Include(x => x.AllowedCorsOrigins);
+
+            Client client = null;
+            if (options != null && options.SynchronousReads)
+            {
+                client = query.SingleOrDefault(x => x.ClientId == clientId);
+            }
+            else
+            {
+                client = await query.SingleOrDefaultAsync(x => x.ClientId == clientId);
+            }
 
             IdentityServer3.Core.Models.Client model = client.ToModel();
             return model;    
