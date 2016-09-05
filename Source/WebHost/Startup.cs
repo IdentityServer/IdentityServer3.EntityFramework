@@ -12,7 +12,7 @@ namespace WebHost
         {
             Log.Logger = new LoggerConfiguration()
                .MinimumLevel.Debug()
-               .WriteTo.Trace()
+               .WriteTo.File(@"c:\logs\ef.txt")
                .CreateLogger();
 
             appBuilder.Map("/core", core =>
