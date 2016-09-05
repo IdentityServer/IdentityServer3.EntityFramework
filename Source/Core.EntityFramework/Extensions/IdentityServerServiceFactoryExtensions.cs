@@ -27,6 +27,11 @@ namespace IdentityServer3.Core.Configuration
             if (factory == null) throw new ArgumentNullException("factory");
             if (options == null) throw new ArgumentNullException("options");
 
+            if (options.SynchronousReads)
+            {
+                factory.Register(new Registration<EntityFrameworkServiceOptions>(options));
+            }
+
             factory.Register(new Registration<IOperationalDbContext>(resolver => new OperationalDbContext(options.ConnectionString, options.Schema)));
             factory.AuthorizationCodeStore = new Registration<IAuthorizationCodeStore, AuthorizationCodeStore>();
             factory.TokenHandleStore = new Registration<ITokenHandleStore, TokenHandleStore>();
@@ -45,6 +50,11 @@ namespace IdentityServer3.Core.Configuration
             if (factory == null) throw new ArgumentNullException("factory");
             if (options == null) throw new ArgumentNullException("options");
 
+            if (options.SynchronousReads)
+            {
+                factory.Register(new Registration<EntityFrameworkServiceOptions>(options));
+            }
+
             factory.Register(new Registration<IClientConfigurationDbContext>(resolver => new ClientConfigurationDbContext(options.ConnectionString, options.Schema)));
             factory.ClientStore = new Registration<IClientStore, ClientStore>();
             factory.CorsPolicyService = new ClientConfigurationCorsPolicyRegistration(options);
@@ -54,6 +64,11 @@ namespace IdentityServer3.Core.Configuration
         {
             if (factory == null) throw new ArgumentNullException("factory");
             if (options == null) throw new ArgumentNullException("options");
+
+            if (options.SynchronousReads)
+            {
+                factory.Register(new Registration<EntityFrameworkServiceOptions>(options));
+            }
 
             factory.Register(new Registration<IScopeConfigurationDbContext>(resolver => new ScopeConfigurationDbContext(options.ConnectionString, options.Schema)));
             factory.ScopeStore = new Registration<IScopeStore, ScopeStore>();

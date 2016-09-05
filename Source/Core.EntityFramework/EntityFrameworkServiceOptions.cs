@@ -30,5 +30,7 @@ namespace IdentityServer3.EntityFramework
 
         public string ConnectionString { get; set; }
         public string Schema { get; set; }
+
+        public bool SynchronousReads { get; set; }
     }
 }
