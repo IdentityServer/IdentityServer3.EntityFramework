@@ -23,6 +23,14 @@ namespace IdentityServer3.EntityFramework.Entities
 {
     public class Client
     {
+        public Client()
+        {
+            if (this.GetType() == typeof(Client))
+            {
+                this.CopyDefaultValuesFromModel();
+            }
+        }
+
         [Key]
         public virtual int Id { get; set; }
 

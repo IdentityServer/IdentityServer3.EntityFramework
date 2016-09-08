@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using IdentityServer3.Core.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,6 +21,14 @@ namespace IdentityServer3.EntityFramework.Entities
 {
     public class Scope
     {
+        public Scope()
+        {
+            if (this.GetType() == typeof(Scope))
+            {
+                this.CopyDefaultValuesFromModel();
+            }
+        }
+
         [Key]
         public virtual int Id { get; set; }
         public virtual bool Enabled { get; set; }

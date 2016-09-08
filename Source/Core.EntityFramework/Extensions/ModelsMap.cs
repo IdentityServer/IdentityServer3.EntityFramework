@@ -106,5 +106,22 @@ namespace IdentityServer3.Core.Models
 
             return Mapper.Map<Models.Client, Entities.Client>(s);
         }
+
+        internal static void CopyDefaultValuesFromModel(this Entities.Client d)
+        {
+            Mapper.Map(new Models.Client(), d);
+        }
+        internal static void CopyDefaultValuesFromModel(this Entities.ClientSecret d)
+        {
+            Mapper.Map(new Models.Secret(), d);
+        }
+        internal static void CopyDefaultValuesFromModel(this Entities.Scope d)
+        {
+            Mapper.Map(new Models.Scope(), d);
+        }
+        internal static void CopyDefaultValuesFromModel(this Entities.ScopeSecret d)
+        {
+            Mapper.Map(new Models.Secret(), d);
+        }
     }
 }

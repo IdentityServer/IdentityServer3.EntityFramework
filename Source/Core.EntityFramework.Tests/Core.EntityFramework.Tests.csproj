@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="NameLengthTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\DefaultValueTests.cs" />
     <Compile Include="Serialization\ClaimConverterTests.cs" />
     <Compile Include="Serialization\ClaimsPrincipalConverterTests.cs" />
     <Compile Include="Serialization\ClientConverterTests.cs" />

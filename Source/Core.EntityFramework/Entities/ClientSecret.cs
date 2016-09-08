@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IdentityServer3.Core.Models;
+using System;
 /*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
@@ -20,6 +21,14 @@ namespace IdentityServer3.EntityFramework.Entities
 {
     public class ClientSecret
     {
+        public ClientSecret()
+        {
+            if (this.GetType() == typeof(ClientSecret))
+            {
+                this.CopyDefaultValuesFromModel();
+            }
+        }
+
         [Key]
         public virtual int Id { get; set; }
 
