@@ -29,8 +29,14 @@ namespace IdentityServer3.EntityFramework.Serialization
 
     public class ClaimLite
     {
+        public ClaimLite()
+        {
+            ValueType = ClaimValueTypes.String;
+        }
+
         public string Type { get; set; }
         public string Value { get; set; }
+        public string ValueType { get; set; }
     }
 
     public class ClaimsPrincipalConverter : JsonConverter
