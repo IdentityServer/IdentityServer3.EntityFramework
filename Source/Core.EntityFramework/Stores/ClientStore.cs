@@ -58,11 +58,11 @@ namespace IdentityServer3.EntityFramework
             Client client = null;
             if (options != null && options.SynchronousReads)
             {
-                client = query.SingleOrDefault(x => x.ClientId == clientId);
+                client = query.SingleOrDefault(x => x.ClientId == clientId && x.Enabled);
             }
             else
             {
-                client = await query.SingleOrDefaultAsync(x => x.ClientId == clientId);
+                client = await query.SingleOrDefaultAsync(x => x.ClientId == clientId && x.Enabled);
             }
 
             IdentityServer3.Core.Models.Client model = client.ToModel();
