@@ -81,5 +81,5 @@ task CreateNuGetPackage -depends Compile {
   copy-item $output_directory\IdentityServer3.EntityFramework.dll $dist_directory\lib\net45
   copy-item $output_directory\IdentityServer3.EntityFramework.pdb $dist_directory\lib\net45
   
-	exec { . $nuget_path pack $dist_directory\IdentityServer3.EntityFramework.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
+	exec { . $nuget_path pack $dist_directory\IdentityServer3.EntityFramework.nuspec -BasePath $dist_directory -OutputDirectory $dist_directory -version $packageVersion }
 }
